@@ -11,6 +11,10 @@ namespace FeedBackSystem
         {
             InitializeComponent();
 
+            SectionTable.VerticalScroll.Enabled = false;
+            ContentTable.VerticalScroll.Enabled = true;
+
+
             MySql sql = new MySql();
             sql.OpenConnection();
 
@@ -24,18 +28,20 @@ namespace FeedBackSystem
             ApplicantList.ValueMember = "Name";
 
             sql.CloseConnection();
+
+            
         }
 
         private void AddSectionBtn_Click(object sender, EventArgs e)
         {
-            RowStyle style = new RowStyle {SizeType = SizeType.AutoSize};
+            RowStyle style = new RowStyle { SizeType = SizeType.AutoSize };
 
-            SectionTable.Padding = new Padding(0, 0, SystemInformation.VerticalScrollBarWidth, 0);
+            ContentTable.Padding = new Padding(0, 0, SystemInformation.VerticalScrollBarWidth, 0);
             SectionTable.RowStyles.Add(style);
-            
+
             Section usercontrol = new Section();
-            
-            SectionTable.Controls.Add(usercontrol, 0, SectionTable.RowCount-1);
+
+            SectionTable.Controls.Add(usercontrol, 0, SectionTable.RowCount - 1);
             SectionTable.ScrollControlIntoView(usercontrol);
 
         }
@@ -59,6 +65,5 @@ namespace FeedBackSystem
                 }
             }
         }
-       
     }
 }
