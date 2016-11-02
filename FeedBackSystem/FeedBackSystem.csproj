@@ -66,6 +66,19 @@
     <Compile Include="HeaderCreator.Designer.cs">
       <DependentUpon>HeaderCreator.cs</DependentUpon>
     </Compile>
+    <Compile Include="HeaderItem.cs" />
+    <Compile Include="HeaderItemCreator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HeaderItemCreator.Designer.cs">
+      <DependentUpon>HeaderItemCreator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HeadItemCreator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HeadItemCreator.Designer.cs">
+      <DependentUpon>HeadItemCreator.cs</DependentUpon>
+    </Compile>
     <Compile Include="Home.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -110,6 +123,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="HeaderCreator.resx">
       <DependentUpon>HeaderCreator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HeaderItemCreator.resx">
+      <DependentUpon>HeaderItemCreator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HeadItemCreator.resx">
+      <DependentUpon>HeadItemCreator.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Home.resx">
       <DependentUpon>Home.cs</DependentUpon>

@@ -16,7 +16,11 @@ namespace FeedBackSystem
 
         private void AddItemBtn_Click(object sender, EventArgs e)
         {
+            HeadItemCreator item = new HeadItemCreator();
+            item.ShowDialog();
+            //figuring how to show the item created here
 
+            /*
             String selectedItemType = ItemTypeList.Text;
 
             if (selectedItemType == null) return;
@@ -43,9 +47,8 @@ namespace FeedBackSystem
                         }
 
                     }
-
                     break;
-            }
+            }*/
         }
     }
 }
