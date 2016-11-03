@@ -22,7 +22,7 @@ namespace FeedBackSystem
              
             HeaderTable.Controls.Add(userControlType, _column[_counter], _row);
             HeaderTable.SetColumnSpan(userControlType, 4);
-
+            
             if (_counter >= 2)
             {
                 _counter = 0;

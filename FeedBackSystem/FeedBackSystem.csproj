@@ -60,11 +60,53 @@
     <Compile Include="Header.designer.cs">
       <DependentUpon>Header.cs</DependentUpon>
     </Compile>
+    <Compile Include="HeaderControls\Date.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="HeaderControls\Date.Designer.cs">
+      <DependentUpon>Date.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HeaderControls\List.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="HeaderControls\List.Designer.cs">
+      <DependentUpon>List.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HeaderControls\Text.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="HeaderControls\Text.Designer.cs">
+      <DependentUpon>Text.cs</DependentUpon>
+    </Compile>
     <Compile Include="HeaderCreator.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="HeaderCreator.Designer.cs">
       <DependentUpon>HeaderCreator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HeaderCreatorControls\Date.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="HeaderCreatorControls\Date.Designer.cs">
+      <DependentUpon>Date.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HeaderCreatorControls\List.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="HeaderCreatorControls\List.Designer.cs">
+      <DependentUpon>List.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HeaderCreatorControls\Query.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="HeaderCreatorControls\Query.Designer.cs">
+      <DependentUpon>Query.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HeaderCreatorControls\Text.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="HeaderCreatorControls\Text.Designer.cs">
+      <DependentUpon>Text.cs</DependentUpon>
     </Compile>
     <Compile Include="HeaderItem.cs" />
     <Compile Include="HeaderItemCreator.cs">
@@ -85,18 +127,6 @@
     <Compile Include="Home.Designer.cs">
       <DependentUpon>Home.cs</DependentUpon>
     </Compile>
-    <Compile Include="ListHeader.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="ListHeader.Designer.cs">
-      <DependentUpon>ListHeader.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ListHeaderInput.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ListHeaderInput.Designer.cs">
-      <DependentUpon>ListHeaderInput.cs</DependentUpon>
-    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -112,17 +142,35 @@
     <Compile Include="Section.Designer.cs">
       <DependentUpon>Section.cs</DependentUpon>
     </Compile>
-    <Compile Include="TextBoxHeader.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="TextBoxHeader.Designer.cs">
-      <DependentUpon>TextBoxHeader.cs</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="GenerateFeedback.resx">
       <DependentUpon>GenerateFeedback.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Header.resx">
+      <DependentUpon>Header.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HeaderControls\Date.resx">
+      <DependentUpon>Date.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HeaderControls\List.resx">
+      <DependentUpon>List.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HeaderControls\Text.resx">
+      <DependentUpon>Text.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="HeaderCreator.resx">
       <DependentUpon>HeaderCreator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HeaderCreatorControls\Date.resx">
+      <DependentUpon>Date.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HeaderCreatorControls\List.resx">
+      <DependentUpon>List.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HeaderCreatorControls\Query.resx">
+      <DependentUpon>Query.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HeaderCreatorControls\Text.resx">
+      <DependentUpon>Text.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="HeaderItemCreator.resx">
       <DependentUpon>HeaderItemCreator.cs</DependentUpon>
@@ -132,12 +180,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Home.resx">
       <DependentUpon>Home.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ListHeader.resx">
-      <DependentUpon>ListHeader.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ListHeaderInput.resx">
-      <DependentUpon>ListHeaderInput.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -153,9 +195,6 @@
     </Compile>
     <EmbeddedResource Include="Section.resx">
       <DependentUpon>Section.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TextBoxHeader.resx">
-      <DependentUpon>TextBoxHeader.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

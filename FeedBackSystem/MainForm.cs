@@ -20,8 +20,11 @@ namespace FeedBackSystem
 
         private void headerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new HeaderCreator().ShowDialog();
-            
+            using (HeaderCreator creator = new HeaderCreator())
+            {
+                creator.ShowDialog();
+            }
+
         }
     }
 }

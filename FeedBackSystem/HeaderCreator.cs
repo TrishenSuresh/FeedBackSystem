@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using FeedBackSystem.HeaderCreatorControls;
 
 namespace FeedBackSystem
 {
@@ -16,39 +17,34 @@ namespace FeedBackSystem
 
         private void AddItemBtn_Click(object sender, EventArgs e)
         {
-            HeadItemCreator item = new HeadItemCreator();
-            item.ShowDialog();
-            //figuring how to show the item created here
-
-            /*
-            String selectedItemType = ItemTypeList.Text;
-
-            if (selectedItemType == null) return;
-
-            switch (selectedItemType)
+            using (HeaderItemCreator creator = new HeaderItemCreator())
             {
-                case "Text":
-                    HeaderTab.AddItem(new TextBoxHeader());
-                    break;
-                case "List":
-                    ListHeaderInput listInput = new ListHeaderInput();
-                    using (listInput)
+                var result = creator.ShowDialog();
+
+                if (result == DialogResult.OK)
+                {
+                    
+                    HeaderItem item = new HeaderItem(creator.Title,creator.InputType,creator.ValueItem);
+
+                    
+                    switch (creator.InputType)
                     {
-                        listInput.ShowDialog();
-                        string[] lists = listInput.ReturnList();
-                        string listName = listInput.ReturnListName();
-
-                        if (listName == null) throw new ArgumentNullException(nameof(listName));
-
-                        if (lists.Length != 0)
-                        {
-                            ListHeader idontknow = new ListHeader();
-
-                        }
+                        case "Text":
+                            HeaderTab.AddItem(new HeaderControls.Text(item.Title,item.ValueItem[0]));
+                            break;
+                        case "List":
+                            HeaderTab.AddItem(new HeaderControls.List(item.Title,item.ValueItem));
+                            break;
+                        
 
                     }
-                    break;
-            }*/
+                    
+                    
+                   
+                   
+                }
+            }
+           
         }
     }
 }

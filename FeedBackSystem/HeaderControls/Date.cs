@@ -8,13 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FeedBackSystem
+namespace FeedBackSystem.HeaderControls
 {
-    public partial class ListHeader : UserControl
+    public partial class Date : UserControl
     {
-        public ListHeader()
+        public Date()
         {
             InitializeComponent();
+        }
+
+        public Date(string date)
+        {
+            DatePicker.Value = Convert.ToDateTime(date);
         }
     }
 }

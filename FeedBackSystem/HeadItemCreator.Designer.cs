@@ -56,25 +56,28 @@
             // titleLabel
             // 
             this.titleLabel.AutoSize = true;
-            this.titleLabel.Location = new System.Drawing.Point(518, 66);
+            this.titleLabel.Location = new System.Drawing.Point(222, 30);
+            this.titleLabel.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.titleLabel.Name = "titleLabel";
-            this.titleLabel.Size = new System.Drawing.Size(61, 29);
+            this.titleLabel.Size = new System.Drawing.Size(27, 13);
             this.titleLabel.TabIndex = 0;
             this.titleLabel.Text = "Title";
             // 
             // titleText
             // 
-            this.titleText.Location = new System.Drawing.Point(607, 63);
+            this.titleText.Location = new System.Drawing.Point(260, 28);
+            this.titleText.Margin = new System.Windows.Forms.Padding(1);
             this.titleText.Name = "titleText";
-            this.titleText.Size = new System.Drawing.Size(316, 35);
+            this.titleText.Size = new System.Drawing.Size(138, 20);
             this.titleText.TabIndex = 1;
             // 
             // inputTypeLabel
             // 
             this.inputTypeLabel.AutoSize = true;
-            this.inputTypeLabel.Location = new System.Drawing.Point(453, 126);
+            this.inputTypeLabel.Location = new System.Drawing.Point(194, 56);
+            this.inputTypeLabel.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.inputTypeLabel.Name = "inputTypeLabel";
-            this.inputTypeLabel.Size = new System.Drawing.Size(126, 29);
+            this.inputTypeLabel.Size = new System.Drawing.Size(58, 13);
             this.inputTypeLabel.TabIndex = 2;
             this.inputTypeLabel.Text = "Input Type";
             // 
@@ -86,9 +89,10 @@
             "List",
             "Date",
             "Query"});
-            this.inputTypeList.Location = new System.Drawing.Point(607, 126);
+            this.inputTypeList.Location = new System.Drawing.Point(260, 56);
+            this.inputTypeList.Margin = new System.Windows.Forms.Padding(1);
             this.inputTypeList.Name = "inputTypeList";
-            this.inputTypeList.Size = new System.Drawing.Size(224, 37);
+            this.inputTypeList.Size = new System.Drawing.Size(98, 21);
             this.inputTypeList.TabIndex = 3;
             this.inputTypeList.SelectedIndexChanged += new System.EventHandler(this.inputTypeList_SelectedIndexChanged);
             // 
@@ -96,26 +100,29 @@
             // 
             this.textPanel.Controls.Add(this.textLabel);
             this.textPanel.Controls.Add(this.textText);
-            this.textPanel.Location = new System.Drawing.Point(533, 194);
+            this.textPanel.Location = new System.Drawing.Point(228, 87);
+            this.textPanel.Margin = new System.Windows.Forms.Padding(1);
             this.textPanel.Name = "textPanel";
-            this.textPanel.Size = new System.Drawing.Size(453, 264);
+            this.textPanel.Size = new System.Drawing.Size(194, 118);
             this.textPanel.TabIndex = 4;
             this.textPanel.Visible = false;
             // 
             // textLabel
             // 
             this.textLabel.AutoSize = true;
-            this.textLabel.Location = new System.Drawing.Point(3, 0);
+            this.textLabel.Location = new System.Drawing.Point(1, 0);
+            this.textLabel.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.textLabel.Name = "textLabel";
-            this.textLabel.Size = new System.Drawing.Size(66, 29);
+            this.textLabel.Size = new System.Drawing.Size(31, 13);
             this.textLabel.TabIndex = 0;
             this.textLabel.Text = "Text:";
             // 
             // textText
             // 
-            this.textText.Location = new System.Drawing.Point(75, 3);
+            this.textText.Location = new System.Drawing.Point(34, 1);
+            this.textText.Margin = new System.Windows.Forms.Padding(1);
             this.textText.Name = "textText";
-            this.textText.Size = new System.Drawing.Size(335, 35);
+            this.textText.Size = new System.Drawing.Size(146, 20);
             this.textText.TabIndex = 1;
             // 
             // datePanel
@@ -125,27 +132,30 @@
             this.datePanel.Controls.Add(this.reviewRBtn);
             this.datePanel.Controls.Add(this.manualRBtn);
             this.datePanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.datePanel.Location = new System.Drawing.Point(530, 197);
+            this.datePanel.Location = new System.Drawing.Point(227, 88);
+            this.datePanel.Margin = new System.Windows.Forms.Padding(1);
             this.datePanel.Name = "datePanel";
-            this.datePanel.Size = new System.Drawing.Size(453, 261);
+            this.datePanel.Size = new System.Drawing.Size(194, 117);
             this.datePanel.TabIndex = 5;
             this.datePanel.Visible = false;
             // 
             // dateLabel
             // 
             this.dateLabel.AutoSize = true;
-            this.dateLabel.Location = new System.Drawing.Point(3, 0);
+            this.dateLabel.Location = new System.Drawing.Point(1, 0);
+            this.dateLabel.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.dateLabel.Name = "dateLabel";
-            this.dateLabel.Size = new System.Drawing.Size(246, 29);
+            this.dateLabel.Size = new System.Drawing.Size(111, 13);
             this.dateLabel.TabIndex = 0;
             this.dateLabel.Text = "Choose the date type:";
             // 
             // todayRbtn
             // 
             this.todayRbtn.AutoSize = true;
-            this.todayRbtn.Location = new System.Drawing.Point(3, 32);
+            this.todayRbtn.Location = new System.Drawing.Point(1, 14);
+            this.todayRbtn.Margin = new System.Windows.Forms.Padding(1);
             this.todayRbtn.Name = "todayRbtn";
-            this.todayRbtn.Size = new System.Drawing.Size(184, 33);
+            this.todayRbtn.Size = new System.Drawing.Size(88, 17);
             this.todayRbtn.TabIndex = 1;
             this.todayRbtn.TabStop = true;
             this.todayRbtn.Text = "Today\'s Date";
@@ -154,9 +164,10 @@
             // reviewRBtn
             // 
             this.reviewRBtn.AutoSize = true;
-            this.reviewRBtn.Location = new System.Drawing.Point(3, 71);
+            this.reviewRBtn.Location = new System.Drawing.Point(1, 33);
+            this.reviewRBtn.Margin = new System.Windows.Forms.Padding(1);
             this.reviewRBtn.Name = "reviewRBtn";
-            this.reviewRBtn.Size = new System.Drawing.Size(295, 33);
+            this.reviewRBtn.Size = new System.Drawing.Size(141, 17);
             this.reviewRBtn.TabIndex = 2;
             this.reviewRBtn.TabStop = true;
             this.reviewRBtn.Text = "Review / Interview Date";
@@ -165,9 +176,10 @@
             // manualRBtn
             // 
             this.manualRBtn.AutoSize = true;
-            this.manualRBtn.Location = new System.Drawing.Point(3, 110);
+            this.manualRBtn.Location = new System.Drawing.Point(1, 52);
+            this.manualRBtn.Margin = new System.Windows.Forms.Padding(1);
             this.manualRBtn.Name = "manualRBtn";
-            this.manualRBtn.Size = new System.Drawing.Size(122, 33);
+            this.manualRBtn.Size = new System.Drawing.Size(60, 17);
             this.manualRBtn.TabIndex = 3;
             this.manualRBtn.TabStop = true;
             this.manualRBtn.Text = "Manual";
@@ -178,28 +190,31 @@
             this.listPanel.Controls.Add(this.listLabel);
             this.listPanel.Controls.Add(this.listText);
             this.listPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.listPanel.Location = new System.Drawing.Point(533, 194);
+            this.listPanel.Location = new System.Drawing.Point(228, 87);
+            this.listPanel.Margin = new System.Windows.Forms.Padding(1);
             this.listPanel.Name = "listPanel";
-            this.listPanel.Size = new System.Drawing.Size(453, 264);
+            this.listPanel.Size = new System.Drawing.Size(194, 118);
             this.listPanel.TabIndex = 6;
             this.listPanel.Visible = false;
             // 
             // listLabel
             // 
             this.listLabel.AutoSize = true;
-            this.listLabel.Location = new System.Drawing.Point(3, 0);
+            this.listLabel.Location = new System.Drawing.Point(1, 0);
+            this.listLabel.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.listLabel.Name = "listLabel";
-            this.listLabel.Size = new System.Drawing.Size(306, 29);
+            this.listLabel.Size = new System.Drawing.Size(136, 13);
             this.listLabel.TabIndex = 0;
             this.listLabel.Text = "Input the list (One line one):";
             // 
             // listText
             // 
-            this.listText.Location = new System.Drawing.Point(3, 32);
+            this.listText.Location = new System.Drawing.Point(1, 14);
+            this.listText.Margin = new System.Windows.Forms.Padding(1);
             this.listText.Multiline = true;
             this.listText.Name = "listText";
             this.listText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.listText.Size = new System.Drawing.Size(407, 198);
+            this.listText.Size = new System.Drawing.Size(177, 91);
             this.listText.TabIndex = 1;
             // 
             // queryPanel
@@ -207,18 +222,20 @@
             this.queryPanel.Controls.Add(this.queryLabel);
             this.queryPanel.Controls.Add(this.queryList);
             this.queryPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.queryPanel.Location = new System.Drawing.Point(533, 197);
+            this.queryPanel.Location = new System.Drawing.Point(228, 88);
+            this.queryPanel.Margin = new System.Windows.Forms.Padding(1);
             this.queryPanel.Name = "queryPanel";
-            this.queryPanel.Size = new System.Drawing.Size(450, 261);
+            this.queryPanel.Size = new System.Drawing.Size(193, 117);
             this.queryPanel.TabIndex = 7;
             this.queryPanel.Visible = false;
             // 
             // queryLabel
             // 
             this.queryLabel.AutoSize = true;
-            this.queryLabel.Location = new System.Drawing.Point(3, 0);
+            this.queryLabel.Location = new System.Drawing.Point(1, 0);
+            this.queryLabel.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.queryLabel.Name = "queryLabel";
-            this.queryLabel.Size = new System.Drawing.Size(387, 58);
+            this.queryLabel.Size = new System.Drawing.Size(172, 26);
             this.queryLabel.TabIndex = 0;
             this.queryLabel.Text = "Select your wanted list (that will be retrieve from the database):";
             // 
@@ -231,16 +248,18 @@
             "Application Status",
             "Application Type",
             "Positions"});
-            this.queryList.Location = new System.Drawing.Point(3, 61);
+            this.queryList.Location = new System.Drawing.Point(1, 27);
+            this.queryList.Margin = new System.Windows.Forms.Padding(1);
             this.queryList.Name = "queryList";
-            this.queryList.Size = new System.Drawing.Size(314, 37);
+            this.queryList.Size = new System.Drawing.Size(137, 21);
             this.queryList.TabIndex = 1;
             // 
             // addBtn
             // 
-            this.addBtn.Location = new System.Drawing.Point(871, 500);
+            this.addBtn.Location = new System.Drawing.Point(373, 224);
+            this.addBtn.Margin = new System.Windows.Forms.Padding(1);
             this.addBtn.Name = "addBtn";
-            this.addBtn.Size = new System.Drawing.Size(115, 55);
+            this.addBtn.Size = new System.Drawing.Size(49, 25);
             this.addBtn.TabIndex = 8;
             this.addBtn.Text = "Add";
             this.addBtn.UseVisualStyleBackColor = true;
@@ -248,9 +267,9 @@
             // 
             // HeadItemCreator
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 29F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1493, 839);
+            this.ClientSize = new System.Drawing.Size(640, 376);
             this.Controls.Add(this.addBtn);
             this.Controls.Add(this.datePanel);
             this.Controls.Add(this.listPanel);
@@ -260,6 +279,7 @@
             this.Controls.Add(this.inputTypeLabel);
             this.Controls.Add(this.titleText);
             this.Controls.Add(this.titleLabel);
+            this.Margin = new System.Windows.Forms.Padding(1);
             this.Name = "HeadItemCreator";
             this.Text = "HeadItemCreator";
             this.textPanel.ResumeLayout(false);

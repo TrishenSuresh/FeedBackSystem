@@ -29,10 +29,9 @@
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.HeaderTab = new FeedBackSystem.Header();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.AddItemBtn = new System.Windows.Forms.Button();
-            this.ItemTypeList = new System.Windows.Forms.ComboBox();
+            this.HeaderTab = new FeedBackSystem.Header();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
@@ -69,60 +68,47 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1057, 488);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // HeaderTab
-            // 
-            this.HeaderTab.AutoScroll = true;
-            this.tableLayoutPanel1.SetColumnSpan(this.HeaderTab, 8);
-            this.HeaderTab.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.HeaderTab.Location = new System.Drawing.Point(108, 51);
-            this.HeaderTab.Name = "HeaderTab";
-            this.tableLayoutPanel1.SetRowSpan(this.HeaderTab, 7);
-            this.HeaderTab.Size = new System.Drawing.Size(834, 330);
-            this.HeaderTab.TabIndex = 1;
-            // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 3;
             this.tableLayoutPanel1.SetColumnSpan(this.tableLayoutPanel2, 4);
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 44.3609F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 55.6391F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 155F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 130F));
             this.tableLayoutPanel2.Controls.Add(this.AddItemBtn, 2, 0);
-            this.tableLayoutPanel2.Controls.Add(this.ItemTypeList, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(528, 435);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 54F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 46F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 72F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 28F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(414, 50);
             this.tableLayoutPanel2.TabIndex = 2;
             // 
             // AddItemBtn
             // 
             this.AddItemBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.AddItemBtn.Location = new System.Drawing.Point(261, 3);
+            this.AddItemBtn.Location = new System.Drawing.Point(286, 3);
             this.AddItemBtn.Name = "AddItemBtn";
-            this.AddItemBtn.Size = new System.Drawing.Size(150, 21);
+            this.AddItemBtn.Size = new System.Drawing.Size(125, 30);
             this.AddItemBtn.TabIndex = 1;
             this.AddItemBtn.Text = "Add Item";
             this.AddItemBtn.UseVisualStyleBackColor = true;
             this.AddItemBtn.Click += new System.EventHandler(this.AddItemBtn_Click);
             // 
-            // ItemTypeList
+            // HeaderTab
             // 
-            this.ItemTypeList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ItemTypeList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ItemTypeList.FormattingEnabled = true;
-            this.ItemTypeList.Items.AddRange(new object[] {
-            "Text",
-            "Date",
-            "Query",
-            "List"});
-            this.ItemTypeList.Location = new System.Drawing.Point(117, 3);
-            this.ItemTypeList.Name = "ItemTypeList";
-            this.ItemTypeList.Size = new System.Drawing.Size(138, 21);
-            this.ItemTypeList.TabIndex = 2;
+            this.HeaderTab.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.HeaderTab.AutoScroll = true;
+            this.HeaderTab.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.tableLayoutPanel1.SetColumnSpan(this.HeaderTab, 8);
+            this.HeaderTab.Location = new System.Drawing.Point(108, 51);
+            this.HeaderTab.Name = "HeaderTab";
+            this.tableLayoutPanel1.SetRowSpan(this.HeaderTab, 7);
+            this.HeaderTab.Size = new System.Drawing.Size(834, 330);
+            this.HeaderTab.TabIndex = 1;
             // 
             // HeaderCreator
             // 
@@ -144,6 +130,5 @@
         private Header HeaderTab;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Button AddItemBtn;
-        private System.Windows.Forms.ComboBox ItemTypeList;
     }
 }
