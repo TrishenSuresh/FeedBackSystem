@@ -1,39 +1,42 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace FeedBackSystem
 {
-    public partial class Header : UserControl
+    class Header
     {
+        public string HeaderID { get; set; }
+        public string Title { get; set; }
+        public List<HeaderItem> HeaderItems { get; set; }
+        public string Desc { get; set; }
 
-        private int _row;
-        private readonly int[] _column = { 1, 6, 11 };
-        private int _counter;
-
+        //overriding the default empty constructor as we want to create default header items in the header upon initialization
         public Header()
         {
-            _counter = 0;
-            _row = 0;
-            InitializeComponent();
+            //Applicant's name item
+            HeaderItem applicant = new HeaderItem("Applicant: ", "Query", "SELECT firstname as title FROM applicant");
+            HeaderItem job = new HeaderItem("Job applied: ", "Query", "SELECT name as title FROM positions");
+            HeaderItem reviewer = new HeaderItem("Reviewer: ", "Query", "SELECT firstname as title FROM reviewer");
+            HeaderItem applicationType = new HeaderItem("Type: ", "Query", "SELECT name as title from applicationtype");
+
+            this.HeaderItems = new List<HeaderItem>();
+            HeaderItems.Add(applicant);
+            HeaderItems.Add(job);
+            HeaderItems.Add(reviewer);
+            HeaderItems.Add(applicationType);
         }
 
-        public void AddItem(UserControl itemType)
+        public void addHeaderItem(HeaderItem item)
         {
-            var userControlType = itemType;
-             
-            HeaderTable.Controls.Add(userControlType, _column[_counter], _row);
-            HeaderTable.SetColumnSpan(userControlType, 4);
-            
-            if (_counter >= 2)
-            {
-                _counter = 0;
-                _row++;
-            }
-            else
-            {
-                _counter++;
-            }
+            this.HeaderItems.Add(item);
+        }
 
-            
+        public void removeHeaderItem(int index)
+        {
+            this.HeaderItems.RemoveAt(index);
         }
     }
 }

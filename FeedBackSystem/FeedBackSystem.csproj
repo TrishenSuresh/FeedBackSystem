@@ -54,11 +54,12 @@
     <Compile Include="GenerateFeedback.Designer.cs">
       <DependentUpon>GenerateFeedback.cs</DependentUpon>
     </Compile>
-    <Compile Include="Header.cs">
+    <Compile Include="Header.cs" />
+    <Compile Include="HeaderPlacement.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Header.designer.cs">
-      <DependentUpon>Header.cs</DependentUpon>
+    <Compile Include="HeaderPlacement.designer.cs">
+      <DependentUpon>HeaderPlacement.cs</DependentUpon>
     </Compile>
     <Compile Include="HeaderControls\Date.cs">
       <SubType>UserControl</SubType>
@@ -136,6 +137,12 @@
     <Compile Include="MySQL.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SaveBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SaveBox.Designer.cs">
+      <DependentUpon>SaveBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Section.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -145,8 +152,8 @@
     <EmbeddedResource Include="GenerateFeedback.resx">
       <DependentUpon>GenerateFeedback.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Header.resx">
-      <DependentUpon>Header.cs</DependentUpon>
+    <EmbeddedResource Include="HeaderPlacement.resx">
+      <DependentUpon>HeaderPlacement.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="HeaderControls\Date.resx">
       <DependentUpon>Date.cs</DependentUpon>
@@ -193,6 +200,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="SaveBox.resx">
+      <DependentUpon>SaveBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Section.resx">
       <DependentUpon>Section.cs</DependentUpon>
     </EmbeddedResource>

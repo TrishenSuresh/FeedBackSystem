@@ -7,11 +7,16 @@ namespace FeedBackSystem
     public partial class HeaderCreator : Form
     {
 
-       
+        Header header;
 
         public HeaderCreator()
         {
             InitializeComponent();
+            this.header = new Header();
+            foreach (HeaderItem item in header.HeaderItems)
+            {
+                HeaderTab.AddItem(new HeaderControls.List(item.Title,item.ValueItem));
+            }
         }
 
 
@@ -25,7 +30,7 @@ namespace FeedBackSystem
                 {
                     
                     HeaderItem item = new HeaderItem(creator.Title,creator.InputType,creator.ValueItem);
-
+                    header.addHeaderItem(item);
                     
                     switch (creator.InputType)
                     {
@@ -45,6 +50,24 @@ namespace FeedBackSystem
                 }
             }
            
+        }
+
+        private void SaveHeaderBtn_Click(object sender, EventArgs e)
+        {
+            using (SaveBox box = new SaveBox())
+            {
+                var result = box.ShowDialog();
+
+                if (result == DialogResult.OK)
+                {
+                    header.Title = box.headerTitle;
+                    header.Desc = box.headerDesc;
+
+                    MySql sql = new MySql();
+                    if (sql.saveHeader(header))
+                        MessageBox.Show("Sucessfully inserted into the database");
+                }
+            }
         }
     }
 }

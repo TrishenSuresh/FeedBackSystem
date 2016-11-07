@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Windows.Forms;
 
 namespace FeedBackSystem
@@ -17,6 +18,7 @@ namespace FeedBackSystem
         public string InputType { get; private set; }
         public string ValueChosen { get; private set; }
         public List<string> ValueItem { get; private set; }
+        public string QueryStat;
 
         public HeaderItem() { }
 
@@ -29,28 +31,34 @@ namespace FeedBackSystem
             ValueItem.AddRange(value);
         }
 
-        public FlowLayoutPanel showItem()
+        public HeaderItem(string title, string inputType, string value)
         {
-            FlowLayoutPanel panel = new FlowLayoutPanel();
-
-            Label label = new Label();
-            label.Text = Title;
-
-            Label text = new Label();
-            text.Text = ValueItem.ToString();
-            
-            try
+            this.Title = title;
+            this.InputType = inputType;
+            this.ValueItem = new List<string>();
+            //new memory allocation 
+            if (inputType.Equals("Query"))
             {
-                panel.Controls.Add(label);
-                panel.Controls.Add(text);
+                try
+                {
+                    MySql sql = new MySql();
+                    DataTable dt = sql.getDataSet(value);
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        string name;
+                        name = dr["title"].ToString();
+                        ValueItem.Add(name);
+                    }
+                } catch (Exception genExp)
+                {
+                    MessageBox.Show(genExp.Message);
+                }
+                QueryStat = value;
             }
-            catch (Exception e)
+            else
             {
-                MessageBox.Show(@"Exception: " + e.Message);
+                ValueItem.Add(value);
             }
-            return panel;
         }
-
-        
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace FeedBackSystem
 {
-    partial class Header
+    partial class HeaderPlacement
     {
         /// <summary> 
         /// Required designer variable.
@@ -67,13 +67,13 @@
             this.HeaderTable.Size = new System.Drawing.Size(959, 265);
             this.HeaderTable.TabIndex = 0;
             // 
-            // Header
+            // HeaderPlacement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.Controls.Add(this.HeaderTable);
-            this.Name = "Header";
+            this.Name = "HeaderPlacement";
             this.Size = new System.Drawing.Size(959, 265);
             this.ResumeLayout(false);
 
