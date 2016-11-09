@@ -118,68 +118,100 @@ namespace FeedBackSystem
             string headTitle = header.Title;
             string headDesc = header.Desc;
             List<HeaderItem> itemValues = header.HeaderItems;
+            
+            _connection.Open();
 
-            try
+            using (MySqlTransaction trans = _connection.BeginTransaction())
             {
-                string sqlStatement;
-                MySqlCommand cmd;
-                List<int> ints = new List<int>();
-                int headID;
-
-                _connection.Open();
-                MySqlDataReader reader;
-
-                sqlStatement = "INSERT INTO header(`Name`,`Desc`) VALUES ('" + headTitle + "','" + headDesc + "'); SELECT last_insert_id() as id;";
-                cmd = new MySqlCommand(sqlStatement, _connection);
-                reader = cmd.ExecuteReader();
-                reader.Read();
-                headID = Convert.ToInt16(reader["id"]);
-                reader.Close();
-                
-                foreach (HeaderItem item in itemValues)
+                try
                 {
-                    sqlStatement = "INSERT INTO headeritem(Title, InputType) VALUES ('" + item.Title + "','" + item.InputType + "'); SELECT last_insert_id() as id;";
-                    cmd = new MySqlCommand(sqlStatement, _connection);
-                    //int id = Convert.ToInt16(cmd.ExecuteScalar().ToString());
-                    reader = cmd.ExecuteReader();
-                    reader.Read();
-                    int id = Convert.ToInt16(reader["id"]);
-                    ints.Add(id);
-                    reader.Close();
+                    string sqlStatement;
+                    List<int> itemsID = new List<int>();
+                    int headID;
 
-                    if (item.InputType.Equals("Query"))
+                    MySqlDataReader reader;
+
+                    sqlStatement = "INSERT INTO header(`Name`,`Desc`) VALUES (@headTitle,@headDesc); SELECT last_insert_id() as id;";
+                    using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
                     {
-                        sqlStatement = "INSERT INTO headeritemlist(HeaderItemId, List) VALUES ('" + id + "','" + item.QueryStat + "');";
-                        cmd = new MySqlCommand(sqlStatement, _connection);
+                        cmd.Parameters.AddWithValue("@headTitle", headTitle);
+                        cmd.Parameters.AddWithValue("@headDesc", headDesc);
                         reader = cmd.ExecuteReader();
+                        reader.Read();
+                        headID = Convert.ToInt16(reader["id"]);
                         reader.Close();
-                    } else { 
-                        foreach (string value in item.ValueItem)
+                        cmd.Parameters.Clear();
+                    }
+
+                    foreach (HeaderItem item in itemValues)
+                    {
+                        int currentItemID;
+                        sqlStatement = "INSERT INTO headeritem(Title, InputType) VALUES (@itemTitle,@itemInputType); SELECT last_insert_id() as id;";
+                        using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
                         {
-                        
-                            sqlStatement = "INSERT INTO headeritemlist(HeaderItemId, List) VALUES ('" + id + "','" + value + "');";
-                            cmd = new MySqlCommand(sqlStatement, _connection);
+                            cmd.Parameters.AddWithValue("@itemTitle", item.Title);
+                            cmd.Parameters.AddWithValue("@itemInputType", item.InputType);
                             reader = cmd.ExecuteReader();
+                            //int id = Convert.ToInt16(cmd.ExecuteScalar().ToString());
+                            reader.Read();
+                            currentItemID = Convert.ToInt16(reader["id"]);
+                            itemsID.Add(currentItemID);
                             reader.Close();
+                            cmd.Parameters.Clear();
+                        }
+
+                        if (item.InputType.Equals("Query"))
+                        {
+                            sqlStatement = "INSERT INTO headeritemlist(HeaderItemId, List) VALUES (@currentItemID,@itemQueryStat);";
+                            using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
+                            {
+                                cmd.Parameters.AddWithValue("@currentItemID", currentItemID);
+                                cmd.Parameters.AddWithValue("@itemQueryStat", item.QueryStat);
+                                reader = cmd.ExecuteReader();
+                                reader.Close();
+                                cmd.Parameters.Clear();
+                            }
+                        }
+                        else
+                        {
+                            foreach (string value in item.ValueItem)
+                            {
+                                sqlStatement = "INSERT INTO headeritemlist(HeaderItemId, List) VALUES (@currentItemID,@value); ";
+                                using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
+                                {
+                                    cmd.Parameters.AddWithValue("@currentItemID", currentItemID);
+                                    cmd.Parameters.AddWithValue("@value", value);
+                                    reader = cmd.ExecuteReader();
+                                    reader.Close();
+                                    cmd.Parameters.Clear();
+                                }
+                            }
                         }
                     }
-                }
 
-                foreach(int itemids in ints)
+                    foreach (int itemids in itemsID)
+                    {
+                        sqlStatement = "INSERT INTO headercontains(HeaderID,HeaderItemID) VALUES (@headID,@itemID);";
+                        using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
+                        {
+                            cmd.Parameters.AddWithValue("@headID", headID);
+                            cmd.Parameters.AddWithValue("@itemID", itemids);
+                            reader = cmd.ExecuteReader();
+                            reader.Close();
+                            cmd.Parameters.Clear();
+                        }
+                    }
+
+                    trans.Commit();
+                    _connection.Close();
+                }
+                catch (Exception genExp)
                 {
-                    sqlStatement = "INSERT INTO headercontains(HeaderID,HeaderItemID) VALUES ('" + headID + "','" + itemids + "');";
-                    cmd = new MySqlCommand(sqlStatement, _connection);
-                    reader = cmd.ExecuteReader();
-                    reader.Close();
+                    MessageBox.Show(genExp.Message);
+                    trans.Rollback();
+                    return false;
                 }
-
-                _connection.Close();
-            }
-            catch (Exception genExp)
-            {
-                MessageBox.Show(genExp.Message);
-                return false;
-            }
+            } //end transaction
 
             return true;
         }
