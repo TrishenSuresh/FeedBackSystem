@@ -3,6 +3,8 @@ using MySql.Data.MySqlClient;
 using System.Windows.Forms;
 using System.Data;
 using System;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace FeedBackSystem
 {
@@ -216,5 +218,43 @@ namespace FeedBackSystem
             return true;
         }
 
+        public Boolean VerifyPassword(string username, string password)
+        {
+            SHA256 sha256 = SHA256Managed.Create();
+
+            string sqlStatement = "SELECT concat(TRIM(FirstName),\".\",TRIM(LastName)) as username, reviewer.Password, Salt FROM feedbacksystem.reviewer where concat(TRIM(FirstName),\".\",TRIM(LastName)) like @Username";
+            _connection.Open();
+
+            using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
+            {
+                cmd.Parameters.AddWithValue("@Username", username);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                
+                if (reader.Read())
+                {
+                    byte[] bytes = Encoding.UTF8.GetBytes(password+reader["Salt"]);
+                    byte[] hash = sha256.ComputeHash(bytes);
+                    string convertedHash = Convert.ToBase64String(hash);
+            
+                    if (convertedHash.Equals(reader["Password"]))
+                    {
+                        _connection.Close();
+                        return true;
+                    }
+                    else
+                    {
+                        _connection.Close();
+                        return false;
+                    }
+                }
+                else
+                {
+                    _connection.Close();
+                    return false;
+                }
+
+            }
+
+        }
     }
 }

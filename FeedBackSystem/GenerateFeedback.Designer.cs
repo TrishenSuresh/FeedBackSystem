@@ -42,8 +42,8 @@
             this.AddSectionBtn = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.ContentTable = new System.Windows.Forms.TableLayoutPanel();
-            this.AddHeaderBtn = new System.Windows.Forms.Button();
             this.SectionTable = new System.Windows.Forms.TableLayoutPanel();
+            this.AddHeaderBtn = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.PDFPanel.SuspendLayout();
@@ -320,18 +320,9 @@
             this.ContentTable.Size = new System.Drawing.Size(594, 554);
             this.ContentTable.TabIndex = 7;
             // 
-            // AddHeaderBtn
-            // 
-            this.AddHeaderBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.AddHeaderBtn.Location = new System.Drawing.Point(3, 3);
-            this.AddHeaderBtn.Name = "AddHeaderBtn";
-            this.AddHeaderBtn.Size = new System.Drawing.Size(588, 82);
-            this.AddHeaderBtn.TabIndex = 0;
-            this.AddHeaderBtn.Text = "Add Header";
-            this.AddHeaderBtn.UseVisualStyleBackColor = true;
-            // 
             // SectionTable
             // 
+            this.SectionTable.AutoScroll = true;
             this.SectionTable.AutoScrollMinSize = new System.Drawing.Size(5, 0);
             this.SectionTable.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.SectionTable.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
@@ -344,6 +335,16 @@
             this.SectionTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.SectionTable.Size = new System.Drawing.Size(588, 460);
             this.SectionTable.TabIndex = 8;
+            // 
+            // AddHeaderBtn
+            // 
+            this.AddHeaderBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.AddHeaderBtn.Location = new System.Drawing.Point(3, 3);
+            this.AddHeaderBtn.Name = "AddHeaderBtn";
+            this.AddHeaderBtn.Size = new System.Drawing.Size(588, 82);
+            this.AddHeaderBtn.TabIndex = 0;
+            this.AddHeaderBtn.Text = "Add Header";
+            this.AddHeaderBtn.UseVisualStyleBackColor = true;
             // 
             // GenerateFeedback
             // 

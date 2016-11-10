@@ -8,7 +8,18 @@ namespace FeedBackSystem
         public MainForm()
         {
             InitializeComponent();
-            MainPanel.Controls.Add(new Home());
+            
+            
+            var result = new Login().ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                MainPanel.Controls.Add(new Home());
+            }
+            else
+            {
+                this.Close();
+            }
         }
 
         private void giveFeedbackToolStripMenuItem_Click(object sender, EventArgs e)

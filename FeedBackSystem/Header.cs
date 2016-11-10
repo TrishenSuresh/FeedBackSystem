@@ -19,7 +19,7 @@ namespace FeedBackSystem
             //Applicant's name item
             HeaderItem applicant = new HeaderItem("Applicant: ", "Query", "SELECT CONCAT(TRIM(firstname),' ',TRIM(lastname)) as title FROM applicant");
             HeaderItem job = new HeaderItem("Job applied: ", "Query", "SELECT name as title FROM positions");
-            HeaderItem reviewer = new HeaderItem("Reviewer: ", "Query", "SELECT CONCAT(TRIM(firstname),' ',TRIM(lastname)) as title FROM reviewer");
+            HeaderItem reviewer = new HeaderItem("Reviewer: ", "Text", Reviewer.ReviewerName);
             HeaderItem applicationType = new HeaderItem("Type: ", "Query", "SELECT name as title from applicationtype");
 
             this.HeaderItems = new List<HeaderItem>();

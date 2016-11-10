@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace FeedBackSystem
 {
-    class HeaderItem
+    public class HeaderItem
     {
         //private string id;
         //private string title;

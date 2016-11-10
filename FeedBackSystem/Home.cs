@@ -8,7 +8,8 @@ namespace FeedBackSystem
         public Home()
         {
             InitializeComponent();
-            welcome.Text = @"Welcome " + Environment.UserName;
+            welcome.Text = @"Welcome " + Reviewer.ReviewerName;
+            
         }
     }
 }

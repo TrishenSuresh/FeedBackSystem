@@ -15,7 +15,7 @@ namespace FeedBackSystem
             this.header = new Header();
             foreach (HeaderItem item in header.HeaderItems)
             {
-                HeaderTab.AddItem(new HeaderControls.List(item.Title,item.ValueItem));
+                HeaderTab.AddItem(item);
             }
         }
 
@@ -29,24 +29,11 @@ namespace FeedBackSystem
                 if (result == DialogResult.OK)
                 {
                     
-                    HeaderItem item = new HeaderItem(creator.Title,creator.InputType,creator.ValueItem);
+                    HeaderItem item = new HeaderItem(creator.Title+":",creator.InputType,creator.ValueItem);
                     header.addHeaderItem(item);
-                    
-                    switch (creator.InputType)
-                    {
-                        case "Text":
-                            HeaderTab.AddItem(new HeaderControls.Text(item.Title,item.ValueItem[0]));
-                            break;
-                        case "List":
-                            HeaderTab.AddItem(new HeaderControls.List(item.Title,item.ValueItem));
-                            break;
-                        
 
-                    }
-                    
-                    
-                   
-                   
+                    HeaderTab.AddItem(item);
+
                 }
             }
            
