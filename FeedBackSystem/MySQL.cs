@@ -120,6 +120,7 @@ namespace FeedBackSystem
             string headTitle = header.Title;
             string headDesc = header.Desc;
             List<HeaderItem> itemValues = header.HeaderItems;
+            bool success = true;
             
             _connection.Open();
 
@@ -130,6 +131,8 @@ namespace FeedBackSystem
                     string sqlStatement;
                     List<int> itemsID = new List<int>();
                     int headID;
+                    string duplicateMsg = "These items are duplicated: ";
+                    bool duplicateItem = false;
 
                     MySqlDataReader reader;
 
@@ -147,49 +150,76 @@ namespace FeedBackSystem
 
                     foreach (HeaderItem item in itemValues)
                     {
-                        int currentItemID;
-                        sqlStatement = "INSERT INTO headeritem(Title, InputType) VALUES (@itemTitle,@itemInputType); SELECT last_insert_id() as id;";
+                        int currentItemID = -1;
+                        duplicateItem = false;
+
+                        //check whether there is same header item (by name and type)
+                        sqlStatement = "SELECT HeaderItemID as id FROM headeritem WHERE Title = @itemTitle AND InputType = @itemInputType";
                         using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
                         {
                             cmd.Parameters.AddWithValue("@itemTitle", item.Title);
                             cmd.Parameters.AddWithValue("@itemInputType", item.InputType);
                             reader = cmd.ExecuteReader();
-                            //int id = Convert.ToInt16(cmd.ExecuteScalar().ToString());
-                            reader.Read();
-                            currentItemID = Convert.ToInt16(reader["id"]);
-                            itemsID.Add(currentItemID);
+                            if (reader.HasRows)
+                            {
+                                reader.Read();
+                                currentItemID = Convert.ToInt16(reader["id"]);
+                                itemsID.Add(currentItemID);
+                                duplicateItem = true;
+                            }
                             reader.Close();
                             cmd.Parameters.Clear();
                         }
 
-                        if (item.InputType.Equals("Query"))
+                        if (!duplicateItem)
                         {
-                            sqlStatement = "INSERT INTO headeritemlist(HeaderItemId, List) VALUES (@currentItemID,@itemQueryStat);";
+                            sqlStatement = "INSERT INTO headeritem(Title, InputType) VALUES (@itemTitle,@itemInputType); SELECT last_insert_id() as id;";
                             using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
                             {
-                                cmd.Parameters.AddWithValue("@currentItemID", currentItemID);
-                                cmd.Parameters.AddWithValue("@itemQueryStat", item.QueryStat);
+                                cmd.Parameters.AddWithValue("@itemTitle", item.Title);
+                                cmd.Parameters.AddWithValue("@itemInputType", item.InputType);
                                 reader = cmd.ExecuteReader();
+                                //int id = Convert.ToInt16(cmd.ExecuteScalar().ToString());
+                                reader.Read();
+                                currentItemID = Convert.ToInt16(reader["id"]);
+                                itemsID.Add(currentItemID);
                                 reader.Close();
                                 cmd.Parameters.Clear();
                             }
-                        }
-                        else
-                        {
-                            foreach (string value in item.ValueItem)
+                        
+                            if (item.InputType.Equals("Query"))
                             {
-                                sqlStatement = "INSERT INTO headeritemlist(HeaderItemId, List) VALUES (@currentItemID,@value); ";
+                                sqlStatement = "INSERT INTO headeritemlist(HeaderItemId, List) VALUES (@currentItemID,@itemQueryStat);";
                                 using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
                                 {
                                     cmd.Parameters.AddWithValue("@currentItemID", currentItemID);
-                                    cmd.Parameters.AddWithValue("@value", value);
+                                    cmd.Parameters.AddWithValue("@itemQueryStat", item.QueryStat);
                                     reader = cmd.ExecuteReader();
                                     reader.Close();
                                     cmd.Parameters.Clear();
                                 }
                             }
+                            else
+                            {
+                                foreach (string value in item.ValueItem)
+                                {
+                                    sqlStatement = "INSERT INTO headeritemlist(HeaderItemId, List) VALUES (@currentItemID,@value); ";
+                                    using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
+                                    {
+                                        cmd.Parameters.AddWithValue("@currentItemID", currentItemID);
+                                        cmd.Parameters.AddWithValue("@value", value);
+                                        reader = cmd.ExecuteReader();
+                                        reader.Close();
+                                        cmd.Parameters.Clear();
+                                    }
+                                }
+                            }
+                        } //end if no duplicate 
+                        else
+                        {
+                            duplicateMsg += "\n" + item.Title;
                         }
-                    }
+                    } //end for each items
 
                     foreach (int itemids in itemsID)
                     {
@@ -202,20 +232,28 @@ namespace FeedBackSystem
                             reader.Close();
                             cmd.Parameters.Clear();
                         }
+                    } //end for each header to item
+
+                    if (duplicateItem)
+                    {
+                        MessageBox.Show(duplicateMsg);
                     }
 
                     trans.Commit();
-                    _connection.Close();
                 }
                 catch (Exception genExp)
                 {
-                    MessageBox.Show(genExp.Message);
                     trans.Rollback();
-                    return false;
+                    MessageBox.Show(genExp.Message);
+                    success = false;
+                }
+                finally
+                {
+                    _connection.Close();
                 }
             } //end transaction
 
-            return true;
+            return success;
         }
 
         public Boolean VerifyPassword(string username, string password)

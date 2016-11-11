@@ -29,6 +29,7 @@ namespace FeedBackSystem
                 case "Text":
                     
                     TextBox text = new TextBox { Anchor = AnchorStyles.Left | AnchorStyles.Right};
+                    text.Text = itemType.ValueItem[0];
                     HeaderTable.Controls.Add(text, _column[_counter]+1,_row);
                     HeaderTable.SetColumnSpan(text, 3);
                     break;
