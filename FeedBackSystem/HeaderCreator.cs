@@ -51,8 +51,11 @@ namespace FeedBackSystem
                     header.Desc = box.headerDesc;
 
                     MySql sql = new MySql();
-                    if (sql.saveHeader(header))
+                    sql.OpenConnection();
+                    if (sql.SaveHeader(header))
                         MessageBox.Show("Sucessfully inserted into the database");
+
+                    sql.CloseConnection();
                 }
             }
         }

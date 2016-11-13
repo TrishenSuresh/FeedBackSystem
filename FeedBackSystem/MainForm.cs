@@ -8,8 +8,8 @@ namespace FeedBackSystem
         public MainForm()
         {
             InitializeComponent();
-            
-            
+
+
             var result = new Login().ShowDialog();
 
             if (result == DialogResult.OK)

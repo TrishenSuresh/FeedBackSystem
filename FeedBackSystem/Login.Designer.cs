@@ -34,7 +34,11 @@
             this.username = new System.Windows.Forms.TextBox();
             this.password = new System.Windows.Forms.TextBox();
             this.loginBtn = new System.Windows.Forms.Button();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.UsernameHelp = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.UsernameHelp)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -51,6 +55,7 @@
             this.tableLayoutPanel1.Controls.Add(this.username, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.password, 2, 2);
             this.tableLayoutPanel1.Controls.Add(this.loginBtn, 4, 3);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 5, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -116,6 +121,32 @@
             this.loginBtn.UseVisualStyleBackColor = true;
             this.loginBtn.Click += new System.EventHandler(this.loginBtn_Click);
             // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.78378F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 66.21622F));
+            this.tableLayoutPanel2.Controls.Add(this.UsernameHelp, 0, 0);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(383, 40);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 1;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(74, 31);
+            this.tableLayoutPanel2.TabIndex = 5;
+            // 
+            // UsernameHelp
+            // 
+            this.UsernameHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.UsernameHelp.Location = new System.Drawing.Point(3, 3);
+            this.UsernameHelp.Name = "UsernameHelp";
+            this.UsernameHelp.Size = new System.Drawing.Size(18, 25);
+            this.UsernameHelp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.UsernameHelp.TabIndex = 0;
+            this.UsernameHelp.TabStop = false;
+            this.UsernameHelp.Click += new System.EventHandler(this.UsernameHelp_Click);
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -128,6 +159,8 @@
             this.Text = "Login";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.tableLayoutPanel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.UsernameHelp)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -140,5 +173,7 @@
         private System.Windows.Forms.TextBox username;
         private System.Windows.Forms.TextBox password;
         private System.Windows.Forms.Button loginBtn;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.PictureBox UsernameHelp;
     }
 }

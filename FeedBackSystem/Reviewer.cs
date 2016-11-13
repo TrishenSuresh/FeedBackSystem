@@ -8,14 +8,8 @@ namespace FeedBackSystem
 {
     static class Reviewer
     {
-        private static string _reviewerName = "";
-
-        public static string ReviewerName
-        {
-            get { return _reviewerName; }
-            set { _reviewerName = value; }
-        }
-        
+        public static string Name { get; set; }
+        public static int Id { get; set; }
 
     }
 }

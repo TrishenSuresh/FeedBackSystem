@@ -116,12 +116,6 @@
     <Compile Include="HeaderItemCreator.Designer.cs">
       <DependentUpon>HeaderItemCreator.cs</DependentUpon>
     </Compile>
-    <Compile Include="HeadItemCreator.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="HeadItemCreator.Designer.cs">
-      <DependentUpon>HeadItemCreator.cs</DependentUpon>
-    </Compile>
     <Compile Include="Home.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -140,6 +134,12 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MoreInfoHeader.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MoreInfoHeader.Designer.cs">
+      <DependentUpon>MoreInfoHeader.cs</DependentUpon>
+    </Compile>
     <Compile Include="MySQL.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -155,6 +155,12 @@
     </Compile>
     <Compile Include="Section.Designer.cs">
       <DependentUpon>Section.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SelectHeader.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SelectHeader.Designer.cs">
+      <DependentUpon>SelectHeader.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="GenerateFeedback.resx">
       <DependentUpon>GenerateFeedback.cs</DependentUpon>
@@ -189,9 +195,6 @@
     <EmbeddedResource Include="HeaderItemCreator.resx">
       <DependentUpon>HeaderItemCreator.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="HeadItemCreator.resx">
-      <DependentUpon>HeadItemCreator.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Home.resx">
       <DependentUpon>Home.cs</DependentUpon>
     </EmbeddedResource>
@@ -200,6 +203,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MoreInfoHeader.resx">
+      <DependentUpon>MoreInfoHeader.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -215,6 +221,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Section.resx">
       <DependentUpon>Section.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SelectHeader.resx">
+      <DependentUpon>SelectHeader.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

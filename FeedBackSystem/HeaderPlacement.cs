@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace FeedBackSystem
@@ -7,7 +8,7 @@ namespace FeedBackSystem
     {
 
         private int _row;
-        private readonly int[] _column = { 1, 6, 11 };
+        private readonly int[] _column = {1, 6, 11};
         private int _counter;
 
         public HeaderPlacement()
@@ -20,15 +21,17 @@ namespace FeedBackSystem
         public void AddItem(HeaderItem itemType)
         {
 
-            RowStyle style = new RowStyle { SizeType = SizeType.AutoSize };
+            try
+            {
 
-            HeaderTable.Controls.Add(new Label {Text = itemType.Title,Anchor = AnchorStyles.Left}, _column[_counter], _row);
+
+            HeaderTable.Controls.Add(new Label {Text = itemType.Title,Anchor = AnchorStyles.Left, TextAlign = ContentAlignment.MiddleLeft, AutoSize = true}, _column[_counter], _row);
 
             switch (itemType.InputType)
             {
                 case "Text":
                     
-                    TextBox text = new TextBox { Anchor = AnchorStyles.Left | AnchorStyles.Right};
+                    TextBox text = new TextBox { Anchor = AnchorStyles.Left | AnchorStyles.Right, AutoSize = true };
                     text.Text = itemType.ValueItem[0];
                     HeaderTable.Controls.Add(text, _column[_counter]+1,_row);
                     HeaderTable.SetColumnSpan(text, 3);
@@ -39,7 +42,8 @@ namespace FeedBackSystem
                     ComboBox list = new ComboBox
                     {
                         DropDownStyle = ComboBoxStyle.DropDownList,
-                        Anchor = AnchorStyles.Left | AnchorStyles.Right
+                        Anchor = AnchorStyles.Left | AnchorStyles.Right,
+                        AutoSize = true
                     };
 
                     foreach (string s in itemType.ValueItem)
@@ -57,7 +61,8 @@ namespace FeedBackSystem
                     ComboBox listQuery = new ComboBox
                     {
                         DropDownStyle = ComboBoxStyle.DropDownList,
-                        Anchor = AnchorStyles.Left | AnchorStyles.Right
+                        Anchor = AnchorStyles.Left | AnchorStyles.Right,
+                        AutoSize = true
                     };
 
 
@@ -90,7 +95,8 @@ namespace FeedBackSystem
                         Value = time,
                         Format = DateTimePickerFormat.Custom,
                         CustomFormat = @"dd/MM/yyyy",
-                        Anchor = AnchorStyles.Left | AnchorStyles.Right
+                        Anchor = AnchorStyles.Left | AnchorStyles.Right,
+                        AutoSize = true
                     };
 
                     HeaderTable.Controls.Add(date, _column[_counter] + 1, _row);
@@ -100,26 +106,31 @@ namespace FeedBackSystem
 
                 case "Label":
 
-                    Label label = new Label {Anchor = AnchorStyles.Left};
+                    Label label = new Label {Text = itemType.ValueItem[0], TextAlign = ContentAlignment.BottomLeft, Anchor = AnchorStyles.Left, AutoSize = true};
                     HeaderTable.Controls.Add(label, _column[_counter] + 1, _row);
                     HeaderTable.SetColumnSpan(label,3);
 
                     break;
+
             }
             
             if (_counter >= 2)
             {
+                this.HeaderTable.RowStyles.Add(new RowStyle(SizeType.Absolute,30));
                 _counter = 0;
-                HeaderTable.RowStyles.Add(style);
-                
                 _row++;
             }
             else
             {
                 _counter++;
             }
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(Ex.Message);
+            }
 
-            
+
         }
     }
 }

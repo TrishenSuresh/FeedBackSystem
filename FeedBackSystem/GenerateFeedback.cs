@@ -65,5 +65,39 @@ namespace FeedBackSystem
                 }
             }
         }
+
+        private void AddHeaderBtn_Click(object sender, EventArgs e)
+        {
+            
+
+            using (SelectHeader form = new SelectHeader())
+            {
+                var result = form.ShowDialog();
+
+                if (result == DialogResult.OK)
+                {
+
+                    Header selectedHeader = form.Header;
+
+                    HeaderPlacement place = new HeaderPlacement();
+
+                    foreach (HeaderItem item in selectedHeader.HeaderItems)
+                    {
+                        place.AddItem(item);
+                    }
+
+                    ContentTable.Controls.Remove(AddHeaderBtn);
+                    ContentTable.Controls.Add(place, 0, 0);
+                }
+            }
+
+
+               
+        }
+
+        private void ChangeHeader_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

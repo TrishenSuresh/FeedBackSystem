@@ -50,8 +50,8 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 5, 7);
             this.tableLayoutPanel1.Controls.Add(this.HeaderTab, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 5, 9);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -66,33 +66,33 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1057, 488);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1092, 386);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 3;
             this.tableLayoutPanel1.SetColumnSpan(this.tableLayoutPanel2, 4);
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 44.3609F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 55.6391F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 139F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 202F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 82F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 146F));
             this.tableLayoutPanel2.Controls.Add(this.AddItemBtn, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.SaveHeaderBtn, 2, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(528, 435);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(548, 269);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 72F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 28F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(414, 50);
-            this.tableLayoutPanel2.TabIndex = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(430, 32);
+            this.tableLayoutPanel2.TabIndex = 3;
             // 
             // AddItemBtn
             // 
-            this.AddItemBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.AddItemBtn.Location = new System.Drawing.Point(124, 3);
+            this.AddItemBtn.AutoSize = true;
+            this.AddItemBtn.Location = new System.Drawing.Point(205, 3);
             this.AddItemBtn.Name = "AddItemBtn";
-            this.AddItemBtn.Size = new System.Drawing.Size(147, 30);
+            this.AddItemBtn.Size = new System.Drawing.Size(59, 23);
             this.AddItemBtn.TabIndex = 1;
             this.AddItemBtn.Text = "Add Item";
             this.AddItemBtn.UseVisualStyleBackColor = true;
@@ -100,10 +100,10 @@
             // 
             // SaveHeaderBtn
             // 
-            this.SaveHeaderBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SaveHeaderBtn.Location = new System.Drawing.Point(277, 3);
+            this.SaveHeaderBtn.AutoSize = true;
+            this.SaveHeaderBtn.Location = new System.Drawing.Point(287, 3);
             this.SaveHeaderBtn.Name = "SaveHeaderBtn";
-            this.SaveHeaderBtn.Size = new System.Drawing.Size(134, 30);
+            this.SaveHeaderBtn.Size = new System.Drawing.Size(136, 23);
             this.SaveHeaderBtn.TabIndex = 2;
             this.SaveHeaderBtn.Text = "Save Header";
             this.SaveHeaderBtn.UseVisualStyleBackColor = true;
@@ -117,23 +117,24 @@
             this.HeaderTab.AutoScroll = true;
             this.HeaderTab.BackColor = System.Drawing.SystemColors.Control;
             this.tableLayoutPanel1.SetColumnSpan(this.HeaderTab, 8);
-            this.HeaderTab.Location = new System.Drawing.Point(121, 64);
+            this.HeaderTab.Location = new System.Drawing.Point(125, 54);
             this.HeaderTab.Margin = new System.Windows.Forms.Padding(16);
             this.HeaderTab.Name = "HeaderTab";
-            this.tableLayoutPanel1.SetRowSpan(this.HeaderTab, 7);
-            this.HeaderTab.Size = new System.Drawing.Size(808, 304);
+            this.tableLayoutPanel1.SetRowSpan(this.HeaderTab, 5);
+            this.HeaderTab.Size = new System.Drawing.Size(840, 158);
             this.HeaderTab.TabIndex = 1;
             // 
             // HeaderCreator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1057, 488);
+            this.ClientSize = new System.Drawing.Size(1092, 386);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "HeaderCreator";
             this.Text = "Create Header";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
 
         }

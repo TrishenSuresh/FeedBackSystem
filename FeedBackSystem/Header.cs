@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FeedBackSystem
 {
-    class Header
+    public class Header
     {
         public string HeaderID { get; set; }
         public string Title { get; set; }
@@ -19,7 +19,7 @@ namespace FeedBackSystem
             //Applicant's name item
             HeaderItem applicant = new HeaderItem("Applicant:", "Query", "SELECT CONCAT(TRIM(firstname),' ',TRIM(lastname)) as title FROM applicant");
             HeaderItem job = new HeaderItem("Job applied:", "Query", "SELECT name as title FROM positions");
-            HeaderItem reviewer = new HeaderItem("Reviewer:", "Text", Reviewer.ReviewerName);
+            HeaderItem reviewer = new HeaderItem("Reviewer:", "Label", Reviewer.Name);
             HeaderItem applicationType = new HeaderItem("Type:", "Query", "SELECT name as title from applicationtype");
 
             this.HeaderItems = new List<HeaderItem>();
@@ -27,6 +27,14 @@ namespace FeedBackSystem
             HeaderItems.Add(job);
             HeaderItems.Add(reviewer);
             HeaderItems.Add(applicationType);
+        }
+
+        public Header(string Id, string Title, string Desc)
+        {
+            this.HeaderItems = new List<HeaderItem>();
+            this.HeaderID = Id;
+            this.Title = Title;
+            this.Desc = Desc;
         }
 
         public void addHeaderItem(HeaderItem item)
