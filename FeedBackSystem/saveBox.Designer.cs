@@ -89,7 +89,7 @@
             this.CancelBtn.UseVisualStyleBackColor = true;
             this.CancelBtn.Click += new System.EventHandler(this.CancelBtn_Click);
             // 
-            // saveBox
+            // SaveBox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 29F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -100,8 +100,8 @@
             this.Controls.Add(this.titleText);
             this.Controls.Add(this.descLabel);
             this.Controls.Add(this.titleLabel);
-            this.Name = "saveBox";
-            this.Text = "saveBox";
+            this.Name = "SaveBox";
+            this.Text = "Save As...";
             this.ResumeLayout(false);
             this.PerformLayout();
 

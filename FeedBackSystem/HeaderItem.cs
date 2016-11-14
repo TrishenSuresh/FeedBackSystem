@@ -7,18 +7,12 @@ namespace FeedBackSystem
 {
     public class HeaderItem
     {
-        //private string id;
-        //private string title;
-        //private string inputType;
-        //private string valueChosen;
-        //private List<string> valueItems;
-
         public string Id { get; set; }
         public string Title { get; set; }
         public string InputType { get; set; }
         public string ValueChosen { get; set; }
         public List<string> ValueItem { get; set; }
-        public string QueryStat;
+        public string QueryStat { get; set; }
 
         public HeaderItem() { }
 

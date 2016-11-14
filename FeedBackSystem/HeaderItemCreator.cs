@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace FeedBackSystem
@@ -17,6 +18,8 @@ namespace FeedBackSystem
         {
             InitializeComponent();
             InputTypeList.SelectedIndex = 0;
+
+            InputTypeHelp.Image = new Icon(SystemIcons.Question, 32, 32).ToBitmap();
         }
 
 
@@ -29,6 +32,7 @@ namespace FeedBackSystem
             switch (selectedInputType)
             {
                 case "Text":
+                case "Label":
                     InputControlPanel.Controls.Add(new HeaderCreatorControls.Text());
                     break;
                 case "Date":
@@ -60,6 +64,7 @@ namespace FeedBackSystem
                 switch (InputType)
                 {
                     case "Text":
+                    case "Label":
                         HeaderCreatorControls.Text text = (HeaderCreatorControls.Text)InputControlPanel.Controls[0];
                         ValueItem.Add(text.GetValue());
                         break;
@@ -90,6 +95,15 @@ namespace FeedBackSystem
             
         }
 
-        
+        private void InputTypeHelp_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Input Type descriptions:\n" +
+                "\tText: Free flow input during generating feedback. \n" +
+                "\tLabel: Static input during header creation. \n" +
+                "\tDate: Could be manual date or data retrieved from database. \n" +
+                "\tList: User-defined list of items. \n" +
+                "\tQuery: List of data that will be retrieved from the database. \n"
+                , @"What input type?");
+        }
     }
 }

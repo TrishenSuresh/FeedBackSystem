@@ -28,8 +28,15 @@ namespace FeedBackSystem
 
                 if (result == DialogResult.OK)
                 {
-                    
-                    HeaderItem item = new HeaderItem(creator.Title+":",creator.InputType,creator.ValueItem);
+                    HeaderItem item;
+                    if (creator.ValueItem.Count > 1)
+                    {
+                        item = new HeaderItem(creator.Title + ":", creator.InputType, creator.ValueItem);
+                    }
+                    else
+                    {
+                        item = new HeaderItem(creator.Title + ":", creator.InputType, creator.ValueItem[0]);
+                    }
                     header.addHeaderItem(item);
 
                     HeaderTab.AddItem(item);
@@ -57,7 +64,11 @@ namespace FeedBackSystem
 
                     sql.CloseConnection();
                 }
-            }
+            } //using savebox
+
+            //after the saving is done, go back to the home page showing the list of available headers
+            this.DialogResult = DialogResult.OK;
+            this.Close();
         }
     }
 }

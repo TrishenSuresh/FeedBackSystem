@@ -164,7 +164,7 @@
             this.ClientSize = new System.Drawing.Size(601, 542);
             this.Controls.Add(this.MainTable);
             this.Name = "SelectHeader";
-            this.Text = "SelectHeader";
+            this.Text = "Select Header";
             this.MainTable.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();

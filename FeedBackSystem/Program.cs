@@ -13,7 +13,13 @@ namespace FeedBackSystem
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            try { 
+                Application.Run(new MainForm());
+            }
+            catch (Exception Ex)
+            {
+                Application.Exit();
+            }
         }
     }
 }

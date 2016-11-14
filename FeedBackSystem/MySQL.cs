@@ -218,6 +218,7 @@ namespace FeedBackSystem
                     da.Fill(dataTable);
                 }
 
+                //each header item
                 foreach (DataRow row in dataTable.Rows)
                 {
                     List<string> list = GetHeaderList(row["HeaderItemID"].ToString());
@@ -247,7 +248,6 @@ namespace FeedBackSystem
             string headDesc = header.Desc;
             List<HeaderItem> itemValues = header.HeaderItems;
             bool success = true;
-            
 
             using (MySqlTransaction trans = _connection.BeginTransaction())
             {

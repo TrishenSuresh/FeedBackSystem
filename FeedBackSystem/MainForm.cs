@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Windows.Forms;
 
 namespace FeedBackSystem
@@ -34,8 +35,25 @@ namespace FeedBackSystem
             using (HeaderCreator creator = new HeaderCreator())
             {
                 creator.ShowDialog();
-            }
+                if (creator.DialogResult == DialogResult.OK)
+                {
+                    MainPanel.Controls.Clear();
 
-        }
+                    MySql sql = new MySql();
+                    sql.OpenConnection();
+                    DataTable headerDt = sql.GetDataSet("SELECT * FROM feedbacksystem.header");
+                    headerDt.Columns["HeaderId"].ColumnName = "Header ID";
+                    headerDt.Columns["Desc"].ColumnName = "Description";
+
+                    DataGridView headerDgv = new DataGridView { Dock = DockStyle.Fill };
+                    headerDgv.DataSource = headerDt;
+                    headerDgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                    
+                    MainPanel.Controls.Add(headerDgv);
+
+                    sql.CloseConnection();
+                }
+            } //end using header creator
+        } //end header tool strip
     }
 }

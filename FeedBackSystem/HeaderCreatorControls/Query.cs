@@ -19,7 +19,17 @@ namespace FeedBackSystem.HeaderCreatorControls
 
         public string GetValue()
         {
-            return QueryList.Text;
+            string sqlStatement = "";
+            switch (QueryList.Text)
+            {
+                case "Applicant - Email":
+                    sqlStatement = "SELECT Email as title FROM applicant";
+                    break;
+                case "Application Status":
+                    sqlStatement = "SELECT StatusTitle as title FROM applicationstatus";
+                    break;
+            }
+            return sqlStatement;
         }
     }
 }

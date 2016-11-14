@@ -39,7 +39,7 @@ namespace FeedBackSystem
             ContentTable.Padding = new Padding(0, 0, SystemInformation.VerticalScrollBarWidth, 0);
             SectionTable.RowStyles.Add(style);
 
-            Section usercontrol = new Section();
+            SectionPlacement usercontrol = new SectionPlacement();
 
             SectionTable.Controls.Add(usercontrol, 0, SectionTable.RowCount - 1);
             SectionTable.ScrollControlIntoView(usercontrol);

@@ -61,24 +61,6 @@
     <Compile Include="HeaderPlacement.designer.cs">
       <DependentUpon>HeaderPlacement.cs</DependentUpon>
     </Compile>
-    <Compile Include="HeaderControls\Date.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="HeaderControls\Date.Designer.cs">
-      <DependentUpon>Date.cs</DependentUpon>
-    </Compile>
-    <Compile Include="HeaderControls\List.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="HeaderControls\List.Designer.cs">
-      <DependentUpon>List.cs</DependentUpon>
-    </Compile>
-    <Compile Include="HeaderControls\Text.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="HeaderControls\Text.Designer.cs">
-      <DependentUpon>Text.cs</DependentUpon>
-    </Compile>
     <Compile Include="HeaderCreator.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -150,11 +132,12 @@
     <Compile Include="SaveBox.Designer.cs">
       <DependentUpon>SaveBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Section.cs">
+    <Compile Include="Section.cs" />
+    <Compile Include="SectionPlacement.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Section.Designer.cs">
-      <DependentUpon>Section.cs</DependentUpon>
+    <Compile Include="SectionPlacement.Designer.cs">
+      <DependentUpon>SectionPlacement.cs</DependentUpon>
     </Compile>
     <Compile Include="SelectHeader.cs">
       <SubType>Form</SubType>
@@ -167,15 +150,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="HeaderPlacement.resx">
       <DependentUpon>HeaderPlacement.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="HeaderControls\Date.resx">
-      <DependentUpon>Date.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="HeaderControls\List.resx">
-      <DependentUpon>List.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="HeaderControls\Text.resx">
-      <DependentUpon>Text.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="HeaderCreator.resx">
       <DependentUpon>HeaderCreator.cs</DependentUpon>
@@ -219,8 +193,8 @@
     <EmbeddedResource Include="SaveBox.resx">
       <DependentUpon>SaveBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Section.resx">
-      <DependentUpon>Section.cs</DependentUpon>
+    <EmbeddedResource Include="SectionPlacement.resx">
+      <DependentUpon>SectionPlacement.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SelectHeader.resx">
       <DependentUpon>SelectHeader.cs</DependentUpon>

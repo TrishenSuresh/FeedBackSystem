@@ -1,12 +1,18 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace FeedBackSystem
 {
-    public partial class Section : UserControl
+    public class Section
     {
-        public Section()
-        {
-            InitializeComponent();
-        }
+        public string SectionId { get; set; }
+        public string Title { get; set; }
+        public List<string> Codes { get; set; }
+        public string Comment { get; set; }
+        
+
     }
 }

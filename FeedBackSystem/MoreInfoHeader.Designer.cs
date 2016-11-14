@@ -70,7 +70,7 @@
             this.Controls.Add(this.Close);
             this.Controls.Add(this.HeaderPlace);
             this.Name = "MoreInfoHeader";
-            this.Text = "MoreInfoHeader";
+            this.Text = "More Info...";
             this.ResumeLayout(false);
             this.PerformLayout();
 

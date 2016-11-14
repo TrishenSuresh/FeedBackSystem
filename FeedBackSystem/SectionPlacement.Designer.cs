@@ -1,6 +1,6 @@
 ﻿namespace FeedBackSystem
 {
-    partial class Section
+    partial class SectionPlacement
     {
         /// <summary> 
         /// Required designer variable.
