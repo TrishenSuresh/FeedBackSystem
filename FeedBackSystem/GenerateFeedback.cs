@@ -88,6 +88,8 @@ namespace FeedBackSystem
 
                     ContentTable.Controls.Remove(AddHeaderBtn);
                     ContentTable.Controls.Add(place, 0, 0);
+
+                    ChangeHeader.Visible = true;
                 }
             }
 
@@ -97,7 +99,25 @@ namespace FeedBackSystem
 
         private void ChangeHeader_Click(object sender, EventArgs e)
         {
+            using (SelectHeader form = new SelectHeader())
+            {
+                var result = form.ShowDialog();
 
+                if (result == DialogResult.OK)
+                {
+                    HeaderPlacement place = new HeaderPlacement();
+
+                    ContentTable.Controls.Remove(ContentTable.GetControlFromPosition(0, 0));
+
+                    foreach (HeaderItem item in form.Header.HeaderItems)
+                    {
+                        place.AddItem(item);
+                    }
+
+                    ContentTable.Controls.Add(place, 0, 0);
+                }
+            }
+                
         }
     }
 }

@@ -66,9 +66,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ControlDark;
             this.Controls.Add(this.HeaderTable);
             this.Name = "HeaderPlacement";
-            this.Size = new System.Drawing.Size(959, 183);
+            this.Size = new System.Drawing.Size(959, 124);
             this.ResumeLayout(false);
 
         }
