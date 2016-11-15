@@ -71,7 +71,7 @@ namespace FeedBackSystem
                         HeaderCreatorControls.Text label = (HeaderCreatorControls.Text)InputControlPanel.Controls[0];
                         if(label.GetValue().Length == 0)
                         {
-                            throw new Exception("Label test must not be empty!");
+                            throw new Exception("Label text must not be empty!");
                         }
                         ValueItem.Add(label.GetValue());
                         break;

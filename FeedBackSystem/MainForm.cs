@@ -59,8 +59,8 @@ namespace FeedBackSystem
         private void headerToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             MainPanel.Controls.Clear();
-            HeaderDisplay headerDisplay = new HeaderDisplay{ Dock = DockStyle.Fill };
-            MainPanel.Controls.Add(headerDisplay);
+            DisplayControl display = new DisplayControl("Header") { Dock = DockStyle.Fill };
+            MainPanel.Controls.Add(display);
         }
     }
 }

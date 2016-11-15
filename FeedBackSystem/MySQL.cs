@@ -258,6 +258,7 @@ namespace FeedBackSystem
                     int headId;
                     string duplicateMsg = "These items are duplicated: ";
                     bool duplicateItem = false;
+                    bool extraDuplicateItem = false;
 
                     MySqlDataReader reader;
 
@@ -342,7 +343,12 @@ namespace FeedBackSystem
                         } //end if no duplicate 
                         else
                         {
-                            duplicateMsg += "\n" + item.Title;
+                            if (!item.Title.Equals("Applicant:") && !item.Title.Equals("Job applied:") &&
+                                !item.Title.Equals("Reviewer:") && !item.Title.Equals("Type:"))
+                            {
+                                duplicateMsg += "\n" + item.Title;
+                                extraDuplicateItem = true;
+                            }
                         }
                     } //end for each items
 
@@ -359,9 +365,17 @@ namespace FeedBackSystem
                         }
                     } //end for each header to item
 
-                    if (duplicateItem)
+                    if (extraDuplicateItem)
                     {
-                        MessageBox.Show(duplicateMsg);
+                        var confirmResult = MessageBox.Show(duplicateMsg + 
+                            "\nClick Yes to save another copy, No to edit" , 
+                            "Are you sure?", 
+                            MessageBoxButtons.YesNo);
+
+                        if(confirmResult != DialogResult.Yes)
+                        {
+                            return false;
+                        }
                     }
 
                     trans.Commit();
