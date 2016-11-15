@@ -54,6 +54,12 @@
     <Compile Include="DeleteBox.Designer.cs">
       <DependentUpon>DeleteBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="DisplayControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DisplayControl.Designer.cs">
+      <DependentUpon>DisplayControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="GenerateFeedback.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -61,12 +67,6 @@
       <DependentUpon>GenerateFeedback.cs</DependentUpon>
     </Compile>
     <Compile Include="Header.cs" />
-    <Compile Include="HeaderDisplay.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="HeaderDisplay.Designer.cs">
-      <DependentUpon>HeaderDisplay.cs</DependentUpon>
-    </Compile>
     <Compile Include="HeaderPlacement.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -160,11 +160,11 @@
     <EmbeddedResource Include="DeleteBox.resx">
       <DependentUpon>DeleteBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DisplayControl.resx">
+      <DependentUpon>DisplayControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GenerateFeedback.resx">
       <DependentUpon>GenerateFeedback.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="HeaderDisplay.resx">
-      <DependentUpon>HeaderDisplay.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="HeaderPlacement.resx">
       <DependentUpon>HeaderPlacement.cs</DependentUpon>

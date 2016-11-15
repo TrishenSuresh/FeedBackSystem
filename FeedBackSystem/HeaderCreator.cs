@@ -62,6 +62,8 @@ namespace FeedBackSystem
                     sql.OpenConnection();
                     if (sql.SaveHeader(header))
                         MessageBox.Show("Sucessfully inserted into the database");
+                    else
+                        return;
 
                     sql.CloseConnection();
                 }
