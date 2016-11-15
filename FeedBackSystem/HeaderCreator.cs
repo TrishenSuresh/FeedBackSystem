@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using System.Collections.Generic;
 using FeedBackSystem.HeaderCreatorControls;
 
 namespace FeedBackSystem
@@ -69,6 +70,33 @@ namespace FeedBackSystem
             //after the saving is done, go back to the home page showing the list of available headers
             this.DialogResult = DialogResult.OK;
             this.Close();
+        }
+
+        private void DeleteItemBtn_Click(object sender, EventArgs e)
+        {
+            List<int> indexs = new List<int>();
+            List<string> names = new List<string>();
+            int count = header.HeaderItems.Count;
+            for(int x = 4; x < count; x++)
+            {
+                indexs.Add(x+1);
+                names.Add(header.HeaderItems[x].Title);
+            }
+
+            using (DeleteBox box = new DeleteBox(indexs,names))
+            {
+                var result = box.ShowDialog();
+
+                if (result == DialogResult.OK)
+                {
+                    header.removeHeaderItem(box.deleteIndex-1);
+                    HeaderTab.ResetTable();
+                    foreach(HeaderItem items in header.HeaderItems)
+                    {
+                        HeaderTab.AddItem(items);
+                    }
+                }
+            } //using deletebox
         }
     }
 }

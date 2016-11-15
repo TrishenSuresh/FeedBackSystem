@@ -27,10 +27,12 @@ namespace FeedBackSystem.HeaderCreatorControls
                     {
                         return "Manual";
                     }
+                    else
+                    {
+                        throw new System.Exception("You have to make a selection!");
+                    }
                 }
             }
-
-            return null;
         }
     }
 }

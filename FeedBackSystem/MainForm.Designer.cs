@@ -42,6 +42,7 @@
             this.reportIssueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.creatorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainPanel = new System.Windows.Forms.Panel();
+            this.headerToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -51,7 +52,7 @@
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 1.435897F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 98.5641F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 27F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel1.Controls.Add(this.menuStrip1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.MainPanel, 1, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -84,7 +85,8 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addToolStripMenuItem});
+            this.addToolStripMenuItem,
+            this.headerToolStripMenuItem1});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(78, 40);
             this.fileToolStripMenuItem.Text = "Review";
@@ -96,26 +98,26 @@
             this.headerToolStripMenuItem,
             this.sectionToolStripMenuItem});
             this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(131, 30);
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
             this.addToolStripMenuItem.Text = "Add";
             // 
             // templateToolStripMenuItem
             // 
             this.templateToolStripMenuItem.Name = "templateToolStripMenuItem";
-            this.templateToolStripMenuItem.Size = new System.Drawing.Size(168, 30);
+            this.templateToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
             this.templateToolStripMenuItem.Text = "Template";
             // 
             // headerToolStripMenuItem
             // 
             this.headerToolStripMenuItem.Name = "headerToolStripMenuItem";
-            this.headerToolStripMenuItem.Size = new System.Drawing.Size(168, 30);
+            this.headerToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
             this.headerToolStripMenuItem.Text = "Header";
             this.headerToolStripMenuItem.Click += new System.EventHandler(this.headerToolStripMenuItem_Click);
             // 
             // sectionToolStripMenuItem
             // 
             this.sectionToolStripMenuItem.Name = "sectionToolStripMenuItem";
-            this.sectionToolStripMenuItem.Size = new System.Drawing.Size(168, 30);
+            this.sectionToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
             this.sectionToolStripMenuItem.Text = "Section";
             // 
             // feedbackToolStripMenuItem
@@ -169,8 +171,15 @@
             this.MainPanel.Location = new System.Drawing.Point(30, 51);
             this.MainPanel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MainPanel.Name = "MainPanel";
-            this.MainPanel.Size = new System.Drawing.Size(1784, 969);
+            this.MainPanel.Size = new System.Drawing.Size(1783, 969);
             this.MainPanel.TabIndex = 1;
+            // 
+            // headerToolStripMenuItem1
+            // 
+            this.headerToolStripMenuItem1.Name = "headerToolStripMenuItem1";
+            this.headerToolStripMenuItem1.Size = new System.Drawing.Size(211, 30);
+            this.headerToolStripMenuItem1.Text = "Header";
+            this.headerToolStripMenuItem1.Click += new System.EventHandler(this.headerToolStripMenuItem1_Click);
             // 
             // MainForm
             // 
@@ -207,6 +216,7 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reportIssueToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem creatorsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem headerToolStripMenuItem1;
     }
 }
 

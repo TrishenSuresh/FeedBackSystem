@@ -28,6 +28,8 @@ namespace FeedBackSystem.HeaderCreatorControls
                 case "Application Status":
                     sqlStatement = "SELECT StatusTitle as title FROM applicationstatus";
                     break;
+                default:
+                    throw new Exception("You have to make a selection!");
             }
             return sqlStatement;
         }

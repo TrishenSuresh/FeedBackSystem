@@ -22,6 +22,11 @@ namespace FeedBackSystem.HeaderCreatorControls
             List<string> list = new List<string>(ListBox.Lines);
             list.RemoveAll(item => item.Length == 0);
 
+            if(list.Count == 0)
+            {
+                throw new Exception("The list cannot be empty!");
+            }
+
             return list;
         }
     }

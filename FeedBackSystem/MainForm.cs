@@ -55,5 +55,12 @@ namespace FeedBackSystem
                 }
             } //end using header creator
         } //end header tool strip
+
+        private void headerToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            MainPanel.Controls.Clear();
+            HeaderDisplay headerDisplay = new HeaderDisplay{ Dock = DockStyle.Fill };
+            MainPanel.Controls.Add(headerDisplay);
+        }
     }
 }

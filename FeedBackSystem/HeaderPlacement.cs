@@ -131,6 +131,13 @@ namespace FeedBackSystem
             }
 
 
+        }// end add item
+
+        public void ResetTable()
+        {
+            HeaderTable.Controls.Clear();
+            _counter = 0;
+            _row = 0;
         }
     }
 }
