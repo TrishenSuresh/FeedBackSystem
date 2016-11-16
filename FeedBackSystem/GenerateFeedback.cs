@@ -78,7 +78,9 @@ namespace FeedBackSystem
                         row++;
                     }
 
-                    _currentFeed.Sections.Clear();
+                    if(_currentFeed.Sections != null)
+                        _currentFeed.Sections.Clear();
+
                     _currentFeed.Sections.AddRange(form._sectionSelected);
 
                     AddSectionBtn.Text = "Change Section";
@@ -92,6 +94,8 @@ namespace FeedBackSystem
         {
             if (ApplicantList.SelectedIndex != -1)
             {
+                PDFDisplay.DocumentText = "<HTML><CENTER>Loading...</CENTER></HTML>";
+
                 Applicant app = (Applicant)ApplicantList.SelectedItem;
 
                 if (app.Pdf != null)

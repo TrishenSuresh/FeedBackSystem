@@ -11,7 +11,7 @@ namespace FeedBackSystem
         public string ApplicantId;
         public string ReviewerId;
         public Header Header;
-        public List<Section> Sections;
+        public List<Section> Sections = new List<Section>();
 
         public void AddSection(Section section)
         {
