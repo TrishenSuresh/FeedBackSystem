@@ -29,11 +29,12 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.SectionTable = new System.Windows.Forms.TableLayoutPanel();
+            this.SectionsTable = new System.Windows.Forms.TableLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.AddSections = new System.Windows.Forms.Button();
-            this.SectionTable.SuspendLayout();
+            this.SectionsTable.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -45,29 +46,30 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Choose the sections";
             // 
-            // SectionTable
+            // SectionsTable
             // 
-            this.SectionTable.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.SectionTable.ColumnCount = 4;
-            this.SectionTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.SectionTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.SectionTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.SectionTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.SectionTable.Controls.Add(this.label2, 0, 0);
-            this.SectionTable.Controls.Add(this.label3, 1, 0);
-            this.SectionTable.Location = new System.Drawing.Point(16, 75);
-            this.SectionTable.Name = "SectionTable";
-            this.SectionTable.RowCount = 2;
-            this.SectionTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.SectionTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.SectionTable.Size = new System.Drawing.Size(444, 292);
-            this.SectionTable.TabIndex = 1;
+            this.SectionsTable.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
+            this.SectionsTable.ColumnCount = 4;
+            this.SectionsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.SectionsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.SectionsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.SectionsTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.SectionsTable.Controls.Add(this.label2, 0, 0);
+            this.SectionsTable.Controls.Add(this.label3, 1, 0);
+            this.SectionsTable.Controls.Add(this.label4, 2, 0);
+            this.SectionsTable.Location = new System.Drawing.Point(16, 75);
+            this.SectionsTable.Name = "SectionsTable";
+            this.SectionsTable.RowCount = 2;
+            this.SectionsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.SectionsTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.SectionsTable.Size = new System.Drawing.Size(444, 292);
+            this.SectionsTable.TabIndex = 1;
             // 
             // label2
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(4, 1);
+            this.label2.Location = new System.Drawing.Point(86, 1);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(27, 13);
             this.label2.TabIndex = 0;
@@ -78,20 +80,32 @@
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(38, 1);
+            this.label3.Location = new System.Drawing.Point(269, 1);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(60, 13);
             this.label3.TabIndex = 1;
             this.label3.Text = "Description";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(402, 1);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(37, 13);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "Codes";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // AddSections
             // 
-            this.AddSections.Location = new System.Drawing.Point(376, 411);
+            this.AddSections.AutoSize = true;
+            this.AddSections.Location = new System.Drawing.Point(377, 411);
             this.AddSections.Name = "AddSections";
-            this.AddSections.Size = new System.Drawing.Size(75, 23);
+            this.AddSections.Size = new System.Drawing.Size(83, 23);
             this.AddSections.TabIndex = 2;
-            this.AddSections.Text = "Add";
+            this.AddSections.Text = "Add Selection";
             this.AddSections.UseVisualStyleBackColor = true;
             this.AddSections.Click += new System.EventHandler(this.AddSection_Click);
             // 
@@ -101,12 +115,12 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(472, 479);
             this.Controls.Add(this.AddSections);
-            this.Controls.Add(this.SectionTable);
+            this.Controls.Add(this.SectionsTable);
             this.Controls.Add(this.label1);
             this.Name = "SelectSection";
             this.Text = "SelectSection";
-            this.SectionTable.ResumeLayout(false);
-            this.SectionTable.PerformLayout();
+            this.SectionsTable.ResumeLayout(false);
+            this.SectionsTable.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -115,9 +129,10 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TableLayoutPanel SectionTable;
+        private System.Windows.Forms.TableLayoutPanel SectionsTable;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button AddSections;
+        private System.Windows.Forms.Label label4;
     }
 }

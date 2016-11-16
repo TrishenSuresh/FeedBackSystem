@@ -24,7 +24,7 @@ namespace FeedBackSystem
 
             List<Applicant> applicants = sql.GetApplicants();
 
-            foreach(Applicant app in applicants)
+            foreach (Applicant app in applicants)
             {
                 ApplicantList.Items.Add(app);
             }
@@ -43,14 +43,14 @@ namespace FeedBackSystem
 
             sql.CloseConnection();
 
-            
+
         }
 
         private void AddSectionBtn_Click(object sender, EventArgs e)
         {
             SectionTable.Controls.Clear();
 
-            RowStyle style = new RowStyle { SizeType = SizeType.AutoSize };
+            RowStyle style = new RowStyle {SizeType = SizeType.AutoSize};
 
             ContentTable.Padding = new Padding(0, 0, SystemInformation.VerticalScrollBarWidth, 0);
             SectionTable.RowStyles.Add(style);
@@ -64,8 +64,19 @@ namespace FeedBackSystem
                 {
                     foreach (Section s in form._sectionSelected)
                     {
-                        SectionTable.Controls.Add(new Label { Text = s.Title, Anchor = AnchorStyles.Left, TextAlign = ContentAlignment.MiddleLeft }, 0, row);
-                        ComboBox codes = new ComboBox { DropDownStyle = ComboBoxStyle.DropDownList, Anchor = AnchorStyles.Right };
+                        SectionTable.Controls.Add(
+                            new Label
+                            {
+                                Text = s.Title,
+                                Anchor = AnchorStyles.Left,
+                                TextAlign = ContentAlignment.MiddleLeft
+                            }, 0, row);
+                        ComboBox codes = new ComboBox
+                        {
+                            DropDownStyle = ComboBoxStyle.DropDownList,
+                            Anchor = AnchorStyles.Right,
+                            Name = "codes" + s.SectionId
+                        };
 
                         foreach (string code in s.Codes)
                         {
@@ -73,12 +84,17 @@ namespace FeedBackSystem
                         }
 
                         SectionTable.Controls.Add(codes, 1, row);
-                        SectionTable.Controls.Add(new RichTextBox { Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top }, 0, row + 1);
+                        SectionTable.Controls.Add(
+                            new RichTextBox
+                            {
+                                Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top,
+                                Name = "comment" + s.SectionId
+                            }, 0, row + 1);
                         row++;
                         row++;
                     }
 
-                    if(_currentFeed.Sections != null)
+                    if (_currentFeed.Sections != null)
                         _currentFeed.Sections.Clear();
 
                     _currentFeed.Sections.AddRange(form._sectionSelected);
@@ -96,7 +112,7 @@ namespace FeedBackSystem
             {
                 PDFDisplay.DocumentText = "<HTML><CENTER>Loading...</CENTER></HTML>";
 
-                Applicant app = (Applicant)ApplicantList.SelectedItem;
+                Applicant app = (Applicant) ApplicantList.SelectedItem;
 
                 if (app.Pdf != null)
                 {
@@ -114,7 +130,7 @@ namespace FeedBackSystem
 
         private void AddHeaderBtn_Click(object sender, EventArgs e)
         {
-            
+
 
             using (SelectHeader form = new SelectHeader())
             {
@@ -140,7 +156,7 @@ namespace FeedBackSystem
             }
 
 
-               
+
         }
 
         private void ChangeHeader_Click(object sender, EventArgs e)
@@ -164,15 +180,95 @@ namespace FeedBackSystem
                     ContentTable.Controls.Add(place, 0, 0);
                 }
             }
-                
+
         }
 
         private void SaveFeedbackBtn_Click(object sender, EventArgs e)
         {
-            Applicant app = (Applicant)ApplicantList.SelectedItem;
+
+            if (ApplicantList.SelectedIndex == -1)
+            {
+                MessageBox.Show("Select an applicant");
+                return;
+            }
+
+            if (_currentFeed.Header == null)
+            {
+                MessageBox.Show("Please Complete the header before proceeding");
+                return;
+            }
+
+            if (_currentFeed.Sections.Count <= 0)
+            {
+                MessageBox.Show("Please complete the sections before proceeding");
+                return;
+            }
+
+            Applicant app = (Applicant) ApplicantList.SelectedItem;
             _currentFeed.ApplicantId = app.Id;
             _currentFeed.ReviewerId = Reviewer.Id.ToString();
-            MessageBox.Show(_currentFeed.Header.Title);
+
+            foreach (Section s in _currentFeed.Sections)
+            {
+                RichTextBox text = (RichTextBox) Controls.Find("comment" + s.SectionId, true)[0];
+                ComboBox codes = (ComboBox) Controls.Find("codes" + s.SectionId, true)[0];
+
+                if (codes.SelectedIndex == -1)
+                {
+                    MessageBox.Show("Please complete the sections before proceeding");
+                    return;
+                }
+
+                s.Comment = text.Text;
+                s.CodeChosen = codes.SelectedItem.ToString();
+
+                if (s.Comment.Length <= 0)
+                {
+                    MessageBox.Show("Please complete the sections before proceeding");
+                    return;
+                }
+            }
+
+            foreach (HeaderItem item in _currentFeed.Header.HeaderItems)
+            {
+
+                Control control = Controls.Find("header" + item.Id, true)[0];
+
+                try
+                {
+                    switch (control.GetType().Name)
+                    {
+                        case "TextBox":
+                            item.ValueChosen = ((TextBox) control).Text;
+                            break;
+                        case "ComboBox":
+                            item.ValueChosen = ((ComboBox) control).SelectedItem.ToString();
+                            break;
+                        case "DateTimePicker":
+                            item.ValueChosen = ((DateTimePicker) control).Value.ToString("dd/MM/yyyy");
+                            break;
+                        case "Label":
+                            item.ValueChosen = ((Label) control).Text;
+                            break;
+                    }
+
+                    if(item.ValueChosen.Length <= 0)
+                        throw new NullReferenceException();
+                }
+                catch (NullReferenceException)
+                {
+                    MessageBox.Show("Please Complete the header before proceeding");
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return;
+                }
+
+                
+            }
+
         }
 
         private void PositionList_SelectedIndexChanged(object sender, EventArgs e)
@@ -185,7 +281,6 @@ namespace FeedBackSystem
                 List<Applicant> app = sql.GetAppByPosition(pos._positionId);
 
                 ApplicantList.Items.Clear();
-                ;
 
                 foreach (Applicant p in app)
                 {

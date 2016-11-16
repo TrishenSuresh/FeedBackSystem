@@ -310,11 +310,11 @@ namespace FeedBackSystem
 
                     if (list.Count > 1)
                     {
-                        headerItem.Add(new HeaderItem(row["Title"].ToString(), row["InputType"].ToString(), list));
+                        headerItem.Add(new HeaderItem(row["HeaderItemID"].ToString(),row["Title"].ToString(), row["InputType"].ToString(), list));
                     }
                     else
                     {
-                        headerItem.Add(new HeaderItem(row["Title"].ToString(), row["InputType"].ToString(), list[0]));
+                        headerItem.Add(new HeaderItem(row["HeaderItemID"].ToString(),row["Title"].ToString(), row["InputType"].ToString(), list[0]));
                     }
                 }
             }

@@ -98,7 +98,7 @@
             this.PositionList.Location = new System.Drawing.Point(3, 16);
             this.PositionList.Name = "PositionList";
             this.tableLayoutPanel1.SetRowSpan(this.PositionList, 8);
-            this.PositionList.Size = new System.Drawing.Size(118, 715);
+            this.PositionList.Size = new System.Drawing.Size(118, 713);
             this.PositionList.TabIndex = 1;
             this.PositionList.SelectedIndexChanged += new System.EventHandler(this.PositionList_SelectedIndexChanged);
             // 
@@ -109,7 +109,7 @@
             this.ApplicantList.Location = new System.Drawing.Point(127, 16);
             this.ApplicantList.Name = "ApplicantList";
             this.tableLayoutPanel1.SetRowSpan(this.ApplicantList, 8);
-            this.ApplicantList.Size = new System.Drawing.Size(123, 715);
+            this.ApplicantList.Size = new System.Drawing.Size(123, 713);
             this.ApplicantList.TabIndex = 2;
             this.ApplicantList.SelectedIndexChanged += new System.EventHandler(this.ApplicantList_SelectedIndexChanged);
             // 
@@ -121,7 +121,7 @@
             this.PDFPanel.Location = new System.Drawing.Point(871, 16);
             this.PDFPanel.Name = "PDFPanel";
             this.tableLayoutPanel1.SetRowSpan(this.PDFPanel, 8);
-            this.PDFPanel.Size = new System.Drawing.Size(370, 715);
+            this.PDFPanel.Size = new System.Drawing.Size(370, 713);
             this.PDFPanel.TabIndex = 5;
             // 
             // PDFDisplay
@@ -130,7 +130,7 @@
             this.PDFDisplay.Location = new System.Drawing.Point(0, 0);
             this.PDFDisplay.MinimumSize = new System.Drawing.Size(20, 20);
             this.PDFDisplay.Name = "PDFDisplay";
-            this.PDFDisplay.Size = new System.Drawing.Size(370, 715);
+            this.PDFDisplay.Size = new System.Drawing.Size(370, 713);
             this.PDFDisplay.TabIndex = 0;
             // 
             // tableLayoutPanel3
@@ -145,12 +145,12 @@
             this.tableLayoutPanel3.Controls.Add(this.AddSectionBtn, 2, 0);
             this.tableLayoutPanel3.Controls.Add(this.button3, 0, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(256, 737);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(256, 735);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(609, 82);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(609, 84);
             this.tableLayoutPanel3.TabIndex = 6;
             // 
             // button5
@@ -208,7 +208,7 @@
             this.ContentTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.ContentTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
             this.ContentTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 481F));
-            this.ContentTable.Size = new System.Drawing.Size(609, 715);
+            this.ContentTable.Size = new System.Drawing.Size(609, 713);
             this.ContentTable.TabIndex = 7;
             // 
             // SectionTable

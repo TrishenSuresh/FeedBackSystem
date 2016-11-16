@@ -35,7 +35,8 @@ namespace FeedBackSystem
                     {
                         Anchor = AnchorStyles.Left | AnchorStyles.Right,
                         AutoSize = true,
-                        Text = itemType.ValueItem[0]
+                        Text = itemType.ValueItem[0],
+                        Name = "header"+itemType.Id
                     };
                     HeaderTable.Controls.Add(text, _column[_counter]+1,_row);
                     HeaderTable.SetColumnSpan(text, 3);
@@ -47,7 +48,8 @@ namespace FeedBackSystem
                     {
                         DropDownStyle = ComboBoxStyle.DropDownList,
                         Anchor = AnchorStyles.Left | AnchorStyles.Right,
-                        AutoSize = true
+                        AutoSize = true,
+                        Name = "header" + itemType.Id
                     };
 
                     foreach (string s in itemType.ValueItem)
@@ -66,7 +68,8 @@ namespace FeedBackSystem
                     {
                         DropDownStyle = ComboBoxStyle.DropDownList,
                         Anchor = AnchorStyles.Left | AnchorStyles.Right,
-                        AutoSize = true
+                        AutoSize = true,
+                        Name = "header" + itemType.Id
                     };
 
 
@@ -100,7 +103,8 @@ namespace FeedBackSystem
                         Format = DateTimePickerFormat.Custom,
                         CustomFormat = @"dd/MM/yyyy",
                         Anchor = AnchorStyles.Left | AnchorStyles.Right,
-                        AutoSize = true
+                        AutoSize = true,
+                        Name = "header" + itemType.Id
                     };
 
                     HeaderTable.Controls.Add(date, _column[_counter] + 1, _row);
@@ -110,7 +114,7 @@ namespace FeedBackSystem
 
                 case "Label":
 
-                    Label label = new Label {Text = itemType.ValueItem[0], TextAlign = ContentAlignment.BottomLeft, Anchor = AnchorStyles.Left, AutoSize = true};
+                    Label label = new Label {Text = itemType.ValueItem[0], TextAlign = ContentAlignment.BottomLeft, Anchor = AnchorStyles.Left, AutoSize = true, Name = "header" + itemType.Id };
                     HeaderTable.Controls.Add(label, _column[_counter] + 1, _row);
                     HeaderTable.SetColumnSpan(label,3);
 

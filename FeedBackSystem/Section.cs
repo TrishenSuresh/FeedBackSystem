@@ -10,6 +10,7 @@ namespace FeedBackSystem
         public string Desc { get; set; }
         public List<string> Codes { get; set; }
         public string Comment { get; set; }
+        public string CodeChosen { get; set; }
 
         public Section(string title, string desc, List<string> codes)
         {

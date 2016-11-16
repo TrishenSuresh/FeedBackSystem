@@ -81,6 +81,7 @@
             this.Controls.Add(this.CodeBox);
             this.Controls.Add(this.label1);
             this.Name = "SectionCreator";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SectionCreator";
             this.ResumeLayout(false);
             this.PerformLayout();

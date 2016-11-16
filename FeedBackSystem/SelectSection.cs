@@ -30,8 +30,8 @@ namespace FeedBackSystem
 
             foreach (Section section in _sections)
             {
-                SectionTable.Controls.Add(new Label {Text = section.Title, AutoSize = true, Anchor = AnchorStyles.Left | AnchorStyles.Top},0,row);
-                SectionTable.Controls.Add(new Label {Text = section.Desc, AutoSize = true, Anchor = AnchorStyles.Left | AnchorStyles.Top},1,row);
+                SectionsTable.Controls.Add(new Label {Text = section.Title, AutoSize = true, Anchor = AnchorStyles.Left | AnchorStyles.Top},0,row);
+                SectionsTable.Controls.Add(new Label {Text = section.Desc, AutoSize = true, Anchor = AnchorStyles.Left | AnchorStyles.Top},1,row);
                 ComboBox Codes = new ComboBox
                 {
                     DropDownStyle = ComboBoxStyle.DropDownList,
@@ -44,8 +44,8 @@ namespace FeedBackSystem
                     Codes.Items.Add(code);
                 }
 
-                SectionTable.Controls.Add(Codes, 2, row);
-                SectionTable.Controls.Add(new CheckBox { Appearance = Appearance.Button, AutoSize = true, Anchor = AnchorStyles.Left 
+                SectionsTable.Controls.Add(Codes, 2, row);
+                SectionsTable.Controls.Add(new CheckBox { Appearance = Appearance.Button, AutoSize = true, Anchor = AnchorStyles.Left 
                     | AnchorStyles.Right | AnchorStyles.Top, Text = "Select", TextAlign = ContentAlignment.MiddleCenter, Name = section.SectionId},3,row);
                 
 
@@ -63,13 +63,12 @@ namespace FeedBackSystem
             
             _sectionSelected.Clear();
 
-            for (int a = 1; a <= SectionTable.RowCount+1; a++)
+            foreach (Section s in _sections)
             {
-                CheckBox box = SectionTable.GetControlFromPosition(3,a) as CheckBox;
-
-                if (box.Checked)
+                CheckBox check = (CheckBox) SectionsTable.Controls.Find(s.SectionId, true)[0];
+                if (check.Checked)
                 {
-                    sectionSelected.Add(box.Name);
+                    sectionSelected.Add(check.Name);
                 }
             }
 
@@ -77,6 +76,7 @@ namespace FeedBackSystem
             {
                 _sectionSelected.Add(_sections.Find(x => x.SectionId == s));
             }
+
 
             DialogResult = DialogResult.OK;
             
