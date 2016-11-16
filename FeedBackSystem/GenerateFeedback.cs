@@ -17,17 +17,19 @@ namespace FeedBackSystem
 
             SectionTable.VerticalScroll.Enabled = false;
             ContentTable.VerticalScroll.Enabled = true;
-
+            AddHeaderBtn.Enabled = false;
 
             MySql sql = new MySql();
             sql.OpenConnection();
 
+
+            /* they shouldnt be able to see this before they select the position
             List<Applicant> applicants = sql.GetApplicants();
 
             foreach (Applicant app in applicants)
             {
                 ApplicantList.Items.Add(app);
-            }
+            }*/
 
             ApplicantList.ValueMember = "Name";
 
@@ -113,6 +115,8 @@ namespace FeedBackSystem
                 PDFDisplay.DocumentText = "<HTML><CENTER>Loading...</CENTER></HTML>";
 
                 Applicant app = (Applicant) ApplicantList.SelectedItem;
+                _currentFeed.Applicant = app;
+                AddHeaderBtn.Enabled = true;
 
                 if (app.Pdf != null)
                 {
@@ -125,7 +129,41 @@ namespace FeedBackSystem
                 {
                     PDFDisplay.DocumentText = "<HTML><CENTER>No PDF found</CENTER></HTML>";
                 }
+
+                if(_currentFeed.Header != null)
+                {
+                    UpdateHeaderTab();
+                }
             }
+        }
+
+        private void UpdateHeaderTab()
+        {
+            HeaderPlacement place = new HeaderPlacement();
+
+            ContentTable.Controls.Remove(ContentTable.GetControlFromPosition(0, 0));
+
+            foreach (HeaderItem item in _currentFeed.Header.HeaderItems)
+            {
+                switch (item.Title)
+                {
+                    case "Applicant:":
+                        item.ValueItem.Clear();
+                        item.ValueItem.Add(_currentFeed.Applicant.Name);
+                        break;
+                    case "Job applied:":
+                        item.ValueItem.Clear();
+                        item.ValueItem.Add(_currentFeed.Position._positionName);
+                        break;
+                    case "Reviewer:":
+                        item.ValueItem.Clear();
+                        item.ValueItem.Add(Reviewer.Name);
+                        break;
+                }
+                place.AddItem(item);
+            }
+            
+            ContentTable.Controls.Add(place, 0, 0);
         }
 
         private void AddHeaderBtn_Click(object sender, EventArgs e)
@@ -140,17 +178,10 @@ namespace FeedBackSystem
                 {
 
                     Header selectedHeader = form.Header;
-
-                    HeaderPlacement place = new HeaderPlacement();
-
-                    foreach (HeaderItem item in selectedHeader.HeaderItems)
-                    {
-                        place.AddItem(item);
-                    }
-
-                    ContentTable.Controls.Remove(AddHeaderBtn);
-                    ContentTable.Controls.Add(place, 0, 0);
                     _currentFeed.Header = selectedHeader;
+
+                    UpdateHeaderTab();
+                    
                     ChangeHeader.Visible = true;
                 }
             }
@@ -167,17 +198,8 @@ namespace FeedBackSystem
 
                 if (result == DialogResult.OK)
                 {
-                    HeaderPlacement place = new HeaderPlacement();
-
-                    ContentTable.Controls.Remove(ContentTable.GetControlFromPosition(0, 0));
-
-                    foreach (HeaderItem item in form.Header.HeaderItems)
-                    {
-                        place.AddItem(item);
-                    }
-
                     _currentFeed.Header = form.Header;
-                    ContentTable.Controls.Add(place, 0, 0);
+                    UpdateHeaderTab();
                 }
             }
 
@@ -203,9 +225,7 @@ namespace FeedBackSystem
                 MessageBox.Show("Please complete the sections before proceeding");
                 return;
             }
-
-            Applicant app = (Applicant) ApplicantList.SelectedItem;
-            _currentFeed.ApplicantId = app.Id;
+            
             _currentFeed.ReviewerId = Reviewer.Id.ToString();
 
             foreach (Section s in _currentFeed.Sections)
@@ -278,6 +298,7 @@ namespace FeedBackSystem
                 MySql sql = new MySql();
                 sql.OpenConnection();
                 Position pos = (Position) PositionList.SelectedItem;
+                _currentFeed.Position = pos;
                 List<Applicant> app = sql.GetAppByPosition(pos._positionId);
 
                 ApplicantList.Items.Clear();

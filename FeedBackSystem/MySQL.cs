@@ -341,8 +341,6 @@ namespace FeedBackSystem
                     string sqlStatement;
                     List<int> itemsId = new List<int>();
                     int headId;
-                    string duplicateMsg = "These items are duplicated: ";
-                    bool extraDuplicateItem = false;
 
                     MySqlDataReader reader;
 
@@ -364,13 +362,12 @@ namespace FeedBackSystem
                         int currentItemId = -1;
                         var duplicateItem = false;
 
-                        //check whether there is same header item (by name and type)
+                        //check whether there is same header item (by name)
                         sqlStatement =
-                            "SELECT HeaderItemID as id FROM headeritem WHERE Title = @itemTitle AND InputType = @itemInputType";
+                            "SELECT HeaderItemID as id FROM headeritem WHERE Title = @itemTitle";
                         using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
                         {
                             cmd.Parameters.AddWithValue("@itemTitle", item.Title);
-                            cmd.Parameters.AddWithValue("@itemInputType", item.InputType);
                             reader = cmd.ExecuteReader();
                             if (reader.HasRows)
                             {
@@ -381,6 +378,28 @@ namespace FeedBackSystem
                             }
                             reader.Close();
                             cmd.Parameters.Clear();
+                        }
+                        
+                        if(duplicateItem)
+                        {
+                            if (!item.Title.Equals("Applicant:") && !item.Title.Equals("Job applied:") &&
+                                !item.Title.Equals("Reviewer:") && !item.Title.Equals("Type:"))
+                            {
+                                var confirmResult = MessageBox.Show("This item, \"" + item.Title + "\" is duplicated!" +
+                                                                "\nClick Yes to save another copy, No to edit",
+                                                    "Are you sure?",
+                                                    MessageBoxButtons.YesNo);
+
+                                if (confirmResult != DialogResult.Yes)
+                                {
+                                    return false;
+                                }
+                                else
+                                {
+                                    duplicateItem = false;
+                                    itemsId.Remove(currentItemId);
+                                }
+                            }
                         }
 
                         if (!duplicateItem)
@@ -430,15 +449,6 @@ namespace FeedBackSystem
                                 }
                             }
                         } //end if no duplicate 
-                        else
-                        {
-                            if (!item.Title.Equals("Applicant:") && !item.Title.Equals("Job applied:") &&
-                                !item.Title.Equals("Reviewer:") && !item.Title.Equals("Type:"))
-                            {
-                                duplicateMsg += "\n" + item.Title;
-                                extraDuplicateItem = true;
-                            }
-                        }
                     } //end for each items
 
                     foreach (int itemids in itemsId)
@@ -453,20 +463,7 @@ namespace FeedBackSystem
                             cmd.Parameters.Clear();
                         }
                     } //end for each header to item
-
-                    if (extraDuplicateItem)
-                    {
-                        var confirmResult = MessageBox.Show(duplicateMsg +
-                                                            "\nClick Yes to save another copy, No to edit",
-                            "Are you sure?",
-                            MessageBoxButtons.YesNo);
-
-                        if (confirmResult != DialogResult.Yes)
-                        {
-                            return false;
-                        }
-                    }
-
+                    
                     trans.Commit();
                 }
                 catch (Exception genExp)

@@ -8,7 +8,8 @@ namespace FeedBackSystem
 {
     class Feedback
     {
-        public string ApplicantId;
+        public Applicant Applicant;
+        public Position Position;
         public string ReviewerId;
         public Header Header;
         public List<Section> Sections = new List<Section>();
@@ -16,6 +17,11 @@ namespace FeedBackSystem
         public void AddSection(Section section)
         {
             Sections.Add(section);
+        }
+
+        public void RemoveSection(int index)
+        {
+            Sections.RemoveAt(index);
         }
 
     }

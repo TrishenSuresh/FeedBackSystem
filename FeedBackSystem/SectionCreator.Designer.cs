@@ -37,35 +37,39 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(49, 38);
+            this.label1.Location = new System.Drawing.Point(74, 58);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(158, 13);
+            this.label1.Size = new System.Drawing.Size(233, 20);
             this.label1.TabIndex = 0;
             this.label1.Text = "Enter the codes to be included :";
             // 
             // CodeBox
             // 
-            this.CodeBox.Location = new System.Drawing.Point(70, 85);
+            this.CodeBox.Location = new System.Drawing.Point(105, 131);
+            this.CodeBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.CodeBox.Name = "CodeBox";
-            this.CodeBox.Size = new System.Drawing.Size(192, 104);
+            this.CodeBox.Size = new System.Drawing.Size(286, 158);
             this.CodeBox.TabIndex = 1;
             this.CodeBox.Text = "";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(52, 66);
+            this.label2.Location = new System.Drawing.Point(78, 102);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(91, 13);
+            this.label2.Size = new System.Drawing.Size(133, 20);
             this.label2.TabIndex = 2;
             this.label2.Text = "One code per line";
             // 
             // SaveBtn
             // 
             this.SaveBtn.AutoSize = true;
-            this.SaveBtn.Location = new System.Drawing.Point(236, 206);
+            this.SaveBtn.Location = new System.Drawing.Point(354, 317);
+            this.SaveBtn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.SaveBtn.Name = "SaveBtn";
-            this.SaveBtn.Size = new System.Drawing.Size(81, 23);
+            this.SaveBtn.Size = new System.Drawing.Size(122, 35);
             this.SaveBtn.TabIndex = 3;
             this.SaveBtn.Text = "Save Section";
             this.SaveBtn.UseVisualStyleBackColor = true;
@@ -73,16 +77,17 @@
             // 
             // SectionCreator
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(344, 241);
+            this.ClientSize = new System.Drawing.Size(516, 371);
             this.Controls.Add(this.SaveBtn);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.CodeBox);
             this.Controls.Add(this.label1);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "SectionCreator";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "SectionCreator";
+            this.Text = "Create Section";
             this.ResumeLayout(false);
             this.PerformLayout();
 
