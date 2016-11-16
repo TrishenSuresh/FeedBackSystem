@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.HeaderTab = new FeedBackSystem.HeaderPlacement();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.AddItemBtn = new System.Windows.Forms.Button();
             this.SaveHeaderBtn = new System.Windows.Forms.Button();
             this.DeleteItemBtn = new System.Windows.Forms.Button();
+            this.HeaderTab = new FeedBackSystem.HeaderPlacement();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
@@ -70,21 +70,6 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1092, 386);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // HeaderTab
-            // 
-            this.HeaderTab.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.HeaderTab.AutoScroll = true;
-            this.HeaderTab.BackColor = System.Drawing.SystemColors.Control;
-            this.tableLayoutPanel1.SetColumnSpan(this.HeaderTab, 8);
-            this.HeaderTab.Location = new System.Drawing.Point(125, 54);
-            this.HeaderTab.Margin = new System.Windows.Forms.Padding(16);
-            this.HeaderTab.Name = "HeaderTab";
-            this.tableLayoutPanel1.SetRowSpan(this.HeaderTab, 5);
-            this.HeaderTab.Size = new System.Drawing.Size(840, 158);
-            this.HeaderTab.TabIndex = 1;
-            // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 3;
@@ -114,6 +99,7 @@
             this.AddItemBtn.TabIndex = 1;
             this.AddItemBtn.Text = "Add Item";
             this.AddItemBtn.UseVisualStyleBackColor = true;
+            this.AddItemBtn.Click += new System.EventHandler(this.AddItemBtn_Click);
             // 
             // SaveHeaderBtn
             // 
@@ -125,6 +111,7 @@
             this.SaveHeaderBtn.TabIndex = 2;
             this.SaveHeaderBtn.Text = "Save Header";
             this.SaveHeaderBtn.UseVisualStyleBackColor = true;
+            this.SaveHeaderBtn.Click += new System.EventHandler(this.SaveHeaderBtn_Click);
             // 
             // DeleteItemBtn
             // 
@@ -137,6 +124,22 @@
             this.DeleteItemBtn.TabIndex = 3;
             this.DeleteItemBtn.Text = "Delete Item";
             this.DeleteItemBtn.UseVisualStyleBackColor = true;
+            this.DeleteItemBtn.Click += new System.EventHandler(this.DeleteItemBtn_Click);
+            // 
+            // HeaderTab
+            // 
+            this.HeaderTab.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.HeaderTab.AutoScroll = true;
+            this.HeaderTab.BackColor = System.Drawing.SystemColors.Control;
+            this.tableLayoutPanel1.SetColumnSpan(this.HeaderTab, 8);
+            this.HeaderTab.Location = new System.Drawing.Point(125, 54);
+            this.HeaderTab.Margin = new System.Windows.Forms.Padding(16);
+            this.HeaderTab.Name = "HeaderTab";
+            this.tableLayoutPanel1.SetRowSpan(this.HeaderTab, 5);
+            this.HeaderTab.Size = new System.Drawing.Size(840, 158);
+            this.HeaderTab.TabIndex = 1;
             // 
             // HeaderCreator
             // 

@@ -55,8 +55,8 @@ namespace FeedBackSystem
 
                 if (result == DialogResult.OK)
                 {
-                    header.Title = box.headerTitle;
-                    header.Desc = box.headerDesc;
+                    header.Title = box.Title;
+                    header.Desc = box.Desc;
 
                     MySql sql = new MySql();
                     sql.OpenConnection();

@@ -12,8 +12,8 @@ namespace FeedBackSystem
 {
     public partial class SaveBox : Form
     {
-        public string headerTitle;
-        public string headerDesc;
+        public string Title;
+        public string Desc;
 
         public SaveBox()
         {
@@ -30,8 +30,8 @@ namespace FeedBackSystem
         {
             if (titleText.Text.Length > 0)
             {
-                headerTitle = titleText.Text;
-                headerDesc = descText.Text;
+                Title = titleText.Text;
+                Desc = descText.Text;
                 this.DialogResult = DialogResult.OK;
             } else
             {

@@ -145,6 +145,12 @@
       <DependentUpon>SaveBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Section.cs" />
+    <Compile Include="SectionCreator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SectionCreator.Designer.cs">
+      <DependentUpon>SectionCreator.cs</DependentUpon>
+    </Compile>
     <Compile Include="SectionPlacement.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -210,6 +216,9 @@
     </Compile>
     <EmbeddedResource Include="SaveBox.resx">
       <DependentUpon>SaveBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SectionCreator.resx">
+      <DependentUpon>SectionCreator.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SectionPlacement.resx">
       <DependentUpon>SectionPlacement.cs</DependentUpon>

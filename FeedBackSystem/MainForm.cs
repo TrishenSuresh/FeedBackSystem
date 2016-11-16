@@ -45,10 +45,10 @@ namespace FeedBackSystem
                     headerDt.Columns["HeaderId"].ColumnName = "Header ID";
                     headerDt.Columns["Desc"].ColumnName = "Description";
 
-                    DataGridView headerDgv = new DataGridView { Dock = DockStyle.Fill };
+                    DataGridView headerDgv = new DataGridView {Dock = DockStyle.Fill};
                     headerDgv.DataSource = headerDt;
                     headerDgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                    
+
                     MainPanel.Controls.Add(headerDgv);
 
                     sql.CloseConnection();
@@ -59,8 +59,21 @@ namespace FeedBackSystem
         private void headerToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             MainPanel.Controls.Clear();
-            DisplayControl display = new DisplayControl("Header") { Dock = DockStyle.Fill };
+            DisplayControl display = new DisplayControl("Header") {Dock = DockStyle.Fill};
             MainPanel.Controls.Add(display);
+        }
+
+        private void sectionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                new SectionCreator().ShowDialog();
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show(Ex.Message);
+            }
+            
         }
     }
 }

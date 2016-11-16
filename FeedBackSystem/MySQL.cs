@@ -16,12 +16,14 @@ namespace FeedBackSystem
 
         public MySql()
         {
-            const string server = "localhost"; 
+            const string server = "localhost";
             const string database = "feedbacksystem";
             const string user = "root";
             const string password = "1234";
 
-            const string connectionString = "SERVER=" + server + ";" + "DATABASE=" + database + ";" + "UID=" + user + ";" + "PASSWORD=" + password + ";";
+            const string connectionString =
+                "SERVER=" + server + ";" + "DATABASE=" + database + ";" + "UID=" + user + ";" + "PASSWORD=" + password +
+                ";";
 
             _connection = new MySqlConnection(connectionString);
         }
@@ -76,17 +78,20 @@ namespace FeedBackSystem
 
             List<Applicant> listOfApp = new List<Applicant>();
 
-            MySqlCommand cmd = new MySqlCommand("SELECT FirstName, LastName, Email, positionapplied.File FROM feedbacksystem.applicant, feedbacksystem.positionapplied where applicant.ApplicantID = positionapplied.ApplicantID", _connection);
+            MySqlCommand cmd =
+                new MySqlCommand(
+                    "SELECT FirstName, LastName, Email, positionapplied.File FROM feedbacksystem.applicant, feedbacksystem.positionapplied where applicant.ApplicantID = positionapplied.ApplicantID",
+                    _connection);
             MySqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
             {
-                
-                
-                byte[] pdf = (byte[])reader["File"];
+
+
+                byte[] pdf = (byte[]) reader["File"];
                 Applicant app = new Applicant(reader["FirstName"] + " " + reader["LastName"], reader["Email"] + "", pdf);
                 listOfApp.Add(app);
-                
+
             }
             reader.Close();
             return listOfApp;
@@ -101,7 +106,7 @@ namespace FeedBackSystem
             {
                 MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection);
 
-                using(MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
                 {
                     da.Fill(dataTable);
                 }
@@ -142,8 +147,9 @@ namespace FeedBackSystem
         {
             List<string> list = new List<string>();
             DataTable dataTable = new DataTable();
-            string sqlStatement = "SELECT headeritemlist.List FROM feedbacksystem.headeritemlist,feedbacksystem.headeritem " +
-                           "where headeritemlist.HeaderItemID = headeritem.HeaderItemID and headeritem.HeaderItemID = @HeaderItemID";
+            string sqlStatement =
+                "SELECT headeritemlist.List FROM feedbacksystem.headeritemlist,feedbacksystem.headeritem " +
+                "where headeritemlist.HeaderItemID = headeritem.HeaderItemID and headeritem.HeaderItemID = @HeaderItemID";
 
             try
             {
@@ -195,7 +201,7 @@ namespace FeedBackSystem
             {
                 MessageBox.Show(genExp.Message);
             }
-            
+
             return header;
         }
 
@@ -204,9 +210,9 @@ namespace FeedBackSystem
             DataTable dataTable = new DataTable();
             List<HeaderItem> headerItem = new List<HeaderItem>();
             string sqlStatement =
-                    "SELECT Header.HeaderID,headeritem.HeaderItemID,Title,InputType FROM feedbacksystem.headeritem,feedbacksystem.headercontains," +
-                    "feedbacksystem.header where headeritem.HeaderItemID = headercontains.HeaderItemID and " +
-                    "headercontains.HeaderID = header.HeaderID and header.HeaderID = @HeaderID";
+                "SELECT Header.HeaderID,headeritem.HeaderItemID,Title,InputType FROM feedbacksystem.headeritem,feedbacksystem.headercontains," +
+                "feedbacksystem.header where headeritem.HeaderItemID = headercontains.HeaderItemID and " +
+                "headercontains.HeaderID = header.HeaderID and header.HeaderID = @HeaderID";
 
             try
             {
@@ -257,12 +263,13 @@ namespace FeedBackSystem
                     List<int> itemsId = new List<int>();
                     int headId;
                     string duplicateMsg = "These items are duplicated: ";
-                    bool duplicateItem = false;
+                    bool duplicateItem;
                     bool extraDuplicateItem = false;
 
                     MySqlDataReader reader;
 
-                    sqlStatement = "INSERT INTO header(`Name`,`Desc`) VALUES (@headTitle,@headDesc); SELECT last_insert_id() as id;";
+                    sqlStatement =
+                        "INSERT INTO header(`Name`,`Desc`) VALUES (@headTitle,@headDesc); SELECT last_insert_id() as id;";
                     using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
                     {
                         cmd.Parameters.AddWithValue("@headTitle", headTitle);
@@ -280,7 +287,8 @@ namespace FeedBackSystem
                         duplicateItem = false;
 
                         //check whether there is same header item (by name and type)
-                        sqlStatement = "SELECT HeaderItemID as id FROM headeritem WHERE Title = @itemTitle AND InputType = @itemInputType";
+                        sqlStatement =
+                            "SELECT HeaderItemID as id FROM headeritem WHERE Title = @itemTitle AND InputType = @itemInputType";
                         using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
                         {
                             cmd.Parameters.AddWithValue("@itemTitle", item.Title);
@@ -299,7 +307,8 @@ namespace FeedBackSystem
 
                         if (!duplicateItem)
                         {
-                            sqlStatement = "INSERT INTO headeritem(Title, InputType) VALUES (@itemTitle,@itemInputType); SELECT last_insert_id() as id;";
+                            sqlStatement =
+                                "INSERT INTO headeritem(Title, InputType) VALUES (@itemTitle,@itemInputType); SELECT last_insert_id() as id;";
                             using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
                             {
                                 cmd.Parameters.AddWithValue("@itemTitle", item.Title);
@@ -312,10 +321,11 @@ namespace FeedBackSystem
                                 reader.Close();
                                 cmd.Parameters.Clear();
                             }
-                        
+
                             if (item.InputType.Equals("Query"))
                             {
-                                sqlStatement = "INSERT INTO headeritemlist(HeaderItemId, List) VALUES (@currentItemID,@itemQueryStat);";
+                                sqlStatement =
+                                    "INSERT INTO headeritemlist(HeaderItemId, List) VALUES (@currentItemID,@itemQueryStat);";
                                 using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
                                 {
                                     cmd.Parameters.AddWithValue("@currentItemID", currentItemId);
@@ -329,7 +339,8 @@ namespace FeedBackSystem
                             {
                                 foreach (string value in item.ValueItem)
                                 {
-                                    sqlStatement = "INSERT INTO headeritemlist(HeaderItemId, List) VALUES (@currentItemID,@value); ";
+                                    sqlStatement =
+                                        "INSERT INTO headeritemlist(HeaderItemId, List) VALUES (@currentItemID,@value); ";
                                     using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
                                     {
                                         cmd.Parameters.AddWithValue("@currentItemID", currentItemId);
@@ -367,12 +378,12 @@ namespace FeedBackSystem
 
                     if (extraDuplicateItem)
                     {
-                        var confirmResult = MessageBox.Show(duplicateMsg + 
-                            "\nClick Yes to save another copy, No to edit" , 
-                            "Are you sure?", 
+                        var confirmResult = MessageBox.Show(duplicateMsg +
+                                                            "\nClick Yes to save another copy, No to edit",
+                            "Are you sure?",
                             MessageBoxButtons.YesNo);
 
-                        if(confirmResult != DialogResult.Yes)
+                        if (confirmResult != DialogResult.Yes)
                         {
                             return false;
                         }
@@ -395,37 +406,134 @@ namespace FeedBackSystem
         {
             SHA256 sha256 = SHA256.Create();
 
-            string sqlStatement = "SELECT concat(TRIM(FirstName),\".\",TRIM(LastName)) as username, reviewer.Password, Salt, ReviewerID FROM feedbacksystem.reviewer where concat(TRIM(FirstName),\".\",TRIM(LastName)) like @Username";
+            string sqlStatement =
+                "SELECT concat(TRIM(FirstName),\".\",TRIM(LastName)) as username, reviewer.Password, Salt, ReviewerID FROM feedbacksystem.reviewer where concat(TRIM(FirstName),\".\",TRIM(LastName)) like @Username";
 
             using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
             {
                 cmd.Parameters.AddWithValue("@Username", username);
                 MySqlDataReader reader = cmd.ExecuteReader();
-                
+
                 if (reader.Read())
                 {
-                    byte[] bytes = Encoding.UTF8.GetBytes(password+reader["Salt"]);
+                    byte[] bytes = Encoding.UTF8.GetBytes(password + reader["Salt"]);
                     byte[] hash = sha256.ComputeHash(bytes);
                     string convertedHash = Convert.ToBase64String(hash);
-            
+
                     if (convertedHash.Equals(reader["Password"]))
                     {
                         Reviewer.Id = Convert.ToInt32(reader["ReviewerID"]);
-                        Reviewer.Name = reader["username"].ToString().Replace("."," ");
+                        Reviewer.Name = reader["username"].ToString().Replace(".", " ");
+                        reader.Close();
                         return true;
                     }
                     else
                     {
+                        reader.Close();
                         return false;
                     }
                 }
                 else
                 {
+                    reader.Close();
                     return false;
                 }
 
             }
 
+        }
+
+        public bool SaveSection(Section section)
+        {
+            string sqlStatement;
+            int sectionId;
+            int codeId = 0;
+            
+
+            using (MySqlTransaction trans = _connection.BeginTransaction())
+            {
+                try
+                {
+                    //Insert the section
+                    sqlStatement = "INSERT INTO sections(`Title`, `Desc`) VALUES (@Title,@Desc); SELECT last_insert_id() as id;";
+                    MySqlDataReader reader;
+
+                    using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
+                    {
+                        cmd.Parameters.AddWithValue("@Title", section.Title);
+                        cmd.Parameters.AddWithValue("@Desc", section.Desc);
+                        reader = cmd.ExecuteReader();
+                        reader.Read();
+                        sectionId = Convert.ToInt16(reader["id"]);
+                        reader.Close();
+                        cmd.Parameters.Clear();
+                    }
+
+                    
+
+                    //loop codes
+                    foreach (var code in section.Codes)
+                    {
+                        bool duplicate = false;
+                        //check codes duplication
+                        sqlStatement = "SELECT codes.CodesID as id FROM feedbacksystem.codes where codes.Code = @code;";
+                        using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
+                        {
+                            cmd.Parameters.AddWithValue("@code", code);
+                            reader = cmd.ExecuteReader();
+
+                            if (reader.HasRows)
+                            {
+                                reader.Read();
+                                codeId = Convert.ToInt16(reader["id"]);
+                                duplicate = true;
+                            }
+                            reader.Close();
+                            cmd.Parameters.Clear();
+                        }
+
+                        //create a new entry if not duplication
+                        if (!duplicate)
+                        {
+                            sqlStatement = "INSERT INTO codes(`Code`) VALUES (@Code); SELECT last_insert_id() as id;";
+                            using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
+                            {
+                                cmd.Parameters.AddWithValue("@Code", code);
+                                reader = cmd.ExecuteReader();
+
+                                if (reader.HasRows)
+                                {
+                                    reader.Read();
+                                    codeId = Convert.ToInt16(reader["id"]);
+                                }
+                                reader.Close();
+                                cmd.Parameters.Clear();
+                            }
+                        }
+
+                        //Link section with codes
+                        sqlStatement = "INSERT INTO section_code VALUES(@CodeID, @SectionID);";
+                        using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
+                        {
+                            cmd.Parameters.AddWithValue("@CodeID", codeId);
+                            cmd.Parameters.AddWithValue("@SectionID", sectionId);
+                            reader = cmd.ExecuteReader();
+                            reader.Close();
+                            cmd.Parameters.Clear();
+                        }
+
+                    }//end loop codes
+                    trans.Commit();
+                }
+                catch (Exception ex)
+                {
+                    trans.Rollback();
+                    MessageBox.Show(ex.Message);
+                    return false;
+                }
+                    
+            }
+            return true;
         }
     }
 }
