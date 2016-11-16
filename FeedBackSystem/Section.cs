@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FeedBackSystem
 {
@@ -16,9 +13,21 @@ namespace FeedBackSystem
 
         public Section(string title, string desc, List<string> codes)
         {
-            this.Title = title;
-            this.Desc = desc;
-            this.Codes = codes;
+            Title = title;
+            Desc = desc;
+            Codes = codes;
+        }
+
+        public Section(string sectionId,string title, string desc)
+        {
+            SectionId = sectionId;
+            Title = title;
+            Desc = desc;
+        }
+
+        public void AddCode(string code)
+        {
+            Codes.Add(code);
         }
     }
 }

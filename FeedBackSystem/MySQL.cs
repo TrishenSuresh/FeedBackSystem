@@ -80,7 +80,7 @@ namespace FeedBackSystem
 
             MySqlCommand cmd =
                 new MySqlCommand(
-                    "SELECT FirstName, LastName, Email, positionapplied.File FROM feedbacksystem.applicant, feedbacksystem.positionapplied where applicant.ApplicantID = positionapplied.ApplicantID",
+                    "SELECT applicant.ApplicantID,FirstName, LastName, Email, positionapplied.File FROM feedbacksystem.applicant, feedbacksystem.positionapplied where applicant.ApplicantID = positionapplied.ApplicantID",
                     _connection);
             MySqlDataReader reader = cmd.ExecuteReader();
 
@@ -89,7 +89,7 @@ namespace FeedBackSystem
 
 
                 byte[] pdf = (byte[]) reader["File"];
-                Applicant app = new Applicant(reader["FirstName"] + " " + reader["LastName"], reader["Email"] + "", pdf);
+                Applicant app = new Applicant(reader["ApplicantID"].ToString(),reader["FirstName"] + " " + reader["LastName"], reader["Email"] + "", pdf);
                 listOfApp.Add(app);
 
             }
@@ -177,6 +177,65 @@ namespace FeedBackSystem
             return list;
         }
 
+        public List<Section> GetSectionsList()
+        {
+            List<Section> sectionList = new List<Section>();
+            DataTable dataTable = new DataTable();
+
+            string sqlStatement = "SELECT * FROM feedbacksystem.sections";
+
+            try
+            {
+                using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
+                {
+                    using (MySqlDataAdapter da = new MySqlDataAdapter(cmd))
+                    {
+                        da.Fill(dataTable);
+                    }
+
+                    foreach (DataRow row in dataTable.Rows)
+                    {
+                        sectionList.Add(new Section(row["SectionID"].ToString(),row["Title"].ToString(),row["Desc"].ToString()));
+                    }
+                }
+
+                foreach (Section section in sectionList)
+                {
+                    List<String> codes = getSectionCodes(section.SectionId);
+                    section.Codes = codes;
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+
+            return sectionList;
+        }
+
+        public List<string> getSectionCodes(string sectionId)
+        {
+            List<string> codes = new List<string>();
+
+            MySqlCommand cmd =
+                new MySqlCommand(
+                    "SELECT codes.Code FROM sections,section_code,codes where sections.SectionID = section_code.SectionID and section_code.CodesID = codes.CodesID and sections.SectionID = @SectionID",
+                    _connection);
+
+            cmd.Parameters.AddWithValue("@SectionID", sectionId);
+            MySqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                codes.Add(reader["Code"].ToString());
+            }
+            reader.Close();
+
+            return codes;
+        }
+
         public Header GetHeader(string id)
         {
             string sqlStatement = "SELECT * FROM feedbacksystem.header where HeaderID = @HeaderID";
@@ -192,7 +251,7 @@ namespace FeedBackSystem
                 reader.Read();
 
                 header.Title = reader["Name"].ToString();
-                header.HeaderID = reader["HeaderID"].ToString();
+                header.HeaderId = reader["HeaderID"].ToString();
                 header.Desc = reader["Desc"].ToString();
                 reader.Close();
 
@@ -263,7 +322,6 @@ namespace FeedBackSystem
                     List<int> itemsId = new List<int>();
                     int headId;
                     string duplicateMsg = "These items are duplicated: ";
-                    bool duplicateItem;
                     bool extraDuplicateItem = false;
 
                     MySqlDataReader reader;
@@ -284,7 +342,7 @@ namespace FeedBackSystem
                     foreach (HeaderItem item in itemValues)
                     {
                         int currentItemId = -1;
-                        duplicateItem = false;
+                        var duplicateItem = false;
 
                         //check whether there is same header item (by name and type)
                         sqlStatement =
@@ -445,8 +503,6 @@ namespace FeedBackSystem
 
         public bool SaveSection(Section section)
         {
-            string sqlStatement;
-            int sectionId;
             int codeId = 0;
             
 
@@ -455,9 +511,10 @@ namespace FeedBackSystem
                 try
                 {
                     //Insert the section
-                    sqlStatement = "INSERT INTO sections(`Title`, `Desc`) VALUES (@Title,@Desc); SELECT last_insert_id() as id;";
+                     string sqlStatement = "INSERT INTO sections(`Title`, `Desc`) VALUES (@Title,@Desc); SELECT last_insert_id() as id;";
                     MySqlDataReader reader;
 
+                    int sectionId;
                     using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
                     {
                         cmd.Parameters.AddWithValue("@Title", section.Title);

@@ -163,6 +163,13 @@
     <Compile Include="SelectHeader.Designer.cs">
       <DependentUpon>SelectHeader.cs</DependentUpon>
     </Compile>
+    <Compile Include="Feedback.cs" />
+    <Compile Include="SelectSection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SelectSection.Designer.cs">
+      <DependentUpon>SelectSection.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="DeleteBox.resx">
       <DependentUpon>DeleteBox.cs</DependentUpon>
     </EmbeddedResource>
@@ -225,6 +232,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SelectHeader.resx">
       <DependentUpon>SelectHeader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SelectSection.resx">
+      <DependentUpon>SelectSection.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -30,9 +30,13 @@ namespace FeedBackSystem
             switch (itemType.InputType)
             {
                 case "Text":
-                    
-                    TextBox text = new TextBox { Anchor = AnchorStyles.Left | AnchorStyles.Right, AutoSize = true };
-                    text.Text = itemType.ValueItem[0];
+
+                    TextBox text = new TextBox
+                    {
+                        Anchor = AnchorStyles.Left | AnchorStyles.Right,
+                        AutoSize = true,
+                        Text = itemType.ValueItem[0]
+                    };
                     HeaderTable.Controls.Add(text, _column[_counter]+1,_row);
                     HeaderTable.SetColumnSpan(text, 3);
                     break;

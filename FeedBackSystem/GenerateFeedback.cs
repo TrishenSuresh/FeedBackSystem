@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
 
@@ -7,6 +8,9 @@ namespace FeedBackSystem
 {
     public partial class GenerateFeedback : UserControl
     {
+        private int row = 0;
+        Feedback _currentFeed = new Feedback();
+
         public GenerateFeedback()
         {
             InitializeComponent();
@@ -34,15 +38,54 @@ namespace FeedBackSystem
 
         private void AddSectionBtn_Click(object sender, EventArgs e)
         {
+            SectionTable.Controls.Clear();
+
             RowStyle style = new RowStyle { SizeType = SizeType.AutoSize };
 
             ContentTable.Padding = new Padding(0, 0, SystemInformation.VerticalScrollBarWidth, 0);
             SectionTable.RowStyles.Add(style);
 
-            SectionPlacement usercontrol = new SectionPlacement();
 
-            SectionTable.Controls.Add(usercontrol, 0, SectionTable.RowCount - 1);
-            SectionTable.ScrollControlIntoView(usercontrol);
+            using (SelectSection form = new SelectSection())
+            {
+                var result = form.ShowDialog();
+
+                if (result == DialogResult.OK)
+                {
+                    foreach (Section s in form._sectionSelected)
+                    {
+                        SectionTable.Controls.Add(new Label { Text = s.Title, Anchor = AnchorStyles.Left, TextAlign = ContentAlignment.MiddleLeft }, 0, row);
+                        ComboBox codes = new ComboBox { DropDownStyle = ComboBoxStyle.DropDownList, Anchor = AnchorStyles.Right };
+
+                        foreach (string code in s.Codes)
+                        {
+                            codes.Items.Add(code);
+                        }
+
+                        SectionTable.Controls.Add(codes, 1, row);
+                        SectionTable.Controls.Add(new RichTextBox { Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top }, 0, row + 1);
+                        row++;
+                        row++;
+                    }
+
+                    _currentFeed.Sections.Clear();
+                    _currentFeed.Sections.AddRange(form._sectionSelected);
+
+                    AddSectionBtn.Text = "Change Section";
+
+                }
+            }
+
+                //SectionPlacement usercontrol = new SectionPlacement();
+
+                //SectionTable.Controls.Add(usercontrol, 0, SectionTable.RowCount - 1);
+                //SectionTable.ScrollControlIntoView(usercontrol);
+
+                //SectionTable.Controls.Add(new Label {Text = "Title", Anchor = AnchorStyles.Left, TextAlign = ContentAlignment.MiddleLeft},0,row);
+                //SectionTable.Controls.Add(new ComboBox() {DropDownStyle = ComboBoxStyle.DropDownList,Anchor = AnchorStyles.Right},1,row);
+                //SectionTable.Controls.Add(new RichTextBox {Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top},0,row+1);
+
+                
 
         }
 
@@ -88,7 +131,7 @@ namespace FeedBackSystem
 
                     ContentTable.Controls.Remove(AddHeaderBtn);
                     ContentTable.Controls.Add(place, 0, 0);
-
+                    _currentFeed.Header = selectedHeader;
                     ChangeHeader.Visible = true;
                 }
             }
@@ -114,10 +157,19 @@ namespace FeedBackSystem
                         place.AddItem(item);
                     }
 
+                    _currentFeed.Header = form.Header;
                     ContentTable.Controls.Add(place, 0, 0);
                 }
             }
                 
+        }
+
+        private void SaveFeedbackBtn_Click(object sender, EventArgs e)
+        {
+            Applicant app = (Applicant)ApplicantList.SelectedItem;
+            _currentFeed.ApplicantId = app.Id;
+            _currentFeed.ReviewerId = Reviewer.Id.ToString();
+            MessageBox.Show(_currentFeed.Header.Title);
         }
     }
 }

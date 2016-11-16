@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace FeedBackSystem
 {
     public class Header
     {
-        public string HeaderID { get; set; }
+        public string HeaderId { get; set; }
         public string Title { get; set; }
         public List<HeaderItem> HeaderItems { get; set; }
         public string Desc { get; set; }
@@ -29,12 +25,12 @@ namespace FeedBackSystem
             HeaderItems.Add(applicationType);
         }
 
-        public Header(string Id, string Title, string Desc)
+        public Header(string id, string title, string desc)
         {
             this.HeaderItems = new List<HeaderItem>();
-            this.HeaderID = Id;
-            this.Title = Title;
-            this.Desc = Desc;
+            this.HeaderId = id;
+            this.Title = title;
+            this.Desc = desc;
         }
 
         public void addHeaderItem(HeaderItem item)
