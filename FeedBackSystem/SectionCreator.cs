@@ -35,6 +35,9 @@ namespace FeedBackSystem
                         {
                             MessageBox.Show("Section succesfully saved");
                             sql.CloseConnection();
+
+                            //after the saving is done, go back to the home page showing the list of available sections
+                            this.DialogResult = DialogResult.OK;
                             this.Close();
                         }
                         
@@ -43,6 +46,6 @@ namespace FeedBackSystem
                 }
             }
 
-        }
+        } //end save button
     }
 }

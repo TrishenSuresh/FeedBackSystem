@@ -632,10 +632,78 @@ namespace FeedBackSystem
             }
             reader.Close();
             return listOfApp;
+        }
 
+        public bool SaveFeedback(Feedback feedback)
+        {
+            using (MySqlTransaction trans = _connection.BeginTransaction())
+            {
+                try
+                {
+                    //Insert the feedback
+                    string sqlStatement = "INSERT INTO feedback(`AppID`, `ReviewID`, `PositionID`) VALUES (@AppID,@ReviewID,@PositionID); SELECT last_insert_id() as id;";
+                    MySqlDataReader reader;
 
+                    int feedbackId;
 
+                    using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
+                    {
+                        cmd.Parameters.AddWithValue("@AppID", feedback.Applicant.Id);
+                        cmd.Parameters.AddWithValue("@ReviewID", feedback.ReviewerId);
+                        cmd.Parameters.AddWithValue("@PositionID", feedback.Position._positionId);
+                        reader = cmd.ExecuteReader();
+                        reader.Read();
+                        feedbackId = Convert.ToInt16(reader["id"]);
+                        reader.Close();
+                        cmd.Parameters.Clear();
+                    }
 
+                    //loop header items
+                    foreach (HeaderItem item in feedback.Header.HeaderItems)
+                    {
+                        //Link feedback with header items
+                        sqlStatement = "INSERT INTO feedbackheader(`FeedbackID`,`HeaderID`,`Input`) VALUES (@FeedbackID,@HeaderID,@Input);";
+                        using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
+                        {
+                            cmd.Parameters.AddWithValue("@FeedbackID", feedbackId);
+                            cmd.Parameters.AddWithValue("@HeaderID", item.Id);
+                            cmd.Parameters.AddWithValue("@Input", item.ValueChosen);
+                            reader = cmd.ExecuteReader();
+                            reader.Close();
+                            cmd.Parameters.Clear();
+                        }
+                        
+                    } //end loop header item
+
+                    //loop sections
+                    foreach (Section sec in feedback.Sections)
+                    {
+                        //Link feedback with sections
+                        sqlStatement = "INSERT INTO feedbacksection(`FeedbackID`,`SectionID`,`Comment`,`CodeGiven`) VALUES (@FeedbackID,@SectionID,@Comment,@Code);";
+                        using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
+                        {
+                            cmd.Parameters.AddWithValue("@FeedbackID", feedbackId);
+                            cmd.Parameters.AddWithValue("@SectionID", sec.SectionId);
+                            cmd.Parameters.AddWithValue("@Comment", sec.Comment);
+                            cmd.Parameters.AddWithValue("@Code", sec.CodeChosen);
+                            reader = cmd.ExecuteReader();
+                            reader.Close();
+                            cmd.Parameters.Clear();
+                        }
+
+                    } //end loop sections
+
+                    trans.Commit();
+                }
+                catch (Exception ex)
+                {
+                    trans.Rollback();
+                    MessageBox.Show(ex.Message);
+                    return false;
+                }
+
+            }
+            return true;
         }
     }
 }

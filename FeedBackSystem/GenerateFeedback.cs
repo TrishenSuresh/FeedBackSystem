@@ -168,15 +168,12 @@ namespace FeedBackSystem
 
         private void AddHeaderBtn_Click(object sender, EventArgs e)
         {
-
-
             using (SelectHeader form = new SelectHeader())
             {
                 var result = form.ShowDialog();
 
                 if (result == DialogResult.OK)
                 {
-
                     Header selectedHeader = form.Header;
                     _currentFeed.Header = selectedHeader;
 
@@ -185,9 +182,6 @@ namespace FeedBackSystem
                     ChangeHeader.Visible = true;
                 }
             }
-
-
-
         }
 
         private void ChangeHeader_Click(object sender, EventArgs e)
@@ -202,53 +196,37 @@ namespace FeedBackSystem
                     UpdateHeaderTab();
                 }
             }
-
         }
 
         private void SaveFeedbackBtn_Click(object sender, EventArgs e)
         {
+            if (PositionList.SelectedIndex == -1)
+            {
+                MessageBox.Show("Select a position", "Missing attributes!");
+                return;
+            }
 
             if (ApplicantList.SelectedIndex == -1)
             {
-                MessageBox.Show("Select an applicant");
+                MessageBox.Show("Select an applicant", "Missing attributes!");
                 return;
             }
 
             if (_currentFeed.Header == null)
             {
-                MessageBox.Show("Please Complete the header before proceeding");
+                MessageBox.Show("Please select the header before proceeding", "Missing component!");
                 return;
             }
 
             if (_currentFeed.Sections.Count <= 0)
             {
-                MessageBox.Show("Please complete the sections before proceeding");
+                MessageBox.Show("Please select the sections before proceeding", "Missing component!");
                 return;
             }
             
             _currentFeed.ReviewerId = Reviewer.Id.ToString();
 
-            foreach (Section s in _currentFeed.Sections)
-            {
-                RichTextBox text = (RichTextBox) Controls.Find("comment" + s.SectionId, true)[0];
-                ComboBox codes = (ComboBox) Controls.Find("codes" + s.SectionId, true)[0];
-
-                if (codes.SelectedIndex == -1)
-                {
-                    MessageBox.Show("Please complete the sections before proceeding");
-                    return;
-                }
-
-                s.Comment = text.Text;
-                s.CodeChosen = codes.SelectedItem.ToString();
-
-                if (s.Comment.Length <= 0)
-                {
-                    MessageBox.Show("Please complete the sections before proceeding");
-                    return;
-                }
-            }
-
+            //check if there are null values in the header 
             foreach (HeaderItem item in _currentFeed.Header.HeaderItems)
             {
 
@@ -259,35 +237,66 @@ namespace FeedBackSystem
                     switch (control.GetType().Name)
                     {
                         case "TextBox":
-                            item.ValueChosen = ((TextBox) control).Text;
+                            item.ValueChosen = ((TextBox)control).Text;
                             break;
                         case "ComboBox":
-                            item.ValueChosen = ((ComboBox) control).SelectedItem.ToString();
+                            item.ValueChosen = ((ComboBox)control).SelectedItem.ToString();
                             break;
                         case "DateTimePicker":
-                            item.ValueChosen = ((DateTimePicker) control).Value.ToString("dd/MM/yyyy");
+                            item.ValueChosen = ((DateTimePicker)control).Value.ToString("dd/MM/yyyy");
                             break;
                         case "Label":
-                            item.ValueChosen = ((Label) control).Text;
+                            item.ValueChosen = ((Label)control).Text;
                             break;
                     }
 
-                    if(item.ValueChosen.Length <= 0)
+                    if (item.ValueChosen.Length <= 0)
                         throw new NullReferenceException();
                 }
                 catch (NullReferenceException)
                 {
-                    MessageBox.Show("Please Complete the header before proceeding");
+                    MessageBox.Show("Please complete the header before proceeding", "Missing attributes!");
                     return;
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(ex.Message, "Error!");
+                    return;
+                }
+            }
+
+            //check if there is null values in the sections
+            foreach (Section s in _currentFeed.Sections)
+            {
+                RichTextBox text = (RichTextBox) Controls.Find("comment" + s.SectionId, true)[0];
+                ComboBox codes = (ComboBox) Controls.Find("codes" + s.SectionId, true)[0];
+
+                if (codes.SelectedIndex == -1)
+                {
+                    MessageBox.Show("Please complete the sections before proceeding -> Codes", "Missing attributes!");
                     return;
                 }
 
-                
+                s.Comment = text.Text;
+                s.CodeChosen = codes.SelectedItem.ToString();
+
+                if (s.Comment.Length <= 0)
+                {
+                    MessageBox.Show("Please complete the sections before proceeding -> Comment", "Missing attributes!");
+                    return;
+                }
             }
+            
+            //end of field checkers
+
+            MySql sql = new MySql();
+            sql.OpenConnection();
+            if (sql.SaveFeedback(_currentFeed))
+                MessageBox.Show("Sucessfully inserted into the database");
+            else
+                return;
+
+            sql.CloseConnection();
 
         }
 

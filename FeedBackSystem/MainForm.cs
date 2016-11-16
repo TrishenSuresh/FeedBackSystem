@@ -75,5 +75,12 @@ namespace FeedBackSystem
             }
             
         }
+
+        private void sectionToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            MainPanel.Controls.Clear();
+            DisplayControl display = new DisplayControl("Section") { Dock = DockStyle.Fill };
+            MainPanel.Controls.Add(display);
+        }
     }
 }
