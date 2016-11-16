@@ -31,6 +31,16 @@ namespace FeedBackSystem
 
             ApplicantList.ValueMember = "Name";
 
+            List<Position> positions = sql.GetPositions();
+
+            foreach (Position p in positions)
+            {
+                PositionList.Items.Add(p);
+            }
+
+            PositionList.ValueMember = "_positionName";
+
+
             sql.CloseConnection();
 
             
@@ -75,17 +85,6 @@ namespace FeedBackSystem
 
                 }
             }
-
-                //SectionPlacement usercontrol = new SectionPlacement();
-
-                //SectionTable.Controls.Add(usercontrol, 0, SectionTable.RowCount - 1);
-                //SectionTable.ScrollControlIntoView(usercontrol);
-
-                //SectionTable.Controls.Add(new Label {Text = "Title", Anchor = AnchorStyles.Left, TextAlign = ContentAlignment.MiddleLeft},0,row);
-                //SectionTable.Controls.Add(new ComboBox() {DropDownStyle = ComboBoxStyle.DropDownList,Anchor = AnchorStyles.Right},1,row);
-                //SectionTable.Controls.Add(new RichTextBox {Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top},0,row+1);
-
-                
 
         }
 
@@ -170,6 +169,28 @@ namespace FeedBackSystem
             _currentFeed.ApplicantId = app.Id;
             _currentFeed.ReviewerId = Reviewer.Id.ToString();
             MessageBox.Show(_currentFeed.Header.Title);
+        }
+
+        private void PositionList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (PositionList.SelectedIndex != -1)
+            {
+                MySql sql = new MySql();
+                sql.OpenConnection();
+                Position pos = (Position) PositionList.SelectedItem;
+                List<Applicant> app = sql.GetAppByPosition(pos._positionId);
+
+                ApplicantList.Items.Clear();
+                ;
+
+                foreach (Applicant p in app)
+                {
+                    ApplicantList.Items.Add(p);
+                }
+
+                sql.CloseConnection();
+            }
+
         }
     }
 }
