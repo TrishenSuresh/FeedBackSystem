@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Windows.Forms;
+using Microsoft.Win32;
 
 namespace FeedBackSystem
 {
@@ -16,6 +17,13 @@ namespace FeedBackSystem
             if (result == DialogResult.OK)
             {
                 MainPanel.Controls.Add(new Home());
+
+                var adobePath = Registry.GetValue(@"HKEY_CLASSES_ROOT\Software\Adobe\Acrobat\Exe", string.Empty, string.Empty);
+
+                if (adobePath == null)
+                {
+                    MessageBox.Show("Please install adobe reader to fully utilize the system's functionality","Adobe Reader Not Found",MessageBoxButtons.OK);
+                }
             }
             else
             {

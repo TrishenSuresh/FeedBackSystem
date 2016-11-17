@@ -662,11 +662,11 @@ namespace FeedBackSystem
                     foreach (HeaderItem item in feedback.Header.HeaderItems)
                     {
                         //Link feedback with header items
-                        sqlStatement = "INSERT INTO feedbackheader(`FeedbackID`,`HeaderID`,`Input`) VALUES (@FeedbackID,@HeaderID,@Input);";
+                        sqlStatement = "INSERT INTO feedbackheader(`FeedbackID`,`HeaderIID`,`Input`) VALUES (@FeedbackID,@HeaderItemID,@Input);";
                         using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
                         {
                             cmd.Parameters.AddWithValue("@FeedbackID", feedbackId);
-                            cmd.Parameters.AddWithValue("@HeaderID", item.Id);
+                            cmd.Parameters.AddWithValue("@HeaderItemID", item.Id);
                             cmd.Parameters.AddWithValue("@Input", item.ValueChosen);
                             reader = cmd.ExecuteReader();
                             reader.Close();
@@ -679,13 +679,14 @@ namespace FeedBackSystem
                     foreach (Section sec in feedback.Sections)
                     {
                         //Link feedback with sections
-                        sqlStatement = "INSERT INTO feedbacksection(`FeedbackID`,`SectionID`,`Comment`,`CodeGiven`) VALUES (@FeedbackID,@SectionID,@Comment,@Code);";
+                        sqlStatement = "INSERT INTO feedbacksection(`FeedbackID`,`SectionID`,`Comment`,`CodeGiven`,IsChecked) VALUES (@FeedbackID,@SectionID,@Comment,@Code,@Checked);";
                         using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
                         {
                             cmd.Parameters.AddWithValue("@FeedbackID", feedbackId);
                             cmd.Parameters.AddWithValue("@SectionID", sec.SectionId);
                             cmd.Parameters.AddWithValue("@Comment", sec.Comment);
                             cmd.Parameters.AddWithValue("@Code", sec.CodeChosen);
+                            cmd.Parameters.AddWithValue("@Checked", sec.IsChecked);
                             reader = cmd.ExecuteReader();
                             reader.Close();
                             cmd.Parameters.Clear();
@@ -698,7 +699,7 @@ namespace FeedBackSystem
                 catch (Exception ex)
                 {
                     trans.Rollback();
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(ex.ToString());
                     return false;
                 }
 

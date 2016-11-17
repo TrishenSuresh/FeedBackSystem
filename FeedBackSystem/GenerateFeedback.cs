@@ -17,6 +17,7 @@ namespace FeedBackSystem
 
             SectionTable.VerticalScroll.Enabled = false;
             ContentTable.VerticalScroll.Enabled = true;
+            SectionTable.HorizontalScroll.Enabled = false;
             AddHeaderBtn.Enabled = false;
 
             MySql sql = new MySql();
@@ -54,7 +55,9 @@ namespace FeedBackSystem
 
             RowStyle style = new RowStyle {SizeType = SizeType.AutoSize};
 
-            ContentTable.Padding = new Padding(0, 0, SystemInformation.VerticalScrollBarWidth, 0);
+            SectionTable.Padding = new Padding(0, 0, SystemInformation.VerticalScrollBarWidth, 0);
+            HeaderControls.Padding = new Padding(0, 0, SystemInformation.VerticalScrollBarWidth, 0);
+
             SectionTable.RowStyles.Add(style);
 
 
@@ -66,13 +69,20 @@ namespace FeedBackSystem
                 {
                     foreach (Section s in form._sectionSelected)
                     {
+
+
+                      
+
+                        SectionTable.Controls.Add(new CheckBox {Anchor = AnchorStyles.Left, Name = "checker"+s.SectionId, AutoSize = true},0,row);
+
                         SectionTable.Controls.Add(
                             new Label
                             {
                                 Text = s.Title,
                                 Anchor = AnchorStyles.Left,
                                 TextAlign = ContentAlignment.MiddleLeft
-                            }, 0, row);
+                            }, 1, row);
+
                         ComboBox codes = new ComboBox
                         {
                             DropDownStyle = ComboBoxStyle.DropDownList,
@@ -85,13 +95,13 @@ namespace FeedBackSystem
                             codes.Items.Add(code);
                         }
 
-                        SectionTable.Controls.Add(codes, 1, row);
+                        SectionTable.Controls.Add(codes, 2, row);
                         SectionTable.Controls.Add(
                             new RichTextBox
                             {
                                 Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top,
                                 Name = "comment" + s.SectionId
-                            }, 0, row + 1);
+                            }, 1, row + 1);
                         row++;
                         row++;
                     }
@@ -270,6 +280,8 @@ namespace FeedBackSystem
             {
                 RichTextBox text = (RichTextBox) Controls.Find("comment" + s.SectionId, true)[0];
                 ComboBox codes = (ComboBox) Controls.Find("codes" + s.SectionId, true)[0];
+                CheckBox checker = (CheckBox) Controls.Find("checker" + s.SectionId, true)[0];
+
 
                 if (codes.SelectedIndex == -1)
                 {
@@ -277,14 +289,18 @@ namespace FeedBackSystem
                     return;
                 }
 
+                //Assign values to section object
                 s.Comment = text.Text;
                 s.CodeChosen = codes.SelectedItem.ToString();
+                s.IsChecked = checker.Checked;
 
                 if (s.Comment.Length <= 0)
                 {
                     MessageBox.Show("Please complete the sections before proceeding -> Comment", "Missing attributes!");
                     return;
                 }
+
+
             }
             
             //end of field checkers
