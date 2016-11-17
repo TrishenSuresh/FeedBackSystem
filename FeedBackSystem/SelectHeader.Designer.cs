@@ -30,7 +30,7 @@
         {
             this.MainTable = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.button3 = new System.Windows.Forms.Button();
+            this.CreateHeaderBtn = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.HeaderList = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
@@ -71,7 +71,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 148F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 292F));
-            this.tableLayoutPanel1.Controls.Add(this.button3, 5, 0);
+            this.tableLayoutPanel1.Controls.Add(this.CreateHeaderBtn, 5, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 479);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
@@ -80,16 +80,16 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(571, 36);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // button3
+            // CreateHeaderBtn
             // 
-            this.button3.AutoSize = true;
-            this.button3.Location = new System.Drawing.Point(444, 3);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(86, 23);
-            this.button3.TabIndex = 2;
-            this.button3.Text = "Create Header";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.CreateHeaderBtn.AutoSize = true;
+            this.CreateHeaderBtn.Location = new System.Drawing.Point(444, 3);
+            this.CreateHeaderBtn.Name = "CreateHeaderBtn";
+            this.CreateHeaderBtn.Size = new System.Drawing.Size(86, 23);
+            this.CreateHeaderBtn.TabIndex = 2;
+            this.CreateHeaderBtn.Text = "Create Header";
+            this.CreateHeaderBtn.UseVisualStyleBackColor = true;
+            this.CreateHeaderBtn.Click += new System.EventHandler(this.CreateHeaderBtn_Click);
             // 
             // tableLayoutPanel2
             // 
@@ -180,7 +180,7 @@
 
         private System.Windows.Forms.TableLayoutPanel MainTable;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button CreateHeaderBtn;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.TableLayoutPanel HeaderList;
         private System.Windows.Forms.Label label1;

@@ -337,5 +337,27 @@ namespace FeedBackSystem
             }
 
         }
+
+        private void SaveTemplateBtn_Click(object sender, EventArgs e)
+        {
+            using (SaveBox save = new SaveBox())
+            {
+                var result = save.ShowDialog();
+
+                if (result == DialogResult.OK)
+                {
+                    MySql sql = new MySql();
+
+                    sql.OpenConnection();
+
+                    if (sql.SaveTemplate(_currentFeed, save.Title, save.Desc))
+                    {
+                        MessageBox.Show("Template successfully saved");
+                    }
+
+                    sql.CloseConnection();
+                }
+            }
+        }
     }
 }

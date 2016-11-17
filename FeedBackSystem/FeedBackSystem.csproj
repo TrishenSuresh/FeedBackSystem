@@ -171,6 +171,7 @@
     <Compile Include="SelectSection.Designer.cs">
       <DependentUpon>SelectSection.cs</DependentUpon>
     </Compile>
+    <Compile Include="Template.cs" />
     <EmbeddedResource Include="DeleteBox.resx">
       <DependentUpon>DeleteBox.cs</DependentUpon>
     </EmbeddedResource>

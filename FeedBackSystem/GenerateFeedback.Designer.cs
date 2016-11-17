@@ -34,7 +34,7 @@
             this.PDFPanel = new System.Windows.Forms.Panel();
             this.PDFDisplay = new System.Windows.Forms.WebBrowser();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.button5 = new System.Windows.Forms.Button();
+            this.SaveTemplateBtn = new System.Windows.Forms.Button();
             this.SaveFeedbackBtn = new System.Windows.Forms.Button();
             this.AddSectionBtn = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
@@ -98,7 +98,7 @@
             this.PositionList.Location = new System.Drawing.Point(3, 16);
             this.PositionList.Name = "PositionList";
             this.tableLayoutPanel1.SetRowSpan(this.PositionList, 8);
-            this.PositionList.Size = new System.Drawing.Size(118, 710);
+            this.PositionList.Size = new System.Drawing.Size(118, 707);
             this.PositionList.TabIndex = 1;
             this.PositionList.SelectedIndexChanged += new System.EventHandler(this.PositionList_SelectedIndexChanged);
             // 
@@ -109,7 +109,7 @@
             this.ApplicantList.Location = new System.Drawing.Point(127, 16);
             this.ApplicantList.Name = "ApplicantList";
             this.tableLayoutPanel1.SetRowSpan(this.ApplicantList, 8);
-            this.ApplicantList.Size = new System.Drawing.Size(123, 710);
+            this.ApplicantList.Size = new System.Drawing.Size(123, 707);
             this.ApplicantList.TabIndex = 2;
             this.ApplicantList.SelectedIndexChanged += new System.EventHandler(this.ApplicantList_SelectedIndexChanged);
             // 
@@ -121,7 +121,7 @@
             this.PDFPanel.Location = new System.Drawing.Point(871, 16);
             this.PDFPanel.Name = "PDFPanel";
             this.tableLayoutPanel1.SetRowSpan(this.PDFPanel, 8);
-            this.PDFPanel.Size = new System.Drawing.Size(370, 710);
+            this.PDFPanel.Size = new System.Drawing.Size(370, 707);
             this.PDFPanel.TabIndex = 5;
             // 
             // PDFDisplay
@@ -130,7 +130,7 @@
             this.PDFDisplay.Location = new System.Drawing.Point(0, 0);
             this.PDFDisplay.MinimumSize = new System.Drawing.Size(20, 20);
             this.PDFDisplay.Name = "PDFDisplay";
-            this.PDFDisplay.Size = new System.Drawing.Size(370, 710);
+            this.PDFDisplay.Size = new System.Drawing.Size(370, 707);
             this.PDFDisplay.TabIndex = 0;
             // 
             // tableLayoutPanel3
@@ -140,27 +140,28 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel3.Controls.Add(this.button5, 0, 1);
+            this.tableLayoutPanel3.Controls.Add(this.SaveTemplateBtn, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.SaveFeedbackBtn, 2, 1);
             this.tableLayoutPanel3.Controls.Add(this.AddSectionBtn, 2, 0);
             this.tableLayoutPanel3.Controls.Add(this.button3, 0, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(256, 732);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(256, 729);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(609, 87);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(609, 90);
             this.tableLayoutPanel3.TabIndex = 6;
             // 
-            // button5
+            // SaveTemplateBtn
             // 
-            this.button5.Location = new System.Drawing.Point(3, 37);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(164, 28);
-            this.button5.TabIndex = 1;
-            this.button5.Text = "Save Template";
-            this.button5.UseVisualStyleBackColor = true;
+            this.SaveTemplateBtn.Location = new System.Drawing.Point(3, 37);
+            this.SaveTemplateBtn.Name = "SaveTemplateBtn";
+            this.SaveTemplateBtn.Size = new System.Drawing.Size(164, 28);
+            this.SaveTemplateBtn.TabIndex = 1;
+            this.SaveTemplateBtn.Text = "Save Template";
+            this.SaveTemplateBtn.UseVisualStyleBackColor = true;
+            this.SaveTemplateBtn.Click += new System.EventHandler(this.SaveTemplateBtn_Click);
             // 
             // SaveFeedbackBtn
             // 
@@ -208,7 +209,7 @@
             this.ContentTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.ContentTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
             this.ContentTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 481F));
-            this.ContentTable.Size = new System.Drawing.Size(609, 710);
+            this.ContentTable.Size = new System.Drawing.Size(609, 707);
             this.ContentTable.TabIndex = 7;
             // 
             // SectionTable
@@ -226,7 +227,7 @@
             this.SectionTable.Name = "SectionTable";
             this.SectionTable.RowCount = 1;
             this.SectionTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.SectionTable.Size = new System.Drawing.Size(603, 475);
+            this.SectionTable.Size = new System.Drawing.Size(586, 475);
             this.SectionTable.TabIndex = 9;
             // 
             // AddHeaderBtn
@@ -234,7 +235,7 @@
             this.AddHeaderBtn.Dock = System.Windows.Forms.DockStyle.Fill;
             this.AddHeaderBtn.Location = new System.Drawing.Point(3, 3);
             this.AddHeaderBtn.Name = "AddHeaderBtn";
-            this.AddHeaderBtn.Size = new System.Drawing.Size(603, 201);
+            this.AddHeaderBtn.Size = new System.Drawing.Size(586, 201);
             this.AddHeaderBtn.TabIndex = 0;
             this.AddHeaderBtn.Text = "Add Header";
             this.AddHeaderBtn.UseVisualStyleBackColor = true;
@@ -253,13 +254,13 @@
             this.HeaderControls.Name = "HeaderControls";
             this.HeaderControls.RowCount = 1;
             this.HeaderControls.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.HeaderControls.Size = new System.Drawing.Size(603, 31);
+            this.HeaderControls.Size = new System.Drawing.Size(586, 31);
             this.HeaderControls.TabIndex = 10;
             // 
             // ChangeHeader
             // 
             this.ChangeHeader.AutoSize = true;
-            this.ChangeHeader.Location = new System.Drawing.Point(508, 3);
+            this.ChangeHeader.Location = new System.Drawing.Point(491, 3);
             this.ChangeHeader.Name = "ChangeHeader";
             this.ChangeHeader.Size = new System.Drawing.Size(92, 23);
             this.ChangeHeader.TabIndex = 0;
@@ -316,7 +317,7 @@
         private System.Windows.Forms.ListBox ApplicantList;
         private System.Windows.Forms.Panel PDFPanel;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button SaveTemplateBtn;
         private System.Windows.Forms.Button SaveFeedbackBtn;
         private System.Windows.Forms.Button AddSectionBtn;
         private System.Windows.Forms.Button button3;

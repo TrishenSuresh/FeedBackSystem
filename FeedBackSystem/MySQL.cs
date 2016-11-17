@@ -699,7 +699,61 @@ namespace FeedBackSystem
                 catch (Exception ex)
                 {
                     trans.Rollback();
-                    MessageBox.Show(ex.ToString());
+                    MessageBox.Show(ex.Message);
+                    return false;
+                }
+
+            }
+            return true;
+        }
+
+        public bool SaveTemplate(Feedback feedback,string title,string desc)
+        {
+            using (MySqlTransaction trans = _connection.BeginTransaction())
+            {
+                try
+                {
+                    //Insert the template
+                    string sqlStatement = "INSERT INTO template(`HeaderID`, `TemplateTitle`, `TemplateDesc`, `TemplateAuthor`) VALUES (@HeaderID,@Title,@Desc,@Author); SELECT last_insert_id() as id;";
+                    MySqlDataReader reader;
+
+                    int templateId;
+
+                    using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
+                    {
+                        cmd.Parameters.AddWithValue("@HeaderID", feedback.Header.HeaderId);
+                        cmd.Parameters.AddWithValue("@Title", title);
+                        cmd.Parameters.AddWithValue("@Desc", desc);
+                        cmd.Parameters.AddWithValue("@Author", Reviewer.Id);
+                        reader = cmd.ExecuteReader();
+                        reader.Read();
+                        templateId = Convert.ToInt16(reader["id"]);
+                        reader.Close();
+                        cmd.Parameters.Clear();
+                    }
+
+                    //loop section
+                    foreach (Section s in feedback.Sections)
+                    {
+                        //Link template with sections
+                        sqlStatement = "INSERT INTO template_section(`TemplateID`,`SectionID`) VALUES (@TemplateID,@SectionID);";
+                        using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
+                        {
+                            cmd.Parameters.AddWithValue("@TemplateID", templateId);
+                            cmd.Parameters.AddWithValue("@SectionID", s.SectionId);
+                            reader = cmd.ExecuteReader();
+                            reader.Close();
+                            cmd.Parameters.Clear();
+                        }
+
+                    } //end loop section
+
+                    trans.Commit();
+                }
+                catch (Exception ex)
+                {
+                    trans.Rollback();
+                    MessageBox.Show(ex.Message);
                     return false;
                 }
 
