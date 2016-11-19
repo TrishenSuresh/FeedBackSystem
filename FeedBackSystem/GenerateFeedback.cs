@@ -20,6 +20,8 @@ namespace FeedBackSystem
             SectionTable.HorizontalScroll.Enabled = false;
             AddHeaderBtn.Enabled = false;
 
+            ContentTable.Padding = new Padding(0, 0, SystemInformation.VerticalScrollBarWidth, 0);
+
             MySql sql = new MySql();
             sql.OpenConnection();
 
@@ -168,6 +170,10 @@ namespace FeedBackSystem
                     case "Reviewer:":
                         item.ValueItem.Clear();
                         item.ValueItem.Add(Reviewer.Name);
+                        break;
+                    case "Application Type:":
+                        item.ValueItem.Clear();
+                        item.ValueItem.Add(_currentFeed.Applicant.ApplyType);
                         break;
                 }
                 place.AddItem(item);

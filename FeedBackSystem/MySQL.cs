@@ -80,16 +80,23 @@ namespace FeedBackSystem
 
             MySqlCommand cmd =
                 new MySqlCommand(
-                    "SELECT applicant.ApplicantID,FirstName, LastName, Email, positionapplied.File FROM feedbacksystem.applicant, feedbacksystem.positionapplied where applicant.ApplicantID = positionapplied.ApplicantID",
+                    "SELECT applicant.ApplicantID,FirstName, LastName, Email, positionapplied.File,applicationtype.Name FROM feedbacksystem.applicant, feedbacksystem.positionapplied, feedbacksystem.applicationtype where applicant.ApplicantID = positionapplied.ApplicantID and positionapplied.ApplicationTypeID = applicationtype.ApplicationTypeID",
                     _connection);
             MySqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
             {
-
-
-                byte[] pdf = (byte[]) reader["File"];
-                Applicant app = new Applicant(reader["ApplicantID"].ToString(),reader["FirstName"] + " " + reader["LastName"], reader["Email"] + "", pdf);
+                Applicant app;
+                //Check whether is the File column not null else it will throw InvalidCast
+                if (!Convert.IsDBNull(reader["File"]))
+                {
+                    byte[] pdf = (byte[])reader["File"];
+                    app = new Applicant(reader["ApplicantID"].ToString(), reader["FirstName"] + " " + reader["LastName"], reader["Email"] + "", pdf, reader["Name"].ToString());
+                }
+                else
+                {
+                    app = new Applicant(reader["ApplicantID"].ToString(), reader["FirstName"] + " " + reader["LastName"], reader["Email"] + "", null, reader["Name"].ToString());
+                }
                 listOfApp.Add(app);
 
             }
@@ -614,19 +621,42 @@ namespace FeedBackSystem
         {
             List<Applicant> listOfApp = new List<Applicant>();
 
-            MySqlCommand cmd =
+            //this command will sort according to the timestamp -> get the distinct row using applicantID -> first row
+            MySqlCommand cmd = 
                 new MySqlCommand(
-                    "SELECT applicant.ApplicantID,FirstName, LastName, Email, positionapplied.File FROM feedbacksystem.applicant, feedbacksystem.positionapplied,feedbacksystem.positions " +
-                    "where applicant.ApplicantID = positionapplied.ApplicantID and positionapplied.PositionID = positions.PositionID and positions.PositionID = @PositionID",
-                    _connection);
+                    "SELECT * FROM " + 
+                        "(SELECT applicant.ApplicantID, FirstName, LastName, Email, " + 
+                            "positionapplied.File, applicationtype.Name " + 
+                        "FROM feedbacksystem.applicant, feedbacksystem.positionapplied, " + 
+                            "feedbacksystem.positions, feedbacksystem.applicationtype " +
+                        "WHERE applicant.ApplicantID = positionapplied.ApplicantID " + 
+                        "AND positionapplied.PositionID = positions.PositionID " +
+                        "AND positions.PositionID = @PositionID " + 
+                        "AND applicationtype.ApplicationTypeID = positionapplied.ApplicantTypeID " + 
+                        "ORDER BY positionapplied.timestamp DESC) t " + 
+                    "GROUP BY ApplicantID; ",
+                _connection);
+            /*new MySqlCommand(
+                "SELECT applicant.ApplicantID,FirstName, LastName, Email, positionapplied.File,applicationtype.Name FROM feedbacksystem.applicant, feedbacksystem.positionapplied,feedbacksystem.positions,feedbacksystem.applicationtype " +
+                "where applicant.ApplicantID = positionapplied.ApplicantID and positionapplied.PositionID = positions.PositionID and positions.PositionID = @PositionID and applicationtype.ApplicationTypeID = positionapplied.ApplicantTypeID " + 
+                "ORDER BY positionapplied.timestamp DESC",
+                _connection);*/
 
             cmd.Parameters.AddWithValue("@PositionID", posId);
             MySqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
             {
-                byte[] pdf = (byte[])reader["File"];
-                Applicant app = new Applicant(reader["ApplicantID"].ToString(), reader["FirstName"] + " " + reader["LastName"], reader["Email"] + "", pdf);
+                Applicant app;
+                //Check whether is the File column not null else it will throw InvalidCast
+                if (!Convert.IsDBNull(reader["File"])) { 
+                    byte[] pdf = (byte[])reader["File"];
+                    app = new Applicant(reader["ApplicantID"].ToString(), reader["FirstName"] + " " + reader["LastName"], reader["Email"] + "", pdf, reader["Name"].ToString());
+                } else
+                {
+                    app = new Applicant(reader["ApplicantID"].ToString(), reader["FirstName"] + " " + reader["LastName"], reader["Email"] + "", null, reader["Name"].ToString());
+                }
+                
                 listOfApp.Add(app);
 
             }

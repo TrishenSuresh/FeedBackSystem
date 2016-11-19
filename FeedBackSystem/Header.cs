@@ -16,7 +16,7 @@ namespace FeedBackSystem
             HeaderItem applicant = new HeaderItem("Applicant:", "Label", "<Set upon selection during generating feedback>");
             HeaderItem job = new HeaderItem("Job applied:", "Label", "<Set upon selection during generating feedback>");
             HeaderItem reviewer = new HeaderItem("Reviewer:", "Label", "<Set during generating feedback>");
-            HeaderItem applicationType = new HeaderItem("Type:", "Query", "SELECT name as title from applicationtype");
+            HeaderItem applicationType = new HeaderItem("Application Type:", "Label", "<Set upon selection during generating feedback>");
 
             this.HeaderItems = new List<HeaderItem>();
             HeaderItems.Add(applicant);

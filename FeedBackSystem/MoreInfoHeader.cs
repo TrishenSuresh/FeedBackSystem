@@ -14,7 +14,8 @@ namespace FeedBackSystem
         {
             InitializeComponent();
 
-            HeaderName.Text = @"Header Name : "+header.Title;
+            HeaderName.Text = @"Header Name : " + header.Title;
+            HeaderDesc.Text = @"Header Description : " + header.Desc;
 
             foreach (HeaderItem item in header.HeaderItems)
             {
