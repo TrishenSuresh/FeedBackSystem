@@ -19,7 +19,7 @@ namespace FeedBackSystem.HeaderCreatorControls
             {
                 if (Review_InterviewRadio.Checked)
                 {
-                    return "Review";
+                    return "<Review Date>"; //will be set to query
                 }
                 else
                 {

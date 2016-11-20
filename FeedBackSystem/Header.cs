@@ -13,10 +13,10 @@ namespace FeedBackSystem
         public Header()
         {
             //Applicant's name item
-            HeaderItem applicant = new HeaderItem("Applicant:", "Label", "<Set upon selection during generating feedback>");
-            HeaderItem job = new HeaderItem("Job applied:", "Label", "<Set upon selection during generating feedback>");
-            HeaderItem reviewer = new HeaderItem("Reviewer:", "Label", "<Set during generating feedback>");
-            HeaderItem applicationType = new HeaderItem("Application Type:", "Label", "<Set upon selection during generating feedback>");
+            HeaderItem applicant = new HeaderItem("Applicant:", "Query", new List<string> { "<Applicant Name>" });
+            HeaderItem job = new HeaderItem("Job applied:", "Query", new List<string> { "<Applied Position>" });
+            HeaderItem reviewer = new HeaderItem("Reviewer:", "Query", new List<string> { "<Reviewer Name>" });
+            HeaderItem applicationType = new HeaderItem("Application Type:", "Query", new List<string> { "<Application Type>" });
 
             this.HeaderItems = new List<HeaderItem>();
             HeaderItems.Add(applicant);

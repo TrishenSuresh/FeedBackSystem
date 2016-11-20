@@ -77,6 +77,8 @@ namespace FeedBackSystem
                         break;
                     case "Date":
                         HeaderCreatorControls.Date date = (HeaderCreatorControls.Date)InputControlPanel.Controls[0];
+                        if (date.GetValue().Equals("<Review Date>"))
+                            InputType = "Query";
                         ValueItem.Add(date.GetValue());
                         break;
                     case "List":
@@ -109,7 +111,7 @@ namespace FeedBackSystem
                 "\tLabel  :  Static input during header creation. \n" +
                 "\tDate  :  Could be manual date or data retrieved from database. \n" +
                 "\tList  :  User-defined list of items. \n" +
-                "\tQuery  :  List of data that will be retrieved from the database. \n"
+                "\tQuery  :  Data that will be retrieved from the database and set upon selection during generating the feedback. \n"
                 , @"What input type?");
         }
 

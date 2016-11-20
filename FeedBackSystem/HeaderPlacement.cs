@@ -61,7 +61,7 @@ namespace FeedBackSystem
                     HeaderTable.SetColumnSpan(list,3);
 
                     break;
-
+                        /*
                 case "Query":
 
                     ComboBox listQuery = new ComboBox
@@ -82,7 +82,7 @@ namespace FeedBackSystem
                     HeaderTable.SetColumnSpan(listQuery, 3);
 
                     break;
-
+                    */
                 case "Date":
 
                     DateTime time = DateTime.Now;
@@ -113,7 +113,7 @@ namespace FeedBackSystem
                     break;
 
                 case "Label":
-
+                case "Query":
                     Label label = new Label {Text = itemType.ValueItem[0], TextAlign = ContentAlignment.BottomLeft, Anchor = AnchorStyles.Left, AutoSize = true, Name = "header" + itemType.Id };
                     HeaderTable.Controls.Add(label, _column[_counter] + 1, _row);
                     HeaderTable.SetColumnSpan(label,3);

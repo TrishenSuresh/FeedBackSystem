@@ -28,22 +28,12 @@ namespace FeedBackSystem
 
                 if (result == DialogResult.OK)
                 {
-                    HeaderItem item;
-                    if (creator.ValueItem.Count > 1)
-                    {
-                        item = new HeaderItem(creator.Title + ":", creator.InputType, creator.ValueItem);
-                    }
-                    else
-                    {
-                        item = new HeaderItem(creator.Title + ":", creator.InputType, creator.ValueItem[0]);
-                    }
+                    HeaderItem item = new HeaderItem(creator.Title + ":", creator.InputType, creator.ValueItem);
                     header.addHeaderItem(item);
 
                     HeaderTab.AddItem(item);
-
                 }
             }
-           
         }
 
         private void SaveHeaderBtn_Click(object sender, EventArgs e)

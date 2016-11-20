@@ -80,7 +80,7 @@ namespace FeedBackSystem
 
             MySqlCommand cmd =
                 new MySqlCommand(
-                    "SELECT applicant.ApplicantID,FirstName, LastName, Email, positionapplied.File,applicationtype.Name FROM feedbacksystem.applicant, feedbacksystem.positionapplied, feedbacksystem.applicationtype where applicant.ApplicantID = positionapplied.ApplicantID and positionapplied.ApplicationTypeID = applicationtype.ApplicationTypeID",
+                    "SELECT applicant.ApplicantID,FirstName, LastName, Email, positionapplied.File,applicationtype.Name,Timestamp FROM feedbacksystem.applicant, feedbacksystem.positionapplied, feedbacksystem.applicationtype where applicant.ApplicantID = positionapplied.ApplicantID and positionapplied.ApplicationTypeID = applicationtype.ApplicationTypeID",
                     _connection);
             MySqlDataReader reader = cmd.ExecuteReader();
 
@@ -96,7 +96,8 @@ namespace FeedBackSystem
                                         reader["Email"] + "", 
                                         pdf, 
                                         reader["Name"].ToString(), 
-                                        reader["StatusTitle"].ToString());
+                                        reader["StatusTitle"].ToString(),
+                                        reader["Timestamp"].ToString());
                 }
                 else
                 {
@@ -105,7 +106,8 @@ namespace FeedBackSystem
                                         reader["Email"] + "", 
                                         null, 
                                         reader["Name"].ToString(), 
-                                        reader["StatusTitle"].ToString());
+                                        reader["StatusTitle"].ToString(),
+                                        reader["Timestamp"].ToString());
                 }
                 listOfApp.Add(app);
 
@@ -324,15 +326,7 @@ namespace FeedBackSystem
                 foreach (DataRow row in dataTable.Rows)
                 {
                     List<string> list = GetHeaderList(row["HeaderItemID"].ToString());
-
-                    if (list.Count > 1)
-                    {
-                        headerItem.Add(new HeaderItem(row["HeaderItemID"].ToString(),row["Title"].ToString(), row["InputType"].ToString(), list));
-                    }
-                    else
-                    {
-                        headerItem.Add(new HeaderItem(row["HeaderItemID"].ToString(),row["Title"].ToString(), row["InputType"].ToString(), list[0]));
-                    }
+                    headerItem.Add(new HeaderItem(row["HeaderItemID"].ToString(),row["Title"].ToString(), row["InputType"].ToString(), list));
                 }
             }
             catch (Exception genExp)
@@ -399,8 +393,7 @@ namespace FeedBackSystem
                         
                         if(duplicateItem)
                         {
-                            if (!item.Title.Equals("Applicant:") && !item.Title.Equals("Job applied:") &&
-                                !item.Title.Equals("Reviewer:") && !item.Title.Equals("Type:"))
+                            if(!item.InputType.Equals("Query"))
                             {
                                 var confirmResult = MessageBox.Show("This item, \"" + item.Title + "\" is duplicated!" +
                                                                 "\nClick Yes to save another copy, No to edit",
@@ -436,33 +429,17 @@ namespace FeedBackSystem
                                 cmd.Parameters.Clear();
                             }
 
-                            if (item.InputType.Equals("Query"))
+                            foreach (string value in item.ValueItem)
                             {
                                 sqlStatement =
-                                    "INSERT INTO headeritemlist(HeaderItemId, List) VALUES (@currentItemID,@itemQueryStat);";
+                                "INSERT INTO headeritemlist(HeaderItemId, List) VALUES (@currentItemID,@value); ";
                                 using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
                                 {
-                                    cmd.Parameters.AddWithValue("@currentItemID", currentItemId);
-                                    cmd.Parameters.AddWithValue("@itemQueryStat", item.QueryStat);
-                                    reader = cmd.ExecuteReader();
-                                    reader.Close();
-                                    cmd.Parameters.Clear();
-                                }
-                            }
-                            else
-                            {
-                                foreach (string value in item.ValueItem)
-                                {
-                                    sqlStatement =
-                                        "INSERT INTO headeritemlist(HeaderItemId, List) VALUES (@currentItemID,@value); ";
-                                    using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
-                                    {
-                                        cmd.Parameters.AddWithValue("@currentItemID", currentItemId);
-                                        cmd.Parameters.AddWithValue("@value", value);
-                                        reader = cmd.ExecuteReader();
-                                        reader.Close();
-                                        cmd.Parameters.Clear();
-                                    }
+                                cmd.Parameters.AddWithValue("@currentItemID", currentItemId);
+                                cmd.Parameters.AddWithValue("@value", value);
+                                reader = cmd.ExecuteReader();
+                                reader.Close();
+                                cmd.Parameters.Clear();
                                 }
                             }
                         } //end if no duplicate 
@@ -635,7 +612,7 @@ namespace FeedBackSystem
             MySqlCommand cmd = 
                 new MySqlCommand(
                     "SELECT * FROM " + 
-                        "(SELECT applicant.ApplicantID, FirstName, LastName, Email, " + 
+                        "(SELECT applicant.ApplicantID, FirstName, LastName, Email, positionapplied.Timestamp, " + 
                             "positionapplied.File, applicationtype.Name, applicationstatus.StatusTitle " + 
                         "FROM feedbacksystem.applicant, feedbacksystem.positionapplied, " + 
                             "feedbacksystem.positions, feedbacksystem.applicationtype, feedbacksystem.applicationstatus " +
@@ -667,7 +644,8 @@ namespace FeedBackSystem
                                         reader["Email"] + "", 
                                         pdf, 
                                         reader["Name"].ToString(), 
-                                        reader["StatusTitle"].ToString());
+                                        reader["StatusTitle"].ToString(),
+                                        reader["Timestamp"].ToString());
                 } else
                 {
                     app = new Applicant(reader["ApplicantID"].ToString(), 
@@ -675,7 +653,8 @@ namespace FeedBackSystem
                                         reader["Email"] + "", 
                                         null, 
                                         reader["Name"].ToString(), 
-                                        reader["StatusTitle"].ToString());
+                                        reader["StatusTitle"].ToString(),
+                                        reader["Timestamp"].ToString());
                 }
                 
                 listOfApp.Add(app);

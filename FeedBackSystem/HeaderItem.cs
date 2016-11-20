@@ -12,10 +12,10 @@ namespace FeedBackSystem
         public string InputType { get; set; }
         public string ValueChosen { get; set; }
         public List<string> ValueItem { get; set; }
-        public string QueryStat { get; set; }
 
         public HeaderItem() { }
 
+        //create a header with a list of value item -> List
         public HeaderItem(string title, string inputType, List<string> value)
         {
             this.Title = title;
@@ -33,79 +33,6 @@ namespace FeedBackSystem
             this.ValueItem = new List<string>();
             //new memory allocation 
             ValueItem.AddRange(value);
-        }
-
-        public HeaderItem(string id,string title, string inputType, string value)
-        {
-            MySql sql = new MySql();
-            this.Id = id;
-            this.Title = title;
-            this.InputType = inputType;
-            this.ValueItem = new List<string>();
-            //new memory allocation 
-            if (inputType.Equals("Query"))
-            {
-                try
-                {
-
-                    sql.OpenConnection();
-                    DataTable dt = sql.GetDataSet(value);
-                    foreach (DataRow dr in dt.Rows)
-                    {
-                        string name = dr["title"].ToString();
-                        ValueItem.Add(name);
-                    }
-                }
-                catch (Exception genExp)
-                {
-                    MessageBox.Show(genExp.Message);
-                }
-                finally
-                {
-                    sql.CloseConnection();
-                }
-                QueryStat = value;
-            }
-            else
-            {
-                ValueItem.Add(value);
-            }
-        }
-
-        public HeaderItem(string title, string inputType, string value)
-        {
-            MySql sql = new MySql();
-            this.Title = title;
-            this.InputType = inputType;
-            this.ValueItem = new List<string>();
-            //new memory allocation 
-            if (inputType.Equals("Query"))
-            {
-                try
-                {
-                    
-                    sql.OpenConnection();
-                    DataTable dt = sql.GetDataSet(value);
-                    foreach (DataRow dr in dt.Rows)
-                    {
-                        string name = dr["title"].ToString();
-                        ValueItem.Add(name);
-                    }
-                }
-                catch (Exception genExp)
-                {
-                    MessageBox.Show(genExp.Message);
-                }
-                finally
-                {
-                    sql.CloseConnection();
-                }
-                QueryStat = value;
-            }
-            else
-            {
-                ValueItem.Add(value);
-            }
         }
     }
 }

@@ -157,25 +157,38 @@ namespace FeedBackSystem
 
             foreach (HeaderItem item in _currentFeed.Header.HeaderItems)
             {
-                switch (item.Title)
-                {
-                    case "Applicant:":
-                        item.ValueItem.Clear();
-                        item.ValueItem.Add(_currentFeed.Applicant.Name);
-                        break;
-                    case "Job applied:":
-                        item.ValueItem.Clear();
-                        item.ValueItem.Add(_currentFeed.Position._positionName);
-                        break;
-                    case "Reviewer:":
-                        item.ValueItem.Clear();
-                        item.ValueItem.Add(Reviewer.Name);
-                        break;
-                    case "Application Type:":
-                        item.ValueItem.Clear();
-                        item.ValueItem.Add(_currentFeed.Applicant.ApplyType);
-                        break;
-                }
+                if(item.InputType.Equals("Query"))
+                    switch (item.ValueItem[0])
+                    {
+                        case "<Applicant Name>":
+                            item.ValueItem.Clear();
+                            item.ValueItem.Add(_currentFeed.Applicant.Name);
+                            break;
+                        case "<Applied Position>":
+                            item.ValueItem.Clear();
+                            item.ValueItem.Add(_currentFeed.Position._positionName);
+                            break;
+                        case "<Reviewer Name>":
+                            item.ValueItem.Clear();
+                            item.ValueItem.Add(Reviewer.Name);
+                            break;
+                        case "<Application Type>":
+                            item.ValueItem.Clear();
+                            item.ValueItem.Add(_currentFeed.Applicant.ApplyType);
+                            break;
+                        case "<Applicant Email>":
+                            item.ValueItem.Clear();
+                            item.ValueItem.Add(_currentFeed.Applicant.Email);
+                            break;
+                        case "<Application Status>":
+                            item.ValueItem.Clear();
+                            item.ValueItem.Add(_currentFeed.Applicant.ApplyType);
+                            break;
+                        case "<Review Date>":
+                            item.ValueItem.Clear();
+                            item.ValueItem.Add(_currentFeed.Applicant.Date);
+                            break;
+                    }
                 place.AddItem(item);
             }
             

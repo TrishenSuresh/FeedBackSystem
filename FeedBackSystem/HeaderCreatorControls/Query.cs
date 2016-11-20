@@ -12,19 +12,15 @@ namespace FeedBackSystem.HeaderCreatorControls
 
         public string GetValue()
         {
-            string sqlStatement = "";
             switch (QueryList.Text)
             {
                 case "Applicant - Email":
-                    sqlStatement = "SELECT Email as title FROM applicant";
-                    break;
+                    return "<Applicant Email>";
                 case "Application Status":
-                    sqlStatement = "SELECT StatusTitle as title FROM applicationstatus";
-                    break;
+                    return "<Application Status>";
                 default:
                     throw new Exception("You have to make a selection!");
             }
-            return sqlStatement;
         }
     }
 }
