@@ -31,11 +31,8 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.templateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.headerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.headerToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.headerToolStrip = new System.Windows.Forms.ToolStripMenuItem();
+            this.sectionToolStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.feedbackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.giveFeedbackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewFeedbackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,7 +40,7 @@
             this.reportIssueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.creatorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainPanel = new System.Windows.Forms.Panel();
-            this.sectionToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.templateToolStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -53,7 +50,7 @@
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 1.435897F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 98.5641F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 31F));
             this.tableLayoutPanel1.Controls.Add(this.menuStrip1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.MainPanel, 1, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -86,49 +83,26 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addToolStripMenuItem,
-            this.headerToolStripMenuItem1,
-            this.sectionToolStripMenuItem1});
+            this.headerToolStrip,
+            this.sectionToolStrip,
+            this.templateToolStrip});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(78, 40);
             this.fileToolStripMenuItem.Text = "Review";
             // 
-            // addToolStripMenuItem
+            // headerToolStrip
             // 
-            this.addToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.templateToolStripMenuItem,
-            this.headerToolStripMenuItem,
-            this.sectionToolStripMenuItem});
-            this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
-            this.addToolStripMenuItem.Text = "Add";
+            this.headerToolStrip.Name = "headerToolStrip";
+            this.headerToolStrip.Size = new System.Drawing.Size(211, 30);
+            this.headerToolStrip.Text = "Header";
+            this.headerToolStrip.Click += new System.EventHandler(this.headerToolStrip_Click);
             // 
-            // templateToolStripMenuItem
+            // sectionToolStrip
             // 
-            this.templateToolStripMenuItem.Name = "templateToolStripMenuItem";
-            this.templateToolStripMenuItem.Size = new System.Drawing.Size(168, 30);
-            this.templateToolStripMenuItem.Text = "Template";
-            // 
-            // headerToolStripMenuItem
-            // 
-            this.headerToolStripMenuItem.Name = "headerToolStripMenuItem";
-            this.headerToolStripMenuItem.Size = new System.Drawing.Size(168, 30);
-            this.headerToolStripMenuItem.Text = "Header";
-            this.headerToolStripMenuItem.Click += new System.EventHandler(this.headerToolStripMenuItem_Click);
-            // 
-            // sectionToolStripMenuItem
-            // 
-            this.sectionToolStripMenuItem.Name = "sectionToolStripMenuItem";
-            this.sectionToolStripMenuItem.Size = new System.Drawing.Size(168, 30);
-            this.sectionToolStripMenuItem.Text = "Section";
-            this.sectionToolStripMenuItem.Click += new System.EventHandler(this.sectionToolStripMenuItem_Click);
-            // 
-            // headerToolStripMenuItem1
-            // 
-            this.headerToolStripMenuItem1.Name = "headerToolStripMenuItem1";
-            this.headerToolStripMenuItem1.Size = new System.Drawing.Size(211, 30);
-            this.headerToolStripMenuItem1.Text = "Header";
-            this.headerToolStripMenuItem1.Click += new System.EventHandler(this.headerToolStripMenuItem1_Click);
+            this.sectionToolStrip.Name = "sectionToolStrip";
+            this.sectionToolStrip.Size = new System.Drawing.Size(211, 30);
+            this.sectionToolStrip.Text = "Section";
+            this.sectionToolStrip.Click += new System.EventHandler(this.sectionToolStrip_Click);
             // 
             // feedbackToolStripMenuItem
             // 
@@ -181,15 +155,15 @@
             this.MainPanel.Location = new System.Drawing.Point(30, 51);
             this.MainPanel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MainPanel.Name = "MainPanel";
-            this.MainPanel.Size = new System.Drawing.Size(1781, 969);
+            this.MainPanel.Size = new System.Drawing.Size(1780, 969);
             this.MainPanel.TabIndex = 1;
             // 
-            // sectionToolStripMenuItem1
+            // templateToolStrip
             // 
-            this.sectionToolStripMenuItem1.Name = "sectionToolStripMenuItem1";
-            this.sectionToolStripMenuItem1.Size = new System.Drawing.Size(211, 30);
-            this.sectionToolStripMenuItem1.Text = "Section";
-            this.sectionToolStripMenuItem1.Click += new System.EventHandler(this.sectionToolStripMenuItem1_Click);
+            this.templateToolStrip.Name = "templateToolStrip";
+            this.templateToolStrip.Size = new System.Drawing.Size(211, 30);
+            this.templateToolStrip.Text = "Template";
+            this.templateToolStrip.Click += new System.EventHandler(this.templateToolStrip_Click);
             // 
             // MainForm
             // 
@@ -216,18 +190,15 @@
         private System.Windows.Forms.Panel MainPanel;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem templateToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem headerToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem sectionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem feedbackToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem giveFeedbackToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewFeedbackToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reportIssueToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem creatorsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem headerToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem sectionToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem headerToolStrip;
+        private System.Windows.Forms.ToolStripMenuItem sectionToolStrip;
+        private System.Windows.Forms.ToolStripMenuItem templateToolStrip;
     }
 }
 

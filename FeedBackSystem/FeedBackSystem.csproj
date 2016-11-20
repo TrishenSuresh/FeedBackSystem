@@ -172,6 +172,12 @@
       <DependentUpon>SelectSection.cs</DependentUpon>
     </Compile>
     <Compile Include="Template.cs" />
+    <Compile Include="TemplateCreator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TemplateCreator.Designer.cs">
+      <DependentUpon>TemplateCreator.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="DeleteBox.resx">
       <DependentUpon>DeleteBox.cs</DependentUpon>
     </EmbeddedResource>
@@ -237,6 +243,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SelectSection.resx">
       <DependentUpon>SelectSection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TemplateCreator.resx">
+      <DependentUpon>TemplateCreator.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

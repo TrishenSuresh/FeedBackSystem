@@ -32,7 +32,7 @@ namespace FeedBackSystem
                     TitleLabel.Text = "List of Sections: ";
                     AddBtn.Text = "Add Section";
                     break;
-                case "Template: ":
+                case "Template":
                     TitleLabel.Text = "List of Templates:";
                     AddBtn.Text = "Add Template";
                     break;
@@ -72,6 +72,17 @@ namespace FeedBackSystem
                         Dt.Columns["Desc"].ColumnName = "Description";
                         break;
                     case "Template":
+                        Dt = sql.GetDataSet("SELECT template.TemplateID AS 'Template ID', template.TemplateTitle AS 'Template Title', " +
+                            "template.TemplateDesc AS 'Template Description', header.Name as 'Header Name', " +
+                            "GROUP_CONCAT(sections.Title order by sections.SectionID SEPARATOR ' | ') as Sections ," +
+                            "CONCAT(reviewer.FirstName,' ', reviewer.LastName) AS 'Author Name' " +
+                            "FROM template, template_section, reviewer, header, sections " + 
+                            "WHERE template.TemplateID = template_section.TemplateID " + 
+                            "AND template_section.SectionID = sections.SectionID " +
+                            "AND template.HeaderID = header.HeaderID " +
+                            "AND template.TemplateAuthor = reviewer.ReviewerID " + 
+                            "GROUP BY template.TemplateID " +
+                            "ORDER BY template.TemplateID; ");
                         break;
                 }
             }
@@ -109,6 +120,14 @@ namespace FeedBackSystem
                     }
                     break;
                 case "Template":
+                    using (TemplateCreator creator = new TemplateCreator())
+                    {
+                        creator.ShowDialog();
+                        if (creator.DialogResult == DialogResult.OK)
+                        {
+                            setDgv();
+                        }
+                    }
                     break;
             }
         }

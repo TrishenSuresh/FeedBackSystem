@@ -13,36 +13,26 @@ namespace FeedBackSystem
 
         private void SaveBtn_Click(object sender, EventArgs e)
         {
-            if (String.IsNullOrEmpty(CodeBox.Text))
+            if (String.IsNullOrEmpty(CodeBox.Text) || String.IsNullOrEmpty(SectionTitleText.Text))
             {
-                MessageBox.Show(@"Codes cannot be empty.");
+                MessageBox.Show(@"Title or Codes cannot be empty.");
             }
             else
             {
-                using (SaveBox save = new SaveBox())
+                MySql sql = new MySql();
+                sql.OpenConnection();
+
+                List<string> codes = new List<string>(CodeBox.Lines);
+                codes.RemoveAll(item => item.Length == 0);
+
+                if (sql.SaveSection(new Section(SectionTitleText.Text, SectionDescText.Text, codes)))
                 {
-                    var result = save.ShowDialog();
+                    MessageBox.Show("Section succesfully saved");
+                    sql.CloseConnection();
 
-                    if (result == DialogResult.OK)
-                    {
-                        MySql sql = new MySql();
-                        sql.OpenConnection();
-
-                        List<string> codes = new List<string>(CodeBox.Lines);
-                        codes.RemoveAll(item => item.Length == 0);
-
-                        if (sql.SaveSection(new Section(save.Title, save.Desc, codes)))
-                        {
-                            MessageBox.Show("Section succesfully saved");
-                            sql.CloseConnection();
-
-                            //after the saving is done, go back to the home page showing the list of available sections
-                            this.DialogResult = DialogResult.OK;
-                            this.Close();
-                        }
-                        
-
-                    }
+                    //after the saving is done, go back to the home page showing the list of available sections
+                    this.DialogResult = DialogResult.OK;
+                    this.Close();
                 }
             }
 

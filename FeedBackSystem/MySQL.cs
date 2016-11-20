@@ -91,11 +91,21 @@ namespace FeedBackSystem
                 if (!Convert.IsDBNull(reader["File"]))
                 {
                     byte[] pdf = (byte[])reader["File"];
-                    app = new Applicant(reader["ApplicantID"].ToString(), reader["FirstName"] + " " + reader["LastName"], reader["Email"] + "", pdf, reader["Name"].ToString());
+                    app = new Applicant(reader["ApplicantID"].ToString(), 
+                                        reader["FirstName"] + " " + reader["LastName"], 
+                                        reader["Email"] + "", 
+                                        pdf, 
+                                        reader["Name"].ToString(), 
+                                        reader["StatusTitle"].ToString());
                 }
                 else
                 {
-                    app = new Applicant(reader["ApplicantID"].ToString(), reader["FirstName"] + " " + reader["LastName"], reader["Email"] + "", null, reader["Name"].ToString());
+                    app = new Applicant(reader["ApplicantID"].ToString(), 
+                                        reader["FirstName"] + " " + reader["LastName"], 
+                                        reader["Email"] + "", 
+                                        null, 
+                                        reader["Name"].ToString(), 
+                                        reader["StatusTitle"].ToString());
                 }
                 listOfApp.Add(app);
 
@@ -626,13 +636,14 @@ namespace FeedBackSystem
                 new MySqlCommand(
                     "SELECT * FROM " + 
                         "(SELECT applicant.ApplicantID, FirstName, LastName, Email, " + 
-                            "positionapplied.File, applicationtype.Name " + 
+                            "positionapplied.File, applicationtype.Name, applicationstatus.StatusTitle " + 
                         "FROM feedbacksystem.applicant, feedbacksystem.positionapplied, " + 
-                            "feedbacksystem.positions, feedbacksystem.applicationtype " +
+                            "feedbacksystem.positions, feedbacksystem.applicationtype, feedbacksystem.applicationstatus " +
                         "WHERE applicant.ApplicantID = positionapplied.ApplicantID " + 
                         "AND positionapplied.PositionID = positions.PositionID " +
                         "AND positions.PositionID = @PositionID " + 
                         "AND applicationtype.ApplicationTypeID = positionapplied.ApplicantTypeID " + 
+                        "AND applicationstatus.StatusID = positionapplied.StatusID " + 
                         "ORDER BY positionapplied.timestamp DESC) t " + 
                     "GROUP BY ApplicantID; ",
                 _connection);
@@ -651,10 +662,20 @@ namespace FeedBackSystem
                 //Check whether is the File column not null else it will throw InvalidCast
                 if (!Convert.IsDBNull(reader["File"])) { 
                     byte[] pdf = (byte[])reader["File"];
-                    app = new Applicant(reader["ApplicantID"].ToString(), reader["FirstName"] + " " + reader["LastName"], reader["Email"] + "", pdf, reader["Name"].ToString());
+                    app = new Applicant(reader["ApplicantID"].ToString(), 
+                                        reader["FirstName"] + " " + reader["LastName"], 
+                                        reader["Email"] + "", 
+                                        pdf, 
+                                        reader["Name"].ToString(), 
+                                        reader["StatusTitle"].ToString());
                 } else
                 {
-                    app = new Applicant(reader["ApplicantID"].ToString(), reader["FirstName"] + " " + reader["LastName"], reader["Email"] + "", null, reader["Name"].ToString());
+                    app = new Applicant(reader["ApplicantID"].ToString(), 
+                                        reader["FirstName"] + " " + reader["LastName"], 
+                                        reader["Email"] + "", 
+                                        null, 
+                                        reader["Name"].ToString(), 
+                                        reader["StatusTitle"].ToString());
                 }
                 
                 listOfApp.Add(app);
