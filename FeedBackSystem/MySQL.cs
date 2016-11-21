@@ -254,6 +254,42 @@ namespace FeedBackSystem
             return sectionList;
         }
 
+        public Section GetSection(string id)
+        {
+            List<Section> sectionList = new List<Section>();
+            Section section = new Section();
+            DataTable dataTable = new DataTable();
+
+            string sqlStatement = "SELECT * FROM feedbacksystem.sections where SectionID = @ID";
+
+            try
+            {
+                using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
+                {
+                    cmd.Parameters.AddWithValue("@ID", id);
+
+                    MySqlDataReader reader = cmd.ExecuteReader();
+
+                    if(reader.Read())
+                    { 
+                        section = new Section(reader["SectionID"].ToString(), reader["Title"].ToString(), reader["Desc"].ToString());
+                    }
+
+                    reader.Close();
+                }
+
+                section.Codes = getSectionCodes(section.SectionId);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+            return section;
+
+        }
+
         public List<string> getSectionCodes(string sectionId)
         {
             List<string> codes = new List<string>();
@@ -737,7 +773,7 @@ namespace FeedBackSystem
             return true;
         }
 
-        public bool SaveTemplate(Feedback feedback,string title,string desc)
+        public bool SaveTemplate(Header header, List<Section> sections,string title,string desc)
         {
             using (MySqlTransaction trans = _connection.BeginTransaction())
             {
@@ -751,7 +787,7 @@ namespace FeedBackSystem
 
                     using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
                     {
-                        cmd.Parameters.AddWithValue("@HeaderID", feedback.Header.HeaderId);
+                        cmd.Parameters.AddWithValue("@HeaderID", header.HeaderId);
                         cmd.Parameters.AddWithValue("@Title", title);
                         cmd.Parameters.AddWithValue("@Desc", desc);
                         cmd.Parameters.AddWithValue("@Author", Reviewer.Id);
@@ -763,7 +799,7 @@ namespace FeedBackSystem
                     }
 
                     //loop section
-                    foreach (Section s in feedback.Sections)
+                    foreach (Section s in sections)
                     {
                         //Link template with sections
                         sqlStatement = "INSERT INTO template_section(`TemplateID`,`SectionID`) VALUES (@TemplateID,@SectionID);";
@@ -789,6 +825,78 @@ namespace FeedBackSystem
 
             }
             return true;
+        }
+
+        public bool ArchiveHeader(string id)
+        {
+            string sqlStatement = "UPDATE header SET Archived=@Archive WHERE HeaderID=@ID";
+
+
+                using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
+                {
+                    try
+                    {
+                        cmd.Parameters.AddWithValue("@Archive", true);
+                        cmd.Parameters.AddWithValue("@ID", id);
+
+                        cmd.ExecuteNonQuery();
+
+                        return true;
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show(e.Message);
+                        return false;
+                    }
+                }
+        }
+
+        public bool ArchiveSection(string id)
+        {
+            string sqlStatement = "UPDATE sections SET Archived=@Archive WHERE SectionID=@ID";
+
+
+            using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
+            {
+                try
+                {
+                    cmd.Parameters.AddWithValue("@Archive", true);
+                    cmd.Parameters.AddWithValue("@ID", id);
+
+                    cmd.ExecuteNonQuery();
+
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                    return false;
+                }
+            }
+        }
+
+        public bool ArchiveTemplate(string id)
+        {
+            string sqlStatement = "UPDATE template SET Archived=@Archive WHERE TemplateID=@ID";
+
+
+            using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
+            {
+                try
+                {
+                    cmd.Parameters.AddWithValue("@Archive", true);
+                    cmd.Parameters.AddWithValue("@ID", id);
+
+                    cmd.ExecuteNonQuery();
+
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                    return false;
+                }
+            }
         }
     }
 }

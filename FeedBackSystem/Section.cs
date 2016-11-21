@@ -13,6 +13,12 @@ namespace FeedBackSystem
         public string CodeChosen { get; set; }
         public bool IsChecked { get; set; }
 
+
+        public Section()
+        {
+            
+        }
+
         public Section(string title, string desc, List<string> codes)
         {
             Title = title;

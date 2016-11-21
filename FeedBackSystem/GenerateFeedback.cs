@@ -54,6 +54,7 @@ namespace FeedBackSystem
         private void AddSectionBtn_Click(object sender, EventArgs e)
         {
             SectionTable.Controls.Clear();
+            _currentFeed.Sections.Clear();
 
             RowStyle style = new RowStyle {SizeType = SizeType.AutoSize};
 
@@ -63,19 +64,26 @@ namespace FeedBackSystem
             SectionTable.RowStyles.Add(style);
 
 
-            using (SelectSection form = new SelectSection())
+            using (SelectControl form = new SelectControl("Section"))
             {
                 var result = form.ShowDialog();
 
                 if (result == DialogResult.OK)
                 {
-                    foreach (Section s in form._sectionSelected)
+                    MySql sql = new MySql();
+                    sql.OpenConnection();
+                    foreach (string id in form._ids)
+                    {
+                        _currentFeed.Sections.Add(sql.GetSection(id));
+                    }
+
+                    foreach (Section s in _currentFeed.Sections)
                     {
 
 
-                      
 
-                        SectionTable.Controls.Add(new CheckBox {Anchor = AnchorStyles.Left, Name = "checker"+s.SectionId, AutoSize = true},0,row);
+
+                        SectionTable.Controls.Add(new CheckBox { Anchor = AnchorStyles.Left, Name = "checker" + s.SectionId, AutoSize = true }, 0, row);
 
                         SectionTable.Controls.Add(
                             new Label
@@ -98,24 +106,69 @@ namespace FeedBackSystem
                         }
 
                         SectionTable.Controls.Add(codes, 2, row);
-                        SectionTable.Controls.Add(
-                            new RichTextBox
-                            {
-                                Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top,
-                                Name = "comment" + s.SectionId
-                            }, 1, row + 1);
+                        RichTextBox comment = new RichTextBox
+                        {
+                            Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top,
+                            Name = "comment" + s.SectionId
+                        };
+                        SectionTable.Controls.Add(comment, 1, row + 1);
+                        SectionTable.SetColumnSpan(comment,2);
                         row++;
                         row++;
                     }
 
-                    if (_currentFeed.Sections != null)
-                        _currentFeed.Sections.Clear();
-
-                    _currentFeed.Sections.AddRange(form._sectionSelected);
-
-                    AddSectionBtn.Text = "Change Section";
-
                 }
+
+
+                //if (result == DialogResult.OK)
+                //{
+                //    foreach (Section s in form._sectionSelected)
+                //    {
+
+
+
+
+                //        SectionTable.Controls.Add(new CheckBox {Anchor = AnchorStyles.Left, Name = "checker"+s.SectionId, AutoSize = true},0,row);
+
+                //        SectionTable.Controls.Add(
+                //            new Label
+                //            {
+                //                Text = s.Title,
+                //                Anchor = AnchorStyles.Left,
+                //                TextAlign = ContentAlignment.MiddleLeft
+                //            }, 1, row);
+
+                //        ComboBox codes = new ComboBox
+                //        {
+                //            DropDownStyle = ComboBoxStyle.DropDownList,
+                //            Anchor = AnchorStyles.Right,
+                //            Name = "codes" + s.SectionId
+                //        };
+
+                //        foreach (string code in s.Codes)
+                //        {
+                //            codes.Items.Add(code);
+                //        }
+
+                //        SectionTable.Controls.Add(codes, 2, row);
+                //        SectionTable.Controls.Add(
+                //            new RichTextBox
+                //            {
+                //                Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top,
+                //                Name = "comment" + s.SectionId
+                //            }, 1, row + 1);
+                //        row++;
+                //        row++;
+                //    }
+
+                //    if (_currentFeed.Sections != null)
+                //        _currentFeed.Sections.Clear();
+
+                //    _currentFeed.Sections.AddRange(form._sectionSelected);
+
+                //    AddSectionBtn.Text = "Change Section";
+
+                // }
             }
 
         }
@@ -197,34 +250,25 @@ namespace FeedBackSystem
 
         private void AddHeaderBtn_Click(object sender, EventArgs e)
         {
-            using (SelectHeader form = new SelectHeader())
+            using (SelectControl form = new SelectControl("Header"))
             {
                 var result = form.ShowDialog();
 
                 if (result == DialogResult.OK)
                 {
-                    Header selectedHeader = form.Header;
-                    _currentFeed.Header = selectedHeader;
+                    MySql sql = new MySql();
+                    sql.OpenConnection();
+
+                    _currentFeed.Header = sql.GetHeader(form._ids[0]);
 
                     UpdateHeaderTab();
-                    
+
                     ChangeHeader.Visible = true;
+
+                    sql.CloseConnection();
                 }
             }
-        }
-
-        private void ChangeHeader_Click(object sender, EventArgs e)
-        {
-            using (SelectHeader form = new SelectHeader())
-            {
-                var result = form.ShowDialog();
-
-                if (result == DialogResult.OK)
-                {
-                    _currentFeed.Header = form.Header;
-                    UpdateHeaderTab();
-                }
-            }
+                
         }
 
         private void SaveFeedbackBtn_Click(object sender, EventArgs e)
@@ -259,7 +303,7 @@ namespace FeedBackSystem
             foreach (HeaderItem item in _currentFeed.Header.HeaderItems)
             {
 
-                Control control = Controls.Find("header" + item.Id, true)[0];
+                System.Windows.Forms.Control control = Controls.Find("header" + item.Id, true)[0];
 
                 try
                 {
@@ -369,7 +413,7 @@ namespace FeedBackSystem
 
                     sql.OpenConnection();
 
-                    if (sql.SaveTemplate(_currentFeed, save.Title, save.Desc))
+                    if (sql.SaveTemplate(_currentFeed.Header,_currentFeed.Sections, save.Title, save.Desc))
                     {
                         MessageBox.Show("Template successfully saved");
                     }

@@ -158,19 +158,13 @@
     <Compile Include="SectionPlacement.Designer.cs">
       <DependentUpon>SectionPlacement.cs</DependentUpon>
     </Compile>
-    <Compile Include="SelectHeader.cs">
+    <Compile Include="SelectControl.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SelectHeader.Designer.cs">
-      <DependentUpon>SelectHeader.cs</DependentUpon>
+    <Compile Include="SelectControl.Designer.cs">
+      <DependentUpon>SelectControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Feedback.cs" />
-    <Compile Include="SelectSection.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SelectSection.Designer.cs">
-      <DependentUpon>SelectSection.cs</DependentUpon>
-    </Compile>
     <Compile Include="Template.cs" />
     <Compile Include="TemplateCreator.cs">
       <SubType>Form</SubType>
@@ -238,11 +232,8 @@
     <EmbeddedResource Include="SectionPlacement.resx">
       <DependentUpon>SectionPlacement.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SelectHeader.resx">
-      <DependentUpon>SelectHeader.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SelectSection.resx">
-      <DependentUpon>SelectSection.cs</DependentUpon>
+    <EmbeddedResource Include="SelectControl.resx">
+      <DependentUpon>SelectControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TemplateCreator.resx">
       <DependentUpon>TemplateCreator.cs</DependentUpon>

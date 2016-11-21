@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,41 +10,39 @@ using System.Windows.Forms;
 
 namespace FeedBackSystem
 {
-    public partial class DisplayControl : UserControl
+    public partial class SelectControl : Form
     {
-        string ControlType;
-        public DisplayControl()
 
+        public string ControlType;
+        public List<string> _ids = new List<string>();
+
+        public SelectControl(string type)
         {
             InitializeComponent();
-        }
 
-        public DisplayControl(string type)
-        {
-            InitializeComponent();
             ControlType = type;
             switch (ControlType)
             {
                 case "Header":
                     TitleLabel.Text = "List of Headers: ";
-                    AddBtn.Text = "Add Header";
-                    DeleteBtn.Text = "Delete Header";
+                    SelectBtn.Text = "Select Header";
+                    Dgv.MultiSelect = false;
                     break;
                 case "Section":
                     TitleLabel.Text = "List of Sections: ";
-                    AddBtn.Text = "Add Section";
-                    DeleteBtn.Text = "Delete Section";
+                    SelectBtn.Text = "Select Section";
+                    Dgv.MultiSelect = true;
                     break;
                 case "Template":
                     TitleLabel.Text = "List of Templates:";
-                    AddBtn.Text = "Add Template";
-                    DeleteBtn.Text = "Delete Template";
+                    SelectBtn.Text = "Select Template";
+                    Dgv.MultiSelect = false;
                     break;
             }
-            setDgv();
+            SetDgv();
         }
 
-        private void setDgv()
+        private void SetDgv()
         {
             MySql sql = new MySql();
             sql.OpenConnection();
@@ -81,10 +79,10 @@ namespace FeedBackSystem
                             "GROUP_CONCAT(sections.Title order by sections.SectionID SEPARATOR ' | ') as Sections , " +
                             "CONCAT(reviewer.FirstName,' ', reviewer.LastName) AS 'Author Name' " +
                             "FROM template, template_section, reviewer, header, sections " +
-                            "WHERE template.Archived = 0 and template.TemplateID = template_section.TemplateID " + 
+                            "WHERE template.Archived = 0 and template.TemplateID = template_section.TemplateID " +
                             "AND template_section.SectionID = sections.SectionID " +
                             "AND template.HeaderID = header.HeaderID " +
-                            "AND template.TemplateAuthor = reviewer.ReviewerID " + 
+                            "AND template.TemplateAuthor = reviewer.ReviewerID " +
                             "GROUP BY template.TemplateID " +
                             "ORDER BY template.TemplateID; ");
                         break;
@@ -94,100 +92,50 @@ namespace FeedBackSystem
             {
                 MessageBox.Show(ex.Message);
             }
-            
+
             Dgv.DataSource = Dt;
             sql.CloseConnection();
+
+            for (int a = 0; a < Dgv.ColumnCount-2; a++)
+            {
+                Dgv.Columns[a].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            }
+
+            Dgv.Columns[Dgv.ColumnCount-1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
         }
 
-        private void AddBtn_Click(object sender, EventArgs e)
+
+        private void SelectBtn_Click(object sender, EventArgs e)
         {
-            switch (ControlType)
+            if (Dgv.SelectedRows.Count > 0)
             {
-                case "Header":
-                    using (HeaderCreator creator = new HeaderCreator())
-                    {
-                        creator.ShowDialog();
-                        if (creator.DialogResult == DialogResult.OK)
-                        {
-                            setDgv();
-                        }
-                    }
-                    break;
-                case "Section":
-                    using (SectionCreator creator = new SectionCreator())
-                    {
-                        creator.ShowDialog();
-                        if (creator.DialogResult == DialogResult.OK)
-                        {
-                            setDgv();
-                        }
-                    }
-                    break;
-                case "Template":
-                    using (TemplateCreator creator = new TemplateCreator())
-                    {
-                        creator.ShowDialog();
-                        if (creator.DialogResult == DialogResult.OK)
-                        {
-                            setDgv();
-                        }
-                    }
-                    break;
+
+                _ids.Clear();
+
+                foreach (DataGridViewRow row in Dgv.SelectedRows)
+                {
+                    _ids.Add(row.Cells[0].Value.ToString());
+                }
+
+                this.DialogResult = DialogResult.OK;
+                
             }
+
         }
 
         private void Dgv_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (Dgv.SelectedRows.Count > 1)
             {
-                DeleteBtn.Text = "Delete " + ControlType + "s";
+                SelectBtn.Text = "Select " + ControlType + "s";
             }
             else
             {
-                DeleteBtn.Text = "Delete " + ControlType;
-            }
-        }
-
-        private void DeleteBtn_Click(object sender, EventArgs e)
-        {
-            List<string> ids = new List<string>();
-
-            MySql sql = new MySql();
-            sql.OpenConnection();
-
-            if (Dgv.SelectedRows.Count > 0)
-            {
-                foreach (DataGridViewRow row in Dgv.SelectedRows)
-                {
-                    ids.Add(row.Cells[0].Value.ToString());
-                }
-
-                switch (ControlType)
-                {
-                    case "Header":
-                        foreach (string id in ids)
-                        {
-                            sql.ArchiveHeader(id);
-                        }
-                            break;
-                    case "Section":
-                        foreach (string id in ids)
-                        {
-                            sql.ArchiveSection(id);
-                        }
-                        break;
-                    case "Template":
-                        foreach (string id in ids)
-                        {
-                            sql.ArchiveTemplate(id);
-                        }
-                        break;
-                }
-
-                MessageBox.Show("Successfully Deleted");
-
-                setDgv();
+                SelectBtn.Text = "Select " + ControlType;
             }
         }
     }
+
+
 }
