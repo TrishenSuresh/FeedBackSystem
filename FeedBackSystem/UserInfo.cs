@@ -20,9 +20,16 @@ namespace FeedBackSystem
             InitializeComponent();
         }
 
-        public UserInfo(string id)
+        public UserInfo(string text)
         {
             InitializeComponent();
+            this.Text = text;
+        }
+
+        public UserInfo(string id, string text)
+        {
+            InitializeComponent();
+            this.Text = text;
 
             MySql sql = new MySql();
             sql.OpenConnection();

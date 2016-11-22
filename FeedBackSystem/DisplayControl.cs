@@ -162,31 +162,41 @@ namespace FeedBackSystem
                     ids.Add(row.Cells[0].Value.ToString());
                 }
 
-                switch (ControlType)
+                var confirmResult = MessageBox.Show("Are you sure you want to delete the row with following ids:\n" +
+                                    string.Join(", ", ids), "Confirm Delete", MessageBoxButtons.YesNo);
+
+                if (confirmResult != DialogResult.Yes)
                 {
-                    case "Header":
-                        foreach (string id in ids)
-                        {
-                            sql.ArchiveHeader(id);
-                        }
-                            break;
-                    case "Section":
-                        foreach (string id in ids)
-                        {
-                            sql.ArchiveSection(id);
-                        }
-                        break;
-                    case "Template":
-                        foreach (string id in ids)
-                        {
-                            sql.ArchiveTemplate(id);
-                        }
-                        break;
+                    return;
                 }
+                else
+                {
+                    switch (ControlType)
+                    {
+                        case "Header":
+                            foreach (string id in ids)
+                            {
+                                sql.ArchiveHeader(id);
+                            }
+                            break;
+                        case "Section":
+                            foreach (string id in ids)
+                            {
+                                sql.ArchiveSection(id);
+                            }
+                            break;
+                        case "Template":
+                            foreach (string id in ids)
+                            {
+                                sql.ArchiveTemplate(id);
+                            }
+                            break;
+                    }
 
-                MessageBox.Show("Successfully Deleted");
+                    MessageBox.Show("Successfully Deleted");
 
-                setDgv();
+                    setDgv();
+                }
             }
         }
     }

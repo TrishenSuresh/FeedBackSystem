@@ -76,6 +76,7 @@
             this.tableLayoutPanel1.Controls.Add(this.label2, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 10;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -88,17 +89,19 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 13.53846F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1244, 822);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1866, 1265);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // PositionList
             // 
             this.PositionList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PositionList.FormattingEnabled = true;
-            this.PositionList.Location = new System.Drawing.Point(3, 16);
+            this.PositionList.ItemHeight = 20;
+            this.PositionList.Location = new System.Drawing.Point(4, 25);
+            this.PositionList.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.PositionList.Name = "PositionList";
             this.tableLayoutPanel1.SetRowSpan(this.PositionList, 8);
-            this.PositionList.Size = new System.Drawing.Size(118, 690);
+            this.PositionList.Size = new System.Drawing.Size(178, 1047);
             this.PositionList.TabIndex = 1;
             this.PositionList.SelectedIndexChanged += new System.EventHandler(this.PositionList_SelectedIndexChanged);
             // 
@@ -106,10 +109,12 @@
             // 
             this.ApplicantList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ApplicantList.FormattingEnabled = true;
-            this.ApplicantList.Location = new System.Drawing.Point(127, 16);
+            this.ApplicantList.ItemHeight = 20;
+            this.ApplicantList.Location = new System.Drawing.Point(190, 25);
+            this.ApplicantList.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.ApplicantList.Name = "ApplicantList";
             this.tableLayoutPanel1.SetRowSpan(this.ApplicantList, 8);
-            this.ApplicantList.Size = new System.Drawing.Size(123, 690);
+            this.ApplicantList.Size = new System.Drawing.Size(185, 1047);
             this.ApplicantList.TabIndex = 2;
             this.ApplicantList.SelectedIndexChanged += new System.EventHandler(this.ApplicantList_SelectedIndexChanged);
             // 
@@ -118,19 +123,21 @@
             this.tableLayoutPanel1.SetColumnSpan(this.PDFPanel, 3);
             this.PDFPanel.Controls.Add(this.PDFDisplay);
             this.PDFPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PDFPanel.Location = new System.Drawing.Point(871, 16);
+            this.PDFPanel.Location = new System.Drawing.Point(1305, 25);
+            this.PDFPanel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.PDFPanel.Name = "PDFPanel";
             this.tableLayoutPanel1.SetRowSpan(this.PDFPanel, 8);
-            this.PDFPanel.Size = new System.Drawing.Size(370, 690);
+            this.PDFPanel.Size = new System.Drawing.Size(557, 1047);
             this.PDFPanel.TabIndex = 5;
             // 
             // PDFDisplay
             // 
             this.PDFDisplay.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PDFDisplay.Location = new System.Drawing.Point(0, 0);
-            this.PDFDisplay.MinimumSize = new System.Drawing.Size(20, 20);
+            this.PDFDisplay.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.PDFDisplay.MinimumSize = new System.Drawing.Size(30, 31);
             this.PDFDisplay.Name = "PDFDisplay";
-            this.PDFDisplay.Size = new System.Drawing.Size(370, 690);
+            this.PDFDisplay.Size = new System.Drawing.Size(557, 1047);
             this.PDFDisplay.TabIndex = 0;
             // 
             // tableLayoutPanel3
@@ -145,29 +152,32 @@
             this.tableLayoutPanel3.Controls.Add(this.AddSectionBtn, 2, 0);
             this.tableLayoutPanel3.Controls.Add(this.button3, 0, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(256, 712);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(383, 1082);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(609, 107);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(914, 178);
             this.tableLayoutPanel3.TabIndex = 6;
             // 
             // SaveTemplateBtn
             // 
-            this.SaveTemplateBtn.Location = new System.Drawing.Point(3, 37);
+            this.SaveTemplateBtn.Location = new System.Drawing.Point(4, 58);
+            this.SaveTemplateBtn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.SaveTemplateBtn.Name = "SaveTemplateBtn";
-            this.SaveTemplateBtn.Size = new System.Drawing.Size(164, 28);
+            this.SaveTemplateBtn.Size = new System.Drawing.Size(246, 43);
             this.SaveTemplateBtn.TabIndex = 1;
-            this.SaveTemplateBtn.Text = "Save Template";
+            this.SaveTemplateBtn.Text = "Save As Template";
             this.SaveTemplateBtn.UseVisualStyleBackColor = true;
             this.SaveTemplateBtn.Click += new System.EventHandler(this.SaveTemplateBtn_Click);
             // 
             // SaveFeedbackBtn
             // 
-            this.SaveFeedbackBtn.Location = new System.Drawing.Point(449, 37);
+            this.SaveFeedbackBtn.Location = new System.Drawing.Point(674, 58);
+            this.SaveFeedbackBtn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.SaveFeedbackBtn.Name = "SaveFeedbackBtn";
-            this.SaveFeedbackBtn.Size = new System.Drawing.Size(157, 28);
+            this.SaveFeedbackBtn.Size = new System.Drawing.Size(236, 43);
             this.SaveFeedbackBtn.TabIndex = 0;
             this.SaveFeedbackBtn.Text = "Save Feedback";
             this.SaveFeedbackBtn.UseVisualStyleBackColor = true;
@@ -175,9 +185,10 @@
             // 
             // AddSectionBtn
             // 
-            this.AddSectionBtn.Location = new System.Drawing.Point(449, 3);
+            this.AddSectionBtn.Location = new System.Drawing.Point(674, 5);
+            this.AddSectionBtn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.AddSectionBtn.Name = "AddSectionBtn";
-            this.AddSectionBtn.Size = new System.Drawing.Size(157, 28);
+            this.AddSectionBtn.Size = new System.Drawing.Size(236, 43);
             this.AddSectionBtn.TabIndex = 0;
             this.AddSectionBtn.Text = "Add Section";
             this.AddSectionBtn.UseVisualStyleBackColor = true;
@@ -185,9 +196,10 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(3, 3);
+            this.button3.Location = new System.Drawing.Point(4, 5);
+            this.button3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(164, 28);
+            this.button3.Size = new System.Drawing.Size(246, 43);
             this.button3.TabIndex = 2;
             this.button3.Text = "Load Template";
             this.button3.UseVisualStyleBackColor = true;
@@ -202,14 +214,15 @@
             this.ContentTable.Controls.Add(this.AddHeaderBtn, 0, 0);
             this.ContentTable.Controls.Add(this.HeaderControls, 0, 1);
             this.ContentTable.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ContentTable.Location = new System.Drawing.Point(256, 16);
+            this.ContentTable.Location = new System.Drawing.Point(383, 25);
+            this.ContentTable.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.ContentTable.Name = "ContentTable";
             this.ContentTable.RowCount = 3;
             this.tableLayoutPanel1.SetRowSpan(this.ContentTable, 8);
             this.ContentTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.ContentTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
-            this.ContentTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 481F));
-            this.ContentTable.Size = new System.Drawing.Size(609, 690);
+            this.ContentTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 57F));
+            this.ContentTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 740F));
+            this.ContentTable.Size = new System.Drawing.Size(914, 1047);
             this.ContentTable.TabIndex = 7;
             // 
             // SectionTable
@@ -222,19 +235,21 @@
             this.SectionTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.SectionTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.SectionTable.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SectionTable.Location = new System.Drawing.Point(3, 247);
+            this.SectionTable.Location = new System.Drawing.Point(4, 381);
+            this.SectionTable.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.SectionTable.Name = "SectionTable";
             this.SectionTable.RowCount = 1;
             this.SectionTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.SectionTable.Size = new System.Drawing.Size(586, 475);
+            this.SectionTable.Size = new System.Drawing.Size(880, 730);
             this.SectionTable.TabIndex = 9;
             // 
             // AddHeaderBtn
             // 
             this.AddHeaderBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.AddHeaderBtn.Location = new System.Drawing.Point(3, 3);
+            this.AddHeaderBtn.Location = new System.Drawing.Point(4, 5);
+            this.AddHeaderBtn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.AddHeaderBtn.Name = "AddHeaderBtn";
-            this.AddHeaderBtn.Size = new System.Drawing.Size(586, 201);
+            this.AddHeaderBtn.Size = new System.Drawing.Size(880, 309);
             this.AddHeaderBtn.TabIndex = 0;
             this.AddHeaderBtn.Text = "Add Header";
             this.AddHeaderBtn.UseVisualStyleBackColor = true;
@@ -249,11 +264,12 @@
             this.HeaderControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.HeaderControls.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.HeaderControls.Controls.Add(this.ChangeHeader, 1, 0);
-            this.HeaderControls.Location = new System.Drawing.Point(3, 210);
+            this.HeaderControls.Location = new System.Drawing.Point(4, 324);
+            this.HeaderControls.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.HeaderControls.Name = "HeaderControls";
             this.HeaderControls.RowCount = 1;
             this.HeaderControls.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.HeaderControls.Size = new System.Drawing.Size(586, 31);
+            this.HeaderControls.Size = new System.Drawing.Size(880, 47);
             this.HeaderControls.TabIndex = 10;
             // 
             // ChangeHeader
@@ -262,9 +278,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ChangeHeader.AutoSize = true;
-            this.ChangeHeader.Location = new System.Drawing.Point(422, 3);
+            this.ChangeHeader.Location = new System.Drawing.Point(634, 5);
+            this.ChangeHeader.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.ChangeHeader.Name = "ChangeHeader";
-            this.ChangeHeader.Size = new System.Drawing.Size(161, 28);
+            this.ChangeHeader.Size = new System.Drawing.Size(242, 46);
             this.ChangeHeader.TabIndex = 0;
             this.ChangeHeader.Text = "Change Header";
             this.ChangeHeader.UseVisualStyleBackColor = true;
@@ -275,9 +292,10 @@
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(14, 0);
+            this.label1.Location = new System.Drawing.Point(23, 0);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(95, 13);
+            this.label1.Size = new System.Drawing.Size(140, 20);
             this.label1.TabIndex = 8;
             this.label1.Text = "Available Positions";
             this.label1.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -286,20 +304,22 @@
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(160, 0);
+            this.label2.Location = new System.Drawing.Point(241, 0);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(56, 13);
+            this.label2.Size = new System.Drawing.Size(83, 20);
             this.label2.TabIndex = 9;
             this.label2.Text = "Applicants";
             this.label2.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             // 
             // GenerateFeedback
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "GenerateFeedback";
-            this.Size = new System.Drawing.Size(1244, 822);
+            this.Size = new System.Drawing.Size(1866, 1265);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.PDFPanel.ResumeLayout(false);

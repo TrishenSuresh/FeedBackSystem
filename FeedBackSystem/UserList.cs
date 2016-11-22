@@ -35,7 +35,7 @@ namespace FeedBackSystem
 
         private void AddBtn_Click(object sender, EventArgs e)
         {
-            using (UserInfo form = new UserInfo())
+            using (UserInfo form = new UserInfo("Add User"))
             {
                 var result = form.ShowDialog();
 
@@ -82,14 +82,23 @@ namespace FeedBackSystem
                     ids.Add(row.Cells[0].Value.ToString());
                 }
 
-                foreach (string s in ids)
+                var confirmResult =  MessageBox.Show("Are you sure you want to delete the users with the following ids:\n" +
+                                    string.Join(", ", ids), "Confirm Delete", MessageBoxButtons.YesNo);
+
+                if (confirmResult != DialogResult.Yes)
                 {
-                    sql.ArchiveUser(s);
+                    return;
+                } else
+                {
+                    foreach (string s in ids)
+                    {
+                        sql.ArchiveUser(s);
+                    }
+
+                    MessageBox.Show("Successfully Deleted");
+
+                    UpdateUserList();
                 }
-
-                MessageBox.Show("Successfully Deleted");
-
-                UpdateUserList();
             }
         }
 
@@ -104,7 +113,7 @@ namespace FeedBackSystem
 
                 string id = Convert.ToString(selectedRow.Cells["ReviewerID"].Value);
 
-                using (UserInfo form = new UserInfo(id))
+                using (UserInfo form = new UserInfo(id, "Update User"))
                 {
                     var result = form.ShowDialog();
 
