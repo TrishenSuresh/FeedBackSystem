@@ -24,11 +24,25 @@ namespace FeedBackSystem
                 {
                     MessageBox.Show("Please install adobe reader to fully utilize the system's functionality","Adobe Reader Not Found",MessageBoxButtons.OK);
                 }
+
+                if (Reviewer.IsAdmin)
+                {
+                    ToolStripMenuItem AdminButton = new ToolStripMenuItem("Admin");
+                    Menu.Items.Add(AdminButton);
+                    ToolStripMenuItem button = new ToolStripMenuItem("Users List");
+                    button.Click += UserListBtn;
+                    AdminButton.DropDownItems.Add(button);
+                }
             }
             else
             {
                 this.Close();
             }
+        }
+
+        private void UserListBtn(object sender, EventArgs eventArgs)
+        {
+            new UserList().ShowDialog();
         }
 
         private void giveFeedbackToolStripMenuItem_Click(object sender, EventArgs e)

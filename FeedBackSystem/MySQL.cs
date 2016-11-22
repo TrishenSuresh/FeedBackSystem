@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using MySql.Data.MySqlClient;
 using System.Windows.Forms;
 using System.Data;
@@ -507,12 +508,12 @@ namespace FeedBackSystem
             return success;
         }
 
-        public Boolean VerifyPassword(string username, string password)
+        public bool VerifyPassword(string username, string password)
         {
             SHA256 sha256 = SHA256.Create();
 
             string sqlStatement =
-                "SELECT concat(TRIM(FirstName),\".\",TRIM(LastName)) as username, reviewer.Password, Salt, ReviewerID FROM feedbacksystem.reviewer where concat(TRIM(FirstName),\".\",TRIM(LastName)) like @Username";
+                "SELECT concat(TRIM(FirstName),\".\",TRIM(LastName)) as username, reviewer.Password, Salt, ReviewerID,AdminAccess FROM feedbacksystem.reviewer where concat(TRIM(FirstName),\".\",TRIM(LastName))  like @Username and Archived = '0'";
 
             using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
             {
@@ -521,6 +522,7 @@ namespace FeedBackSystem
 
                 if (reader.Read())
                 {
+
                     byte[] bytes = Encoding.UTF8.GetBytes(password + reader["Salt"]);
                     byte[] hash = sha256.ComputeHash(bytes);
                     string convertedHash = Convert.ToBase64String(hash);
@@ -529,6 +531,7 @@ namespace FeedBackSystem
                     {
                         Reviewer.Id = Convert.ToInt32(reader["ReviewerID"]);
                         Reviewer.Name = reader["username"].ToString().Replace(".", " ");
+                        Reviewer.IsAdmin = (bool) reader["AdminAccess"];
                         reader.Close();
                         return true;
                     }
@@ -851,6 +854,30 @@ namespace FeedBackSystem
                 }
         }
 
+        public bool ArchiveUser(string id)
+        {
+            string sqlStatement = "UPDATE reviewer SET Archived=@Archive WHERE ReviewerID=@ID";
+
+
+            using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
+            {
+                try
+                {
+                    cmd.Parameters.AddWithValue("@Archive", true);
+                    cmd.Parameters.AddWithValue("@ID", id);
+
+                    cmd.ExecuteNonQuery();
+
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                    return false;
+                }
+            }
+        }
+
         public bool ArchiveSection(string id)
         {
             string sqlStatement = "UPDATE sections SET Archived=@Archive WHERE SectionID=@ID";
@@ -897,6 +924,118 @@ namespace FeedBackSystem
                     return false;
                 }
             }
+        }
+
+        public bool AddUser(string fn, string ln, string password, bool isAdmin)
+        {
+            SHA256 sha256 = SHA256.Create();
+
+            string salt = CreateSalt();
+
+            byte[] bytes = Encoding.UTF8.GetBytes(password + salt);
+            byte[] hash = sha256.ComputeHash(bytes);
+            string HashedPassword = Convert.ToBase64String(hash);
+
+            string sqlStatement = "insert into reviewer(FirstName,LastName,Password,Salt,AdminAccess) values (@FN,@LN,@Pass,@Salt,@Admin)";
+
+            using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
+            {
+                try
+                {
+                    cmd.Parameters.AddWithValue("@FN", fn);
+                    cmd.Parameters.AddWithValue("@LN", ln);
+                    cmd.Parameters.AddWithValue("@Pass", HashedPassword);
+                    cmd.Parameters.AddWithValue("@Salt", salt);
+                    cmd.Parameters.AddWithValue("@Admin", isAdmin);
+
+                    cmd.ExecuteNonQuery();
+
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                    return false;
+                }
+            }
+
+
+        }
+
+        public bool EditUser(string id,string fn, string ln,bool isAdmin, string password)
+        {
+            SHA256 sha256 = SHA256.Create();
+
+            string salt = CreateSalt();
+
+            byte[] bytes = Encoding.UTF8.GetBytes(password + salt);
+            byte[] hash = sha256.ComputeHash(bytes);
+            string HashedPassword = Convert.ToBase64String(hash);
+
+            string sqlStatement = "update reviewer set FirstName = @FN, LastName = @LN, Password = @Pass, Salt = @Salt, AdminAccess = @Admin where ReviewerID = @ID";
+
+            using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
+            {
+                try
+                {
+                    cmd.Parameters.AddWithValue("@FN", fn);
+                    cmd.Parameters.AddWithValue("@LN", ln);
+                    cmd.Parameters.AddWithValue("@Pass", HashedPassword);
+                    cmd.Parameters.AddWithValue("@Salt", salt);
+                    cmd.Parameters.AddWithValue("@Admin", isAdmin);
+                    cmd.Parameters.AddWithValue("@ID", id);
+
+                    cmd.ExecuteNonQuery();
+
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                    return false;
+                }
+            }
+
+
+        }
+
+        public bool EditUser(string id,string fn, string ln, bool isAdmin)
+        {
+
+            string sqlStatement = "update reviewer set FirstName = @FN, LastName = @LN, AdminAccess = @Admin where ReviewerID = @ID";
+
+            using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
+            {
+                try
+                {
+                    cmd.Parameters.AddWithValue("@FN", fn);
+                    cmd.Parameters.AddWithValue("@LN", ln);
+                    cmd.Parameters.AddWithValue("@Admin", isAdmin);
+                    cmd.Parameters.AddWithValue("@ID", id);
+
+                    cmd.ExecuteNonQuery();
+
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                    return false;
+                }
+            }
+
+
+        }
+
+        private static string CreateSalt()
+        {
+            //Generate a cryptographic random number.
+            RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
+            byte[] buff = new byte[256];
+            rng.GetBytes(buff);
+
+            // Return a Base64 string representation of the random number.
+            return Convert.ToBase64String(buff);
         }
     }
 }

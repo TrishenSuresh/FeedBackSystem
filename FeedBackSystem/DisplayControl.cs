@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace FeedBackSystem
 {
-    public partial class DisplayControl : UserControl
+    public partial class DisplayControl : System.Windows.Forms.UserControl
     {
         string ControlType;
         public DisplayControl()

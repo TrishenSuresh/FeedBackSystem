@@ -2,7 +2,7 @@
 
 namespace FeedBackSystem
 {
-    public partial class Home : UserControl
+    public partial class Home : System.Windows.Forms.UserControl
     {
         public Home()
         {
