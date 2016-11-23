@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
+using MySql.Data.MySqlClient;
+using System.Data;
 
 namespace FeedBackSystem
 {
@@ -18,22 +20,16 @@ namespace FeedBackSystem
             SectionTable.VerticalScroll.Enabled = false;
             ContentTable.VerticalScroll.Enabled = true;
             SectionTable.HorizontalScroll.Enabled = false;
-            AddHeaderBtn.Enabled = false;
+            //AddHeaderBtn.Enabled = false;
+            AddHeaderBtn.Visible = false;
+            AddSectionBtn.Visible = false;
+            SetTemplateBtn.Enabled = false;
 
             ContentTable.Padding = new Padding(0, 0, SystemInformation.VerticalScrollBarWidth, 0);
 
             MySql sql = new MySql();
             sql.OpenConnection();
-
-
-            /* they shouldnt be able to see this before they select the position
-            List<Applicant> applicants = sql.GetApplicants();
-
-            foreach (Applicant app in applicants)
-            {
-                ApplicantList.Items.Add(app);
-            }*/
-
+            
             ApplicantList.ValueMember = "Name";
 
             List<Position> positions = sql.GetPositions();
@@ -44,25 +40,14 @@ namespace FeedBackSystem
             }
 
             PositionList.ValueMember = "_positionName";
-
-
+            
             sql.CloseConnection();
-
-
         }
 
-        private void AddSectionBtn_Click(object sender, EventArgs e)
+        private void AddSectionBtn_Click(object sender, EventArgs e) { setSection(); }
+        private void setSection()
         {
-            SectionTable.Controls.Clear();
             _currentFeed.Sections.Clear();
-
-            RowStyle style = new RowStyle {SizeType = SizeType.AutoSize};
-
-            SectionTable.Padding = new Padding(0, 0, SystemInformation.VerticalScrollBarWidth, 0);
-            HeaderControls.Padding = new Padding(0, 0, SystemInformation.VerticalScrollBarWidth, 0);
-
-            SectionTable.RowStyles.Add(style);
-
 
             using (SelectControl form = new SelectControl("Section"))
             {
@@ -76,101 +61,58 @@ namespace FeedBackSystem
                     {
                         _currentFeed.Sections.Add(sql.GetSection(id));
                     }
+                    FillSection();
+                } 
+            }
+        }
 
-                    foreach (Section s in _currentFeed.Sections)
+        private void FillSection()
+        {
+            SectionTable.Controls.Clear();
+
+            RowStyle style = new RowStyle { SizeType = SizeType.AutoSize };
+
+            SectionTable.Padding = new Padding(0, 0, SystemInformation.VerticalScrollBarWidth, 0);
+            HeaderControls.Padding = new Padding(0, 0, SystemInformation.VerticalScrollBarWidth, 0);
+
+            SectionTable.RowStyles.Add(style);
+            
+            foreach (Section s in _currentFeed.Sections)
+            {
+                SectionTable.Controls.Add(new CheckBox { Anchor = AnchorStyles.Left, Name = "checker" + s.SectionId, AutoSize = true }, 0, row);
+
+                SectionTable.Controls.Add(
+                    new Label
                     {
+                        Text = s.Title,
+                        Anchor = AnchorStyles.Left,
+                        TextAlign = ContentAlignment.MiddleLeft
+                    }, 1, row);
 
+                ComboBox codes = new ComboBox
+                    {
+                        DropDownStyle = ComboBoxStyle.DropDownList,
+                        Anchor = AnchorStyles.Right,
+                        Name = "codes" + s.SectionId
+                    };
 
-
-
-                        SectionTable.Controls.Add(new CheckBox { Anchor = AnchorStyles.Left, Name = "checker" + s.SectionId, AutoSize = true }, 0, row);
-
-                        SectionTable.Controls.Add(
-                            new Label
-                            {
-                                Text = s.Title,
-                                Anchor = AnchorStyles.Left,
-                                TextAlign = ContentAlignment.MiddleLeft
-                            }, 1, row);
-
-                        ComboBox codes = new ComboBox
-                        {
-                            DropDownStyle = ComboBoxStyle.DropDownList,
-                            Anchor = AnchorStyles.Right,
-                            Name = "codes" + s.SectionId
-                        };
-
-                        foreach (string code in s.Codes)
-                        {
-                            codes.Items.Add(code);
-                        }
-
-                        SectionTable.Controls.Add(codes, 2, row);
-                        RichTextBox comment = new RichTextBox
-                        {
-                            Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top,
-                            Name = "comment" + s.SectionId
-                        };
-                        SectionTable.Controls.Add(comment, 1, row + 1);
-                        SectionTable.SetColumnSpan(comment,2);
-                        row++;
-                        row++;
-                    }
-
+                foreach (string code in s.Codes)
+                {
+                    codes.Items.Add(code);
                 }
 
+                SectionTable.Controls.Add(codes, 2, row);
+                RichTextBox comment = new RichTextBox
+                { 
+                    Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top,
+                    Name = "comment" + s.SectionId
+                };
 
-                //if (result == DialogResult.OK)
-                //{
-                //    foreach (Section s in form._sectionSelected)
-                //    {
-
-
-
-
-                //        SectionTable.Controls.Add(new CheckBox {Anchor = AnchorStyles.Left, Name = "checker"+s.SectionId, AutoSize = true},0,row);
-
-                //        SectionTable.Controls.Add(
-                //            new Label
-                //            {
-                //                Text = s.Title,
-                //                Anchor = AnchorStyles.Left,
-                //                TextAlign = ContentAlignment.MiddleLeft
-                //            }, 1, row);
-
-                //        ComboBox codes = new ComboBox
-                //        {
-                //            DropDownStyle = ComboBoxStyle.DropDownList,
-                //            Anchor = AnchorStyles.Right,
-                //            Name = "codes" + s.SectionId
-                //        };
-
-                //        foreach (string code in s.Codes)
-                //        {
-                //            codes.Items.Add(code);
-                //        }
-
-                //        SectionTable.Controls.Add(codes, 2, row);
-                //        SectionTable.Controls.Add(
-                //            new RichTextBox
-                //            {
-                //                Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top,
-                //                Name = "comment" + s.SectionId
-                //            }, 1, row + 1);
-                //        row++;
-                //        row++;
-                //    }
-
-                //    if (_currentFeed.Sections != null)
-                //        _currentFeed.Sections.Clear();
-
-                //    _currentFeed.Sections.AddRange(form._sectionSelected);
-
-                //    AddSectionBtn.Text = "Change Section";
-
-                // }
+                SectionTable.Controls.Add(comment, 1, row + 1);
+                SectionTable.SetColumnSpan(comment,2);
+                row++;
+                row++;
             }
-
         }
 
         private void ApplicantList_SelectedIndexChanged(object sender, EventArgs e)
@@ -197,12 +139,19 @@ namespace FeedBackSystem
 
                 if(_currentFeed.Header != null)
                 {
-                    UpdateHeaderTab();
+                    //in order to reset the header items value for the cascading
+                    MySql sql = new MySql();
+                    sql.OpenConnection();
+                    _currentFeed.Header.HeaderItems = sql.GetHeaderItems(_currentFeed.Header.HeaderId);
+                    sql.CloseConnection();
+
+                    FillHeader();
                 }
+                SetTemplateBtn.Enabled = true;
             }
         }
 
-        private void UpdateHeaderTab()
+        private void FillHeader()
         {
             HeaderPlacement place = new HeaderPlacement();
 
@@ -210,7 +159,8 @@ namespace FeedBackSystem
 
             foreach (HeaderItem item in _currentFeed.Header.HeaderItems)
             {
-                if(item.InputType.Equals("Query"))
+                if (item.InputType.Equals("Query"))
+                {
                     switch (item.ValueItem[0])
                     {
                         case "<Applicant Name>":
@@ -242,6 +192,7 @@ namespace FeedBackSystem
                             item.ValueItem.Add(_currentFeed.Applicant.Date);
                             break;
                     }
+                }
                 place.AddItem(item);
             }
             
@@ -249,6 +200,15 @@ namespace FeedBackSystem
         }
 
         private void AddHeaderBtn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                setHeader();
+            } catch (Exception ex)
+            { return; }
+
+        }
+        private void setHeader()
         {
             using (SelectControl form = new SelectControl("Header"))
             {
@@ -260,12 +220,20 @@ namespace FeedBackSystem
                     sql.OpenConnection();
 
                     _currentFeed.Header = sql.GetHeader(form._ids[0]);
+                    _currentFeed.Header.HeaderItems = sql.GetHeaderItems(_currentFeed.Header.HeaderId);
 
-                    UpdateHeaderTab();
+                    FillHeader();
 
-                    ChangeHeader.Visible = true;
+                    //ChangeHeader.Visible = true;
 
                     sql.CloseConnection();
+                } else
+                {
+                    /*
+                     * To prevent the continuation of the method calls to setSection in setTemplate 
+                     * when the user did not select any header (direct close window)
+                     */
+                    throw new Exception();
                 }
             }
                 
@@ -419,6 +387,76 @@ namespace FeedBackSystem
                     }
 
                     sql.CloseConnection();
+                }
+            }
+        }
+
+        private void SetTemplateBtn_Click(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show("[Yes] To load template.\n[No] To select header and sections separately."
+                         , "Choose Loading Method", MessageBoxButtons.YesNoCancel);
+            if(result == DialogResult.Cancel)
+            {
+                return;
+            }
+            else
+            {
+                if(result == DialogResult.Yes)
+                {
+                    ChangeHeader.Visible = false;
+                    AddSectionBtn.Visible = false;
+
+                    using (SelectControl form = new SelectControl("Template"))
+                    {
+                        var selectResult = form.ShowDialog();
+
+                        if (selectResult == DialogResult.OK)
+                        {
+                            MySql sql = new MySql();
+                            sql.OpenConnection();
+
+                            string sqlStatement = "select * from template where TemplateID = @id";
+                            MySqlCommand cmd = new MySqlCommand(sqlStatement);
+                            cmd.Parameters.AddWithValue("@id", form._ids[0]);
+                            DataTable template = sql.GetDataSetCmd(cmd);
+
+                            _currentFeed.Header = sql.GetHeader(template.Rows[0][1].ToString());
+                            _currentFeed.Header.HeaderItems = sql.GetHeaderItems(_currentFeed.Header.HeaderId);
+
+                            FillHeader();
+                            
+                            _currentFeed.Sections.Clear();
+                            cmd.Parameters.Clear();
+
+                            sqlStatement = "SELECT * FROM template_section WHERE TemplateID = @id";
+                            cmd = new MySqlCommand(sqlStatement);
+                            cmd.Parameters.AddWithValue("@id", form._ids[0]);
+                            DataTable templateSections = sql.GetDataSetCmd(cmd);
+                            
+                            foreach (DataRow row in templateSections.Rows)
+                            {
+                                _currentFeed.Sections.Add(sql.GetSection(row["SectionID"].ToString()));
+                            }
+                            FillSection();
+                            
+                            sql.CloseConnection();
+                            
+                        }
+                    }
+                }
+                else //Will default to select header and sections
+                {
+                    try
+                    {
+                        setHeader();
+                        ChangeHeader.Visible = true;
+                        setSection();
+                        AddSectionBtn.Visible = true;
+                        AddSectionBtn.Text = "Change Section";
+                    } catch (Exception ex)
+                    {
+                        return;
+                    }
                 }
             }
         }
