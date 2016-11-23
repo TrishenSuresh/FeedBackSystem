@@ -29,16 +29,18 @@ namespace FeedBackSystem
                     TitleLabel.Text = "List of Headers: ";
                     AddBtn.Text = "Add Header";
                     DeleteBtn.Text = "Delete Header";
+                    EditBtn.Text = "Edit Header";
                     break;
                 case "Section":
                     TitleLabel.Text = "List of Sections: ";
                     AddBtn.Text = "Add Section";
                     DeleteBtn.Text = "Delete Section";
+                    EditBtn.Text = "Edit Section";
                     break;
                 case "Template":
                     TitleLabel.Text = "List of Templates:";
                     AddBtn.Text = "Add Template";
-                    DeleteBtn.Text = "Delete Template";
+                    EditBtn.Text = "Edit Template";
                     break;
             }
             setDgv();
@@ -141,10 +143,12 @@ namespace FeedBackSystem
             if (Dgv.SelectedRows.Count > 1)
             {
                 DeleteBtn.Text = "Delete " + ControlType + "s";
+                EditBtn.Enabled = false;
             }
             else
             {
                 DeleteBtn.Text = "Delete " + ControlType;
+                EditBtn.Enabled = true;
             }
         }
 
@@ -162,41 +166,74 @@ namespace FeedBackSystem
                     ids.Add(row.Cells[0].Value.ToString());
                 }
 
-                var confirmResult = MessageBox.Show("Are you sure you want to delete the row with following ids:\n" +
+                var confirmResult = MessageBox.Show("Are you sure you want to delete the "+ControlType.ToLower()+"s with following ids:\n" +
                                     string.Join(", ", ids), "Confirm Delete", MessageBoxButtons.YesNo);
 
-                if (confirmResult != DialogResult.Yes)
+                if (confirmResult != DialogResult.Yes) return;
+
+                switch (ControlType)
                 {
-                    return;
+                    case "Header":
+                        foreach (string id in ids)
+                        {
+                            sql.ArchiveHeader(id);
+                        }
+                        break;
+                    case "Section":
+                        foreach (string id in ids)
+                        {
+                            sql.ArchiveSection(id);
+                        }
+                        break;
+                    case "Template":
+                        foreach (string id in ids)
+                        {
+                            sql.ArchiveTemplate(id);
+                        }
+                        break;
                 }
-                else
-                {
-                    switch (ControlType)
+
+                MessageBox.Show("Successfully Deleted");
+
+                setDgv();
+            }
+        }
+
+        private void EditBtn_Click(object sender, EventArgs e)
+        {
+            string id = Dgv.SelectedRows[0].Cells[0].Value.ToString();
+            switch (ControlType)
+            {
+                case "Header":
+                    using (HeaderCreator creator = new HeaderCreator(id))
                     {
-                        case "Header":
-                            foreach (string id in ids)
-                            {
-                                sql.ArchiveHeader(id);
-                            }
-                            break;
-                        case "Section":
-                            foreach (string id in ids)
-                            {
-                                sql.ArchiveSection(id);
-                            }
-                            break;
-                        case "Template":
-                            foreach (string id in ids)
-                            {
-                                sql.ArchiveTemplate(id);
-                            }
-                            break;
+                        creator.ShowDialog();
+                        if (creator.DialogResult == DialogResult.OK)
+                        {
+                            setDgv();
+                        }
                     }
-
-                    MessageBox.Show("Successfully Deleted");
-
-                    setDgv();
-                }
+                    break;
+                case "Section":
+                    using (SectionCreator creator = new SectionCreator())
+                    {
+                        creator.ShowDialog();
+                        if (creator.DialogResult == DialogResult.OK)
+                        {
+                            setDgv();
+                        }
+                    }
+                    break;
+                case "Template":
+                    using (TemplateCreator creator = new TemplateCreator())
+                    {
+                        creator.ShowDialog();
+                        if (creator.DialogResult == DialogResult.OK)
+                        {
+                            setDgv();
+                        }
+                    }
+                    break;
             }
         }
     }

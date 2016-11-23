@@ -500,7 +500,7 @@ namespace FeedBackSystem
                 catch (Exception genExp)
                 {
                     trans.Rollback();
-                    MessageBox.Show(genExp.Message);
+                    MessageBox.Show(genExp.ToString());
                     success = false;
                 }
             } //end transaction

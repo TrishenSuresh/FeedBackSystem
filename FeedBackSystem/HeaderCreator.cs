@@ -19,6 +19,26 @@ namespace FeedBackSystem
             }
         }
 
+        public HeaderCreator(string id)
+        {
+            InitializeComponent();
+            
+            MySql sql = new MySql();
+            sql.OpenConnection();
+
+            header = sql.GetHeader(id);
+
+            List<HeaderItem> items = sql.GetHeaderItems(id);
+
+            foreach (HeaderItem item in items)
+            {
+                HeaderTab.AddItem(item);
+            }
+
+
+            sql.CloseConnection();
+        }
+
 
         private void AddItemBtn_Click(object sender, EventArgs e)
         {
@@ -38,6 +58,9 @@ namespace FeedBackSystem
 
         private void SaveHeaderBtn_Click(object sender, EventArgs e)
         {
+
+            header.HeaderItems = HeaderTab._headeritems;
+
             using (SaveBox box = new SaveBox())
             {
                 var result = box.ShowDialog();

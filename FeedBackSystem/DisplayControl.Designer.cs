@@ -32,6 +32,7 @@
             this.Dgv = new System.Windows.Forms.DataGridView();
             this.AddBtn = new System.Windows.Forms.Button();
             this.DeleteBtn = new System.Windows.Forms.Button();
+            this.EditBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.Dgv)).BeginInit();
             this.SuspendLayout();
             // 
@@ -80,7 +81,7 @@
             // DeleteBtn
             // 
             this.DeleteBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.DeleteBtn.Location = new System.Drawing.Point(326, 287);
+            this.DeleteBtn.Location = new System.Drawing.Point(195, 287);
             this.DeleteBtn.Margin = new System.Windows.Forms.Padding(2);
             this.DeleteBtn.Name = "DeleteBtn";
             this.DeleteBtn.Size = new System.Drawing.Size(127, 25);
@@ -89,10 +90,23 @@
             this.DeleteBtn.UseVisualStyleBackColor = true;
             this.DeleteBtn.Click += new System.EventHandler(this.DeleteBtn_Click);
             // 
+            // EditBtn
+            // 
+            this.EditBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.EditBtn.Location = new System.Drawing.Point(326, 287);
+            this.EditBtn.Margin = new System.Windows.Forms.Padding(2);
+            this.EditBtn.Name = "EditBtn";
+            this.EditBtn.Size = new System.Drawing.Size(127, 25);
+            this.EditBtn.TabIndex = 4;
+            this.EditBtn.Text = "Edit";
+            this.EditBtn.UseVisualStyleBackColor = true;
+            this.EditBtn.Click += new System.EventHandler(this.EditBtn_Click);
+            // 
             // DisplayControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.EditBtn);
             this.Controls.Add(this.DeleteBtn);
             this.Controls.Add(this.AddBtn);
             this.Controls.Add(this.Dgv);
@@ -112,5 +126,6 @@
         private System.Windows.Forms.DataGridView Dgv;
         private System.Windows.Forms.Button AddBtn;
         private System.Windows.Forms.Button DeleteBtn;
+        private System.Windows.Forms.Button EditBtn;
     }
 }

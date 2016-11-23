@@ -22,6 +22,44 @@ namespace FeedBackSystem
             InputTypeHelp.Image = new Icon(SystemIcons.Question, 32, 32).ToBitmap();
         }
 
+        public HeaderItemCreator(HeaderItem item)
+        {
+            InitializeComponent();
+
+            InputTitle.Text = item.Title.TrimEnd(':');
+
+            switch(item.InputType)
+            {
+                case "Text":
+                    InputTypeList.SelectedIndex = 0;
+                    var text = InputControlPanel.Controls[0] as HeaderCreatorControls.Text;
+                    text.SetValue(item.ValueItem[0]);
+                    break;
+                case "Label":
+                    InputTypeList.SelectedIndex = 1;
+                    var label = InputControlPanel.Controls[0] as HeaderCreatorControls.Text;
+                    label.SetValue(item.ValueItem[0]);
+                    break;
+                case "Date":
+                    InputTypeList.SelectedIndex = 2;
+                    var date = InputControlPanel.Controls[0] as HeaderCreatorControls.Date;
+                    break;
+                case "List":
+                    InputTypeList.SelectedIndex = 3;
+                    var list = InputControlPanel.Controls[0] as HeaderCreatorControls.List;
+                    list.SetValue(item.ValueItem);
+                    break;
+                case "Query":
+                    InputTypeList.SelectedIndex = 4;
+                    var query = InputControlPanel.Controls[0] as HeaderCreatorControls.Query;
+                    break;
+            }
+
+            OkBtn.Text = "Save";
+
+            InputTypeHelp.Image = new Icon(SystemIcons.Question, 32, 32).ToBitmap();
+        }
+
 
         private void InputTypeList_SelectedIndexChanged(object sender, EventArgs e)
         {

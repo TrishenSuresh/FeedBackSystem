@@ -23,5 +23,10 @@ namespace FeedBackSystem.HeaderCreatorControls
 
             return list;
         }
+
+        public void SetValue(List<String> s)
+        {
+            ListBox.Lines = s.ToArray();
+        }
     }
 }

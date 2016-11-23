@@ -13,5 +13,11 @@ namespace FeedBackSystem.HeaderCreatorControls
         {
             return TextBox.Text;
         }
+
+        public void SetValue(string s)
+        {
+            TextBox.Text = s;
+        }
+
     }
 }

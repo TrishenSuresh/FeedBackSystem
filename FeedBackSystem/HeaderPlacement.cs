@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
+using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace FeedBackSystem
@@ -10,6 +14,7 @@ namespace FeedBackSystem
         private int _row;
         private readonly int[] _column = {1, 6, 11};
         private int _counter;
+        public List<HeaderItem> _headeritems = new List<HeaderItem>();
 
         public HeaderPlacement()
         {
@@ -24,8 +29,15 @@ namespace FeedBackSystem
             try
             {
 
-
-            HeaderTable.Controls.Add(new Label {Text = itemType.Title,Anchor = AnchorStyles.Left, TextAlign = ContentAlignment.MiddleLeft, AutoSize = true}, _column[_counter], _row);
+                Label title = new Label
+                {
+                    Text = itemType.Title,
+                    Anchor = AnchorStyles.Left,
+                    TextAlign = ContentAlignment.MiddleLeft,
+                    AutoSize = true,
+                };
+                title.DoubleClick += EditItem;
+                HeaderTable.Controls.Add(title, _column[_counter], _row);
 
             switch (itemType.InputType)
             {
@@ -36,7 +48,7 @@ namespace FeedBackSystem
                         Anchor = AnchorStyles.Left | AnchorStyles.Right,
                         AutoSize = true,
                         Text = itemType.ValueItem[0],
-                        Name = "header"+itemType.Id
+                        Name = itemType.Id
                     };
                     HeaderTable.Controls.Add(text, _column[_counter]+1,_row);
                     HeaderTable.SetColumnSpan(text, 3);
@@ -121,7 +133,9 @@ namespace FeedBackSystem
                     break;
 
             }
-            
+
+            _headeritems.Add(itemType);
+
             if (_counter >= 2)
             {
                 this.HeaderTable.RowStyles.Add(new RowStyle(SizeType.Absolute,30));
@@ -139,7 +153,51 @@ namespace FeedBackSystem
             }
 
 
-        }// end add item
+        }
+        // end add item
+
+        private void EditItem(object sender, EventArgs eventArgs)
+        {
+            string title;
+            string inputType;
+
+            Label control = sender as Label;
+            title = control.Text;
+
+            if (_headeritems.FindIndex(x => x.Title == title) <= 3)
+            {
+                MessageBox.Show("Sorry, you are not allowed to edit that");
+                return;
+            }
+
+            List<HeaderItem> headerItem = new List<HeaderItem>();
+            headerItem.AddRange(_headeritems);
+            
+
+            HeaderItem item = headerItem.Find(x => x.Title == title);
+
+            using (HeaderItemCreator form = new HeaderItemCreator(item))
+            {
+                var result = form.ShowDialog();
+
+                if (result != DialogResult.OK) return;
+                int index = headerItem.FindIndex(x => x.Title == title);
+                headerItem.RemoveAt(index);
+                HeaderItem itemNew = new HeaderItem(form.Title+":",form.InputType,form.ValueItem);
+                headerItem.Insert(index,itemNew);
+
+                ResetTable();
+                _headeritems.Clear();
+                foreach (HeaderItem i in headerItem)
+                {
+                    AddItem(i);
+                }
+            }
+
+
+        }
+
+
 
         public void ResetTable()
         {
@@ -147,5 +205,7 @@ namespace FeedBackSystem
             _counter = 0;
             _row = 0;
         }
+        
+
     }
 }
