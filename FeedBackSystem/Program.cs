@@ -13,13 +13,16 @@ namespace FeedBackSystem
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            try { 
+
+            Login login = new FeedBackSystem.Login();
+            if(login.ShowDialog() == DialogResult.OK)
+            {
                 Application.Run(new MainForm());
-            }
-            catch (Exception Ex)
+            } else
             {
                 Application.Exit();
             }
+            
         }
     }
 }

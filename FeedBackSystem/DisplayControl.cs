@@ -14,7 +14,6 @@ namespace FeedBackSystem
     {
         string ControlType;
         public DisplayControl()
-
         {
             InitializeComponent();
         }
@@ -23,26 +22,13 @@ namespace FeedBackSystem
         {
             InitializeComponent();
             ControlType = type;
-            switch (ControlType)
-            {
-                case "Header":
-                    TitleLabel.Text = "List of Headers: ";
-                    AddBtn.Text = "Add Header";
-                    DeleteBtn.Text = "Delete Header";
-                    EditBtn.Text = "Edit Header";
-                    break;
-                case "Section":
-                    TitleLabel.Text = "List of Sections: ";
-                    AddBtn.Text = "Add Section";
-                    DeleteBtn.Text = "Delete Section";
-                    EditBtn.Text = "Edit Section";
-                    break;
-                case "Template":
-                    TitleLabel.Text = "List of Templates:";
-                    AddBtn.Text = "Add Template";
-                    EditBtn.Text = "Edit Template";
-                    break;
-            }
+
+            TitleLabel.Text = "List of " + ControlType + "s: ";
+            AddBtn.Text = "Add " + ControlType;
+            DeleteBtn.Text = "Delete" + ControlType;
+            EditBtn.Text = "Edit " + ControlType;
+            UpdateBtn.Text = "Update " + ControlType;
+            
             setDgv();
         }
 
@@ -99,6 +85,14 @@ namespace FeedBackSystem
             
             Dgv.DataSource = Dt;
             sql.CloseConnection();
+
+            for (int a = 0; a < Dgv.ColumnCount - 2; a++)
+            {
+                Dgv.Columns[a].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            }
+
+            Dgv.Columns[Dgv.ColumnCount - 1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+
         }
 
         private void AddBtn_Click(object sender, EventArgs e)
@@ -144,12 +138,17 @@ namespace FeedBackSystem
             {
                 DeleteBtn.Text = "Delete " + ControlType + "s";
                 EditBtn.Enabled = false;
+                RowTitleText.Clear();
+                RowDescText.Clear();
             }
             else
             {
                 DeleteBtn.Text = "Delete " + ControlType;
                 EditBtn.Enabled = true;
+                RowTitleText.Text = Dgv.SelectedRows[0].Cells[1].Value.ToString();
+                RowDescText.Text = Dgv.SelectedRows[0].Cells[2].Value.ToString();
             }
+            UpdateBtn.Visible = false;
         }
 
         private void DeleteBtn_Click(object sender, EventArgs e)
@@ -234,6 +233,54 @@ namespace FeedBackSystem
                         }
                     }
                     break;
+            }
+        }
+
+        private void RowTitleText_TextChanged(object sender, EventArgs e)
+        {
+            if (RowTitleText.ContainsFocus)
+            {
+                UpdateBtn.Visible = true;
+            }
+        }
+
+        private void UpdateBtn_Click(object sender, EventArgs e)
+        {
+            string id = Dgv.SelectedRows[0].Cells[0].Value.ToString();
+
+            if (!String.IsNullOrEmpty(RowTitleText.Text))
+            {
+                MySql sql = new MySql();
+                sql.OpenConnection();
+
+                if (sql.EditComponent(ControlType, id, RowTitleText.Text, RowDescText.Text))
+                {
+                    MessageBox.Show("Successfully Updated!\n For advanced updates please click the Edit " + ControlType + " button. ");
+                }
+                else
+                {
+                    MessageBox.Show("No updates detected!\n For advanced updates please click the Edit " + ControlType + " button. ");
+                }
+
+                sql.CloseConnection();
+            }
+            else
+            {
+                MessageBox.Show(ControlType + " Title must not be empty!", "Missing attributes");
+                return;
+            }
+            
+            setDgv();
+            RowTitleText.Clear();
+            RowDescText.Clear();
+            UpdateBtn.Visible = false;
+        }
+
+        private void RowDescText_TextChanged(object sender, EventArgs e)
+        {
+            if (RowDescText.ContainsFocus)
+            {
+                UpdateBtn.Visible = true;
             }
         }
     }

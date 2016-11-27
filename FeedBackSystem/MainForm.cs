@@ -10,33 +10,23 @@ namespace FeedBackSystem
         public MainForm()
         {
             InitializeComponent();
+            
+            MainPanel.Controls.Add(new Home());
 
+            var adobePath = Registry.GetValue(@"HKEY_CLASSES_ROOT\Software\Adobe\Acrobat\Exe", string.Empty, string.Empty);
 
-            var result = new Login().ShowDialog();
-
-            if (result == DialogResult.OK)
+            if (adobePath == null)
             {
-                MainPanel.Controls.Add(new Home());
-
-                var adobePath = Registry.GetValue(@"HKEY_CLASSES_ROOT\Software\Adobe\Acrobat\Exe", string.Empty, string.Empty);
-
-                if (adobePath == null)
-                {
-                    MessageBox.Show("Please install adobe reader to fully utilize the system's functionality","Adobe Reader Not Found",MessageBoxButtons.OK);
-                }
-
-                if (Reviewer.IsAdmin)
-                {
-                    ToolStripMenuItem AdminButton = new ToolStripMenuItem("Admin");
-                    Menu.Items.Add(AdminButton);
-                    ToolStripMenuItem button = new ToolStripMenuItem("Users List");
-                    button.Click += UserListBtn;
-                    AdminButton.DropDownItems.Add(button);
-                }
+                MessageBox.Show("Please install adobe reader to fully utilize the system's functionality","Adobe Reader Not Found",MessageBoxButtons.OK);
             }
-            else
+
+            if (Reviewer.IsAdmin)
             {
-                this.Close();
+                ToolStripMenuItem AdminButton = new ToolStripMenuItem("Admin");
+                Menu.Items.Add(AdminButton);
+                ToolStripMenuItem button = new ToolStripMenuItem("Users List");
+                button.Click += UserListBtn;
+                AdminButton.DropDownItems.Add(button);
             }
         }
 

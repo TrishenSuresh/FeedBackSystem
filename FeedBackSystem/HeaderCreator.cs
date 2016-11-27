@@ -35,6 +35,8 @@ namespace FeedBackSystem
                 HeaderTab.AddItem(item);
             }
 
+            TitleText.Text = header.Title;
+            DescText.Text = header.Desc;
 
             sql.CloseConnection();
         }
@@ -60,27 +62,25 @@ namespace FeedBackSystem
         {
 
             header.HeaderItems = HeaderTab._headeritems;
+            
+            header.Title = TitleText.Text;
+            header.Desc = DescText.Text;
 
-            using (SaveBox box = new SaveBox())
+            if(String.IsNullOrEmpty(header.Title))
             {
-                var result = box.ShowDialog();
+                MessageBox.Show("The Header Title must not be empty!", "Missing attributes");
+                return;
+            }
 
-                if (result == DialogResult.OK)
-                {
-                    header.Title = box.Title;
-                    header.Desc = box.Desc;
+            MySql sql = new MySql();
+            sql.OpenConnection();
+            if (sql.SaveHeader(header))
+                MessageBox.Show("Sucessfully inserted into the database");
+            else
+                return;
 
-                    MySql sql = new MySql();
-                    sql.OpenConnection();
-                    if (sql.SaveHeader(header))
-                        MessageBox.Show("Sucessfully inserted into the database");
-                    else
-                        return;
-
-                    sql.CloseConnection();
-                }
-            } //using savebox
-
+            sql.CloseConnection();
+        
             //after the saving is done, go back to the home page showing the list of available headers
             this.DialogResult = DialogResult.OK;
             this.Close();

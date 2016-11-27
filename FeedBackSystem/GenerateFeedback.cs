@@ -24,6 +24,7 @@ namespace FeedBackSystem
             AddHeaderBtn.Visible = false;
             AddSectionBtn.Visible = false;
             SetTemplateBtn.Enabled = false;
+            SaveTemplateBtn.Enabled = false;
 
             ContentTable.Padding = new Padding(0, 0, SystemInformation.VerticalScrollBarWidth, 0);
 
@@ -405,6 +406,7 @@ namespace FeedBackSystem
                 {
                     ChangeHeader.Visible = false;
                     AddSectionBtn.Visible = false;
+                    SaveTemplateBtn.Enabled = false;
 
                     using (SelectControl form = new SelectControl("Template"))
                     {
@@ -453,6 +455,7 @@ namespace FeedBackSystem
                         setSection();
                         AddSectionBtn.Visible = true;
                         AddSectionBtn.Text = "Change Section";
+                        SaveTemplateBtn.Enabled = true;
                     } catch (Exception ex)
                     {
                         return;

@@ -1037,5 +1037,59 @@ namespace FeedBackSystem
             // Return a Base64 string representation of the random number.
             return Convert.ToBase64String(buff);
         }
+
+        public bool EditComponent(string type, string id, string title, string desc)
+        {
+            string tableID = "";
+            string tableName = "";
+            string tableTitle = "";
+            string tableDesc = "";
+
+            switch(type)
+            {
+                case "Header":
+                    tableID = "HeaderID";
+                    tableName = "header";
+                    tableTitle = "Name";
+                    tableDesc = "Desc";
+                    break;
+                case "Section":
+                    tableID = "SectionID";
+                    tableName = "sections";
+                    tableTitle = "Title";
+                    tableDesc = "Desc";
+                    break;
+                case "Template":
+                    tableID = "TemplateID";
+                    tableName = "template";
+                    tableTitle = "TemplateTitle";
+                    tableDesc = "TemplateDesc";
+                    break;
+                default:
+                    return false;
+            }
+
+            string sqlStatement = "update " + tableName + " set `" + tableTitle + "` = @Title, `" 
+                + tableDesc + "` = @Desc where " + tableID + " = @ID";
+
+            using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
+            {
+                try
+                {
+                    cmd.Parameters.AddWithValue("@Title", title);
+                    cmd.Parameters.AddWithValue("@Desc", desc);
+                    cmd.Parameters.AddWithValue("@ID", id);
+
+                    cmd.ExecuteNonQuery();
+
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                    return false;
+                }
+            }
+        }
     }
 }
