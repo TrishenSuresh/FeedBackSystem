@@ -44,17 +44,18 @@ namespace FeedBackSystem
 
         private void AddItemBtn_Click(object sender, EventArgs e)
         {
-            using (HeaderItemCreator creator = new HeaderItemCreator())
+
+            using (HeaderItemDisplay creator = new HeaderItemDisplay(header.HeaderId))
             {
                 var result = creator.ShowDialog();
 
-                if (result == DialogResult.OK)
-                {
-                    HeaderItem item = new HeaderItem(creator.Title + ":", creator.InputType, creator.ValueItem);
-                    header.addHeaderItem(item);
+                //if (result == DialogResult.OK)
+                //{
+                //    HeaderItem item = new HeaderItem(creator.Title + ":", creator.InputType, creator.ValueItem);
+                //    header.addHeaderItem(item);
 
-                    HeaderTab.AddItem(item);
-                }
+                //    HeaderTab.AddItem(item);
+                //}
             }
         }
 

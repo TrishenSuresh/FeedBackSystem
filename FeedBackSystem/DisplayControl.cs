@@ -100,7 +100,7 @@ namespace FeedBackSystem
             switch (ControlType)
             {
                 case "Header":
-                    using (HeaderCreator creator = new HeaderCreator())
+                    using (HeaderItemDisplay creator = new HeaderItemDisplay())
                     {
                         creator.ShowDialog();
                         if (creator.DialogResult == DialogResult.OK)
@@ -204,7 +204,7 @@ namespace FeedBackSystem
             switch (ControlType)
             {
                 case "Header":
-                    using (HeaderCreator creator = new HeaderCreator(id))
+                    using (HeaderItemDisplay creator = new HeaderItemDisplay(id))
                     {
                         creator.ShowDialog();
                         if (creator.DialogResult == DialogResult.OK)
@@ -214,7 +214,7 @@ namespace FeedBackSystem
                     }
                     break;
                 case "Section":
-                    using (SectionCreator creator = new SectionCreator())
+                    using (SectionCreator creator = new SectionCreator(id))
                     {
                         creator.ShowDialog();
                         if (creator.DialogResult == DialogResult.OK)

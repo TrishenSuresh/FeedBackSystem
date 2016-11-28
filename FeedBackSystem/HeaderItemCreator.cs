@@ -7,17 +7,13 @@ namespace FeedBackSystem
 {
     public partial class HeaderItemCreator : Form
     {
-
-        public List<string> ValueItem = new List<string>();
-        public string Title;
-        public string InputType;
-
-
+        public HeaderItem headitem;
 
         public HeaderItemCreator()
         {
             InitializeComponent();
             InputTypeList.SelectedIndex = 0;
+            headitem = new HeaderItem();
 
             InputTypeHelp.Image = new Icon(SystemIcons.Question, 32, 32).ToBitmap();
         }
@@ -25,6 +21,7 @@ namespace FeedBackSystem
         public HeaderItemCreator(HeaderItem item)
         {
             InitializeComponent();
+            headitem = item;
 
             InputTitle.Text = item.Title.TrimEnd(':');
 
@@ -95,15 +92,17 @@ namespace FeedBackSystem
                 //would never happen
                 if (InputTypeList.Text.Length <= 0)
                     throw new Exception("Make a selection");
+                
+                headitem.Title = InputTitle.Text+":";
+                
+                headitem.InputType = InputTypeList.Text;
+                headitem.ValueItem.Clear();
 
-                Title = InputTitle.Text;
-                InputType = InputTypeList.Text;
-
-                switch (InputType)
+                switch (headitem.InputType)
                 {
                     case "Text":
                         HeaderCreatorControls.Text text = (HeaderCreatorControls.Text)InputControlPanel.Controls[0];
-                        ValueItem.Add(text.GetValue());
+                        headitem.ValueItem.Add(text.GetValue());
                         break;
                     case "Label":
                         HeaderCreatorControls.Text label = (HeaderCreatorControls.Text)InputControlPanel.Controls[0];
@@ -111,26 +110,26 @@ namespace FeedBackSystem
                         {
                             throw new Exception("Label text must not be empty!");
                         }
-                        ValueItem.Add(label.GetValue());
+                        headitem.ValueItem.Add(label.GetValue());
                         break;
                     case "Date":
                         HeaderCreatorControls.Date date = (HeaderCreatorControls.Date)InputControlPanel.Controls[0];
                         if (date.GetValue().Equals("<Review Date>"))
-                            InputType = "Query";
-                        ValueItem.Add(date.GetValue());
+                            headitem.InputType = "Query";
+                        headitem.ValueItem.Add(date.GetValue());
                         break;
                     case "List":
                         HeaderCreatorControls.List list = (HeaderCreatorControls.List)InputControlPanel.Controls[0];
-                        ValueItem.AddRange(list.GetValue());
+                        headitem.ValueItem.AddRange(list.GetValue());
                         break;
                     case "Query":
                         HeaderCreatorControls.Query query = (HeaderCreatorControls.Query)InputControlPanel.Controls[0];
-                        ValueItem.Add(query.GetValue());
+                        headitem.ValueItem.Add(query.GetValue());
                         break;
                 }
 
-
                 DialogResult = DialogResult.OK;
+                
                 Close();
 
             }

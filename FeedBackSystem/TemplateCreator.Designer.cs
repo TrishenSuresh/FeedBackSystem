@@ -37,10 +37,16 @@
             this.AddSectionBtn = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.SaveTemplateBtn = new System.Windows.Forms.Button();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.TitleText = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.DescText = new System.Windows.Forms.TextBox();
             this.ContentTable.SuspendLayout();
             this.HeaderControls.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // ContentTable
@@ -53,16 +59,18 @@
             this.ContentTable.Controls.Add(this.HeaderControls, 0, 1);
             this.ContentTable.Controls.Add(this.tableLayoutPanel1, 0, 3);
             this.ContentTable.Controls.Add(this.tableLayoutPanel2, 0, 4);
+            this.ContentTable.Controls.Add(this.tableLayoutPanel3, 0, 5);
             this.ContentTable.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ContentTable.Location = new System.Drawing.Point(0, 0);
             this.ContentTable.Name = "ContentTable";
-            this.ContentTable.RowCount = 5;
+            this.ContentTable.RowCount = 6;
             this.ContentTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.ContentTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
             this.ContentTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 481F));
             this.ContentTable.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.ContentTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.ContentTable.Size = new System.Drawing.Size(925, 806);
+            this.ContentTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+            this.ContentTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.ContentTable.Size = new System.Drawing.Size(925, 851);
             this.ContentTable.TabIndex = 8;
             // 
             // SectionTable
@@ -163,7 +171,7 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(919, 35);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(919, 29);
             this.tableLayoutPanel2.TabIndex = 12;
             // 
             // SaveTemplateBtn
@@ -177,12 +185,71 @@
             this.SaveTemplateBtn.UseVisualStyleBackColor = true;
             this.SaveTemplateBtn.Click += new System.EventHandler(this.SaveTemplateBtn_Click);
             // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 4;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel3.Controls.Add(this.label1, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.TitleText, 1, 0);
+            this.tableLayoutPanel3.Controls.Add(this.label2, 2, 0);
+            this.tableLayoutPanel3.Controls.Add(this.DescText, 3, 0);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 803);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 2;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(646, 45);
+            this.tableLayoutPanel3.TabIndex = 13;
+            // 
+            // label1
+            // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(3, 6);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(27, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Title";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // TitleText
+            // 
+            this.TitleText.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.TitleText.Location = new System.Drawing.Point(36, 3);
+            this.TitleText.Name = "TitleText";
+            this.TitleText.Size = new System.Drawing.Size(141, 20);
+            this.TitleText.TabIndex = 1;
+            // 
+            // label2
+            // 
+            this.label2.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(183, 6);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(60, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Description";
+            // 
+            // DescText
+            // 
+            this.DescText.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.DescText.Location = new System.Drawing.Point(249, 3);
+            this.DescText.Multiline = true;
+            this.DescText.Name = "DescText";
+            this.DescText.Size = new System.Drawing.Size(394, 20);
+            this.DescText.TabIndex = 3;
+            // 
             // TemplateCreator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(925, 806);
+            this.ClientSize = new System.Drawing.Size(925, 851);
             this.Controls.Add(this.ContentTable);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "TemplateCreator";
@@ -195,6 +262,8 @@
             this.tableLayoutPanel1.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
+            this.tableLayoutPanel3.ResumeLayout(false);
+            this.tableLayoutPanel3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -210,5 +279,10 @@
         private System.Windows.Forms.Button AddSectionBtn;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Button SaveTemplateBtn;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox TitleText;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox DescText;
     }
 }

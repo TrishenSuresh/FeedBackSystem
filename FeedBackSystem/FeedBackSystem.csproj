@@ -47,6 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HeaderItemDisplay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HeaderItemDisplay.Designer.cs">
+      <DependentUpon>HeaderItemDisplay.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserInfo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -184,6 +190,9 @@
     <Compile Include="UserList.Designer.cs">
       <DependentUpon>UserList.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="HeaderItemDisplay.resx">
+      <DependentUpon>HeaderItemDisplay.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserInfo.resx">
       <DependentUpon>UserInfo.cs</DependentUpon>
     </EmbeddedResource>
@@ -256,6 +265,7 @@
     <EmbeddedResource Include="UserList.resx">
       <DependentUpon>UserList.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Properties\DataSources\HeaderItem.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

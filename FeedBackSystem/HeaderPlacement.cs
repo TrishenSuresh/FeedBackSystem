@@ -183,7 +183,7 @@ namespace FeedBackSystem
                 if (result != DialogResult.OK) return;
                 int index = headerItem.FindIndex(x => x.Title == title);
                 headerItem.RemoveAt(index);
-                HeaderItem itemNew = new HeaderItem(form.Title+":",form.InputType,form.ValueItem);
+                HeaderItem itemNew = form.headitem;
                 headerItem.Insert(index,itemNew);
 
                 ResetTable();

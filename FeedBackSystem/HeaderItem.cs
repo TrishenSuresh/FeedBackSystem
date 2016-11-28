@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Net.Http.Headers;
 using System.Windows.Forms;
 
 namespace FeedBackSystem
@@ -13,7 +14,15 @@ namespace FeedBackSystem
         public string ValueChosen { get; set; }
         public List<string> ValueItem { get; set; }
 
-        public HeaderItem() { }
+
+        public HeaderItem()
+        {
+            Id = "";
+            Title = "";
+            InputType = "";
+            ValueChosen = "";
+            ValueItem = new List<string>();
+        }
 
         //create a header with a list of value item -> List
         public HeaderItem(string title, string inputType, List<string> value)

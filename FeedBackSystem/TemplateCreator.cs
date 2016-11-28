@@ -137,27 +137,29 @@ namespace FeedBackSystem
         private void SaveTemplateBtn_Click(object sender, EventArgs e)
         {
             MySql sql = new MySql();
-            
 
-            using (SaveBox save = new SaveBox())
+            if (TitleText.Text.Length <= 0)
             {
-                var result = save.ShowDialog();
-
-                if (result == DialogResult.OK)
-                {
-                    sql.OpenConnection();
-                    if (sql.SaveTemplate(_currentTemplate.Header, _currentTemplate.Sections, save.Title, save.Desc))
-                    {
-                        MessageBox.Show("Template successfully saved");
-                        sql.CloseConnection();
-                        this.DialogResult = DialogResult.OK;
-                        Close();
-                    }
-                }
+                MessageBox.Show("Please insert the title","Missing Field");
+                return;
             }
 
+            if (DescText.Text.Length <= 0)
+            {
+                MessageBox.Show("Please insert the description","Missing Field");
+                return;
+            }
 
-             
+            sql.OpenConnection();
+
+            if (sql.SaveTemplate(_currentTemplate.Header, _currentTemplate.Sections, TitleText.Text, DescText.Text))
+            {
+                MessageBox.Show("Template successfully saved");
+                
+                this.DialogResult = DialogResult.OK;
+                Close();
+            }
+            sql.CloseConnection();
 
         }
     }
