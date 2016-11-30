@@ -4,6 +4,7 @@ using MySql.Data.MySqlClient;
 using System.Windows.Forms;
 using System.Data;
 using System;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -91,24 +92,24 @@ namespace FeedBackSystem
                 //Check whether is the File column not null else it will throw InvalidCast
                 if (!Convert.IsDBNull(reader["File"]))
                 {
-                    byte[] pdf = (byte[])reader["File"];
-                    app = new Applicant(reader["ApplicantID"].ToString(), 
-                                        reader["FirstName"] + " " + reader["LastName"], 
-                                        reader["Email"] + "", 
-                                        pdf, 
-                                        reader["Name"].ToString(), 
-                                        reader["StatusTitle"].ToString(),
-                                        reader["Timestamp"].ToString());
+                    byte[] pdf = (byte[]) reader["File"];
+                    app = new Applicant(reader["ApplicantID"].ToString(),
+                        reader["FirstName"] + " " + reader["LastName"],
+                        reader["Email"] + "",
+                        pdf,
+                        reader["Name"].ToString(),
+                        reader["StatusTitle"].ToString(),
+                        reader["Timestamp"].ToString());
                 }
                 else
                 {
-                    app = new Applicant(reader["ApplicantID"].ToString(), 
-                                        reader["FirstName"] + " " + reader["LastName"], 
-                                        reader["Email"] + "", 
-                                        null, 
-                                        reader["Name"].ToString(), 
-                                        reader["StatusTitle"].ToString(),
-                                        reader["Timestamp"].ToString());
+                    app = new Applicant(reader["ApplicantID"].ToString(),
+                        reader["FirstName"] + " " + reader["LastName"],
+                        reader["Email"] + "",
+                        null,
+                        reader["Name"].ToString(),
+                        reader["StatusTitle"].ToString(),
+                        reader["Timestamp"].ToString());
                 }
                 listOfApp.Add(app);
 
@@ -129,7 +130,8 @@ namespace FeedBackSystem
 
             while (reader.Read())
             {
-                positions.Add(new Position(reader["PositionID"].ToString(),reader["Name"].ToString(),reader["Desc"].ToString(),reader["Department"].ToString(),reader["MinQualification"].ToString()));
+                positions.Add(new Position(reader["PositionID"].ToString(), reader["Name"].ToString(),
+                    reader["Desc"].ToString(), reader["Department"].ToString(), reader["MinQualification"].ToString()));
 
             }
             reader.Close();
@@ -235,7 +237,8 @@ namespace FeedBackSystem
 
                     foreach (DataRow row in dataTable.Rows)
                     {
-                        sectionList.Add(new Section(row["SectionID"].ToString(),row["Title"].ToString(),row["Desc"].ToString()));
+                        sectionList.Add(new Section(row["SectionID"].ToString(), row["Title"].ToString(),
+                            row["Desc"].ToString()));
                     }
                 }
 
@@ -244,7 +247,7 @@ namespace FeedBackSystem
                     List<String> codes = getSectionCodes(section.SectionId);
                     section.Codes = codes;
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -271,9 +274,10 @@ namespace FeedBackSystem
 
                     MySqlDataReader reader = cmd.ExecuteReader();
 
-                    if(reader.Read())
-                    { 
-                        section = new Section(reader["SectionID"].ToString(), reader["Title"].ToString(), reader["Desc"].ToString());
+                    if (reader.Read())
+                    {
+                        section = new Section(reader["SectionID"].ToString(), reader["Title"].ToString(),
+                            reader["Desc"].ToString());
                     }
 
                     reader.Close();
@@ -347,7 +351,7 @@ namespace FeedBackSystem
             string sqlStatement =
                 "SELECT Header.HeaderID,headeritem.HeaderItemID,Title,InputType FROM feedbacksystem.headeritem,feedbacksystem.headercontains," +
                 "feedbacksystem.header where headeritem.HeaderItemID = headercontains.HeaderItemID and " +
-                "headercontains.HeaderID = header.HeaderID and header.HeaderID = @HeaderID";
+                "headercontains.HeaderID = header.HeaderID and header.HeaderID = @HeaderID  order by position asc";
 
             try
             {
@@ -363,7 +367,8 @@ namespace FeedBackSystem
                 foreach (DataRow row in dataTable.Rows)
                 {
                     List<string> list = GetHeaderList(row["HeaderItemID"].ToString());
-                    headerItem.Add(new HeaderItem(row["HeaderItemID"].ToString(),row["Title"].ToString(), row["InputType"].ToString(), list));
+                    headerItem.Add(new HeaderItem(row["HeaderItemID"].ToString(), row["Title"].ToString(),
+                        row["InputType"].ToString(), list));
                 }
             }
             catch (Exception genExp)
@@ -427,15 +432,15 @@ namespace FeedBackSystem
                             reader.Close();
                             cmd.Parameters.Clear();
                         }
-                        
-                        if(duplicateItem)
+
+                        if (duplicateItem)
                         {
-                            if(!item.InputType.Equals("Query"))
+                            if (!item.InputType.Equals("Query"))
                             {
                                 var confirmResult = MessageBox.Show("This item, \"" + item.Title + "\" is duplicated!" +
-                                                                "\nClick Yes to save another copy, No to edit",
-                                                    "Are you sure?",
-                                                    MessageBoxButtons.YesNo);
+                                                                    "\nClick Yes to save another copy, No to edit",
+                                    "Are you sure?",
+                                    MessageBoxButtons.YesNo);
 
                                 if (confirmResult != DialogResult.Yes)
                                 {
@@ -469,32 +474,37 @@ namespace FeedBackSystem
                             foreach (string value in item.ValueItem)
                             {
                                 sqlStatement =
-                                "INSERT INTO headeritemlist(HeaderItemId, List) VALUES (@currentItemID,@value); ";
+                                    "INSERT INTO headeritemlist(HeaderItemId, List) VALUES (@currentItemID,@value); ";
                                 using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
                                 {
-                                cmd.Parameters.AddWithValue("@currentItemID", currentItemId);
-                                cmd.Parameters.AddWithValue("@value", value);
-                                reader = cmd.ExecuteReader();
-                                reader.Close();
-                                cmd.Parameters.Clear();
+                                    cmd.Parameters.AddWithValue("@currentItemID", currentItemId);
+                                    cmd.Parameters.AddWithValue("@value", value);
+                                    reader = cmd.ExecuteReader();
+                                    reader.Close();
+                                    cmd.Parameters.Clear();
                                 }
                             }
                         } //end if no duplicate 
                     } //end for each items
 
+                    int position = 0;
+
                     foreach (int itemids in itemsId)
                     {
-                        sqlStatement = "INSERT INTO headercontains(HeaderID,HeaderItemID) VALUES (@headID,@itemID);";
+                        sqlStatement =
+                            "INSERT INTO headercontains(HeaderID,HeaderItemID,position) VALUES (@headID,@itemID,@position);";
                         using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
                         {
                             cmd.Parameters.AddWithValue("@headID", headId);
                             cmd.Parameters.AddWithValue("@itemID", itemids);
+                            cmd.Parameters.AddWithValue("@position", position);
                             reader = cmd.ExecuteReader();
                             reader.Close();
                             cmd.Parameters.Clear();
                         }
+                        position++;
                     } //end for each header to item
-                    
+
                     trans.Commit();
                 }
                 catch (Exception genExp)
@@ -554,14 +564,15 @@ namespace FeedBackSystem
         public bool SaveSection(Section section)
         {
             int codeId = 0;
-            
+
 
             using (MySqlTransaction trans = _connection.BeginTransaction())
             {
                 try
                 {
                     //Insert the section
-                     string sqlStatement = "INSERT INTO sections(`Title`, `Desc`) VALUES (@Title,@Desc); SELECT last_insert_id() as id;";
+                    string sqlStatement =
+                        "INSERT INTO sections(`Title`, `Desc`) VALUES (@Title,@Desc); SELECT last_insert_id() as id;";
                     MySqlDataReader reader;
 
                     int sectionId;
@@ -576,7 +587,7 @@ namespace FeedBackSystem
                         cmd.Parameters.Clear();
                     }
 
-                    
+
 
                     //loop codes
                     foreach (var code in section.Codes)
@@ -629,7 +640,7 @@ namespace FeedBackSystem
                             cmd.Parameters.Clear();
                         }
 
-                    }//end loop codes
+                    } //end loop codes
                     trans.Commit();
                 }
                 catch (Exception ex)
@@ -638,7 +649,7 @@ namespace FeedBackSystem
                     MessageBox.Show(ex.Message);
                     return false;
                 }
-                    
+
             }
             return true;
         }
@@ -648,21 +659,21 @@ namespace FeedBackSystem
             List<Applicant> listOfApp = new List<Applicant>();
 
             //this command will sort according to the timestamp -> get the distinct row using applicantID -> first row
-            MySqlCommand cmd = 
+            MySqlCommand cmd =
                 new MySqlCommand(
-                    "SELECT * FROM " + 
-                        "(SELECT applicant.ApplicantID, FirstName, LastName, Email, positionapplied.Timestamp, " + 
-                            "positionapplied.File, applicationtype.Name, applicationstatus.StatusTitle " + 
-                        "FROM feedbacksystem.applicant, feedbacksystem.positionapplied, " + 
-                            "feedbacksystem.positions, feedbacksystem.applicationtype, feedbacksystem.applicationstatus " +
-                        "WHERE applicant.ApplicantID = positionapplied.ApplicantID " + 
-                        "AND positionapplied.PositionID = positions.PositionID " +
-                        "AND positions.PositionID = @PositionID " + 
-                        "AND applicationtype.ApplicationTypeID = positionapplied.ApplicantTypeID " + 
-                        "AND applicationstatus.StatusID = positionapplied.StatusID " + 
-                        "ORDER BY positionapplied.timestamp DESC) t " + 
+                    "SELECT * FROM " +
+                    "(SELECT applicant.ApplicantID, FirstName, LastName, Email, positionapplied.Timestamp, " +
+                    "positionapplied.File, applicationtype.Name, applicationstatus.StatusTitle " +
+                    "FROM feedbacksystem.applicant, feedbacksystem.positionapplied, " +
+                    "feedbacksystem.positions, feedbacksystem.applicationtype, feedbacksystem.applicationstatus " +
+                    "WHERE applicant.ApplicantID = positionapplied.ApplicantID " +
+                    "AND positionapplied.PositionID = positions.PositionID " +
+                    "AND positions.PositionID = @PositionID " +
+                    "AND applicationtype.ApplicationTypeID = positionapplied.ApplicantTypeID " +
+                    "AND applicationstatus.StatusID = positionapplied.StatusID " +
+                    "ORDER BY positionapplied.timestamp DESC) t " +
                     "GROUP BY ApplicantID; ",
-                _connection);
+                    _connection);
             /*new MySqlCommand(
                 "SELECT applicant.ApplicantID,FirstName, LastName, Email, positionapplied.File,applicationtype.Name FROM feedbacksystem.applicant, feedbacksystem.positionapplied,feedbacksystem.positions,feedbacksystem.applicationtype " +
                 "where applicant.ApplicantID = positionapplied.ApplicantID and positionapplied.PositionID = positions.PositionID and positions.PositionID = @PositionID and applicationtype.ApplicationTypeID = positionapplied.ApplicantTypeID " + 
@@ -676,26 +687,28 @@ namespace FeedBackSystem
             {
                 Applicant app;
                 //Check whether is the File column not null else it will throw InvalidCast
-                if (!Convert.IsDBNull(reader["File"])) { 
-                    byte[] pdf = (byte[])reader["File"];
-                    app = new Applicant(reader["ApplicantID"].ToString(), 
-                                        reader["FirstName"] + " " + reader["LastName"], 
-                                        reader["Email"] + "", 
-                                        pdf, 
-                                        reader["Name"].ToString(), 
-                                        reader["StatusTitle"].ToString(),
-                                        reader["Timestamp"].ToString());
-                } else
+                if (!Convert.IsDBNull(reader["File"]))
                 {
-                    app = new Applicant(reader["ApplicantID"].ToString(), 
-                                        reader["FirstName"] + " " + reader["LastName"], 
-                                        reader["Email"] + "", 
-                                        null, 
-                                        reader["Name"].ToString(), 
-                                        reader["StatusTitle"].ToString(),
-                                        reader["Timestamp"].ToString());
+                    byte[] pdf = (byte[]) reader["File"];
+                    app = new Applicant(reader["ApplicantID"].ToString(),
+                        reader["FirstName"] + " " + reader["LastName"],
+                        reader["Email"] + "",
+                        pdf,
+                        reader["Name"].ToString(),
+                        reader["StatusTitle"].ToString(),
+                        reader["Timestamp"].ToString());
                 }
-                
+                else
+                {
+                    app = new Applicant(reader["ApplicantID"].ToString(),
+                        reader["FirstName"] + " " + reader["LastName"],
+                        reader["Email"] + "",
+                        null,
+                        reader["Name"].ToString(),
+                        reader["StatusTitle"].ToString(),
+                        reader["Timestamp"].ToString());
+                }
+
                 listOfApp.Add(app);
 
             }
@@ -710,7 +723,8 @@ namespace FeedBackSystem
                 try
                 {
                     //Insert the feedback
-                    string sqlStatement = "INSERT INTO feedback(`AppID`, `ReviewID`, `PositionID`) VALUES (@AppID,@ReviewID,@PositionID); SELECT last_insert_id() as id;";
+                    string sqlStatement =
+                        "INSERT INTO feedback(`AppID`, `ReviewID`, `PositionID`,`HeaderID`) VALUES (@AppID,@ReviewID,@PositionID,@HeaderID); SELECT last_insert_id() as id;";
                     MySqlDataReader reader;
 
                     int feedbackId;
@@ -720,6 +734,7 @@ namespace FeedBackSystem
                         cmd.Parameters.AddWithValue("@AppID", feedback.Applicant.Id);
                         cmd.Parameters.AddWithValue("@ReviewID", feedback.ReviewerId);
                         cmd.Parameters.AddWithValue("@PositionID", feedback.Position._positionId);
+                        cmd.Parameters.AddWithValue("@HeaderID", feedback.Header.HeaderId);
                         reader = cmd.ExecuteReader();
                         reader.Read();
                         feedbackId = Convert.ToInt16(reader["id"]);
@@ -731,7 +746,8 @@ namespace FeedBackSystem
                     foreach (HeaderItem item in feedback.Header.HeaderItems)
                     {
                         //Link feedback with header items
-                        sqlStatement = "INSERT INTO feedbackheader(`FeedbackID`,`HeaderIID`,`Input`) VALUES (@FeedbackID,@HeaderItemID,@Input);";
+                        sqlStatement =
+                            "INSERT INTO feedbackheader(`FeedbackID`,`HeaderIID`,`Input`) VALUES (@FeedbackID,@HeaderItemID,@Input);";
                         using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
                         {
                             cmd.Parameters.AddWithValue("@FeedbackID", feedbackId);
@@ -741,14 +757,15 @@ namespace FeedBackSystem
                             reader.Close();
                             cmd.Parameters.Clear();
                         }
-                        
+
                     } //end loop header item
 
                     //loop sections
                     foreach (Section sec in feedback.Sections)
                     {
                         //Link feedback with sections
-                        sqlStatement = "INSERT INTO feedbacksection(`FeedbackID`,`SectionID`,`Comment`,`CodeGiven`,IsChecked) VALUES (@FeedbackID,@SectionID,@Comment,@Code,@Checked);";
+                        sqlStatement =
+                            "INSERT INTO feedbacksection(`FeedbackID`,`SectionID`,`Comment`,`CodeGiven`,IsChecked) VALUES (@FeedbackID,@SectionID,@Comment,@Code,@Checked);";
                         using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
                         {
                             cmd.Parameters.AddWithValue("@FeedbackID", feedbackId);
@@ -776,14 +793,15 @@ namespace FeedBackSystem
             return true;
         }
 
-        public bool SaveTemplate(Header header, List<Section> sections,string title,string desc)
+        public bool SaveTemplate(Header header, List<Section> sections, string title, string desc)
         {
             using (MySqlTransaction trans = _connection.BeginTransaction())
             {
                 try
                 {
                     //Insert the template
-                    string sqlStatement = "INSERT INTO template(`HeaderID`, `TemplateTitle`, `TemplateDesc`, `TemplateAuthor`) VALUES (@HeaderID,@Title,@Desc,@Author); SELECT last_insert_id() as id;";
+                    string sqlStatement =
+                        "INSERT INTO template(`HeaderID`, `TemplateTitle`, `TemplateDesc`, `TemplateAuthor`) VALUES (@HeaderID,@Title,@Desc,@Author); SELECT last_insert_id() as id;";
                     MySqlDataReader reader;
 
                     int templateId;
@@ -805,7 +823,8 @@ namespace FeedBackSystem
                     foreach (Section s in sections)
                     {
                         //Link template with sections
-                        sqlStatement = "INSERT INTO template_section(`TemplateID`,`SectionID`) VALUES (@TemplateID,@SectionID);";
+                        sqlStatement =
+                            "INSERT INTO template_section(`TemplateID`,`SectionID`) VALUES (@TemplateID,@SectionID);";
                         using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
                         {
                             cmd.Parameters.AddWithValue("@TemplateID", templateId);
@@ -835,23 +854,23 @@ namespace FeedBackSystem
             string sqlStatement = "UPDATE header SET Archived=@Archive WHERE HeaderID=@ID";
 
 
-                using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
+            using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
+            {
+                try
                 {
-                    try
-                    {
-                        cmd.Parameters.AddWithValue("@Archive", true);
-                        cmd.Parameters.AddWithValue("@ID", id);
+                    cmd.Parameters.AddWithValue("@Archive", true);
+                    cmd.Parameters.AddWithValue("@ID", id);
 
-                        cmd.ExecuteNonQuery();
+                    cmd.ExecuteNonQuery();
 
-                        return true;
-                    }
-                    catch (Exception e)
-                    {
-                        MessageBox.Show(e.Message);
-                        return false;
-                    }
+                    return true;
                 }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                    return false;
+                }
+            }
         }
 
         public bool ArchiveUser(string id)
@@ -936,7 +955,8 @@ namespace FeedBackSystem
             byte[] hash = sha256.ComputeHash(bytes);
             string HashedPassword = Convert.ToBase64String(hash);
 
-            string sqlStatement = "insert into reviewer(FirstName,LastName,Password,Salt,AdminAccess) values (@FN,@LN,@Pass,@Salt,@Admin)";
+            string sqlStatement =
+                "insert into reviewer(FirstName,LastName,Password,Salt,AdminAccess) values (@FN,@LN,@Pass,@Salt,@Admin)";
 
             using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
             {
@@ -962,7 +982,7 @@ namespace FeedBackSystem
 
         }
 
-        public bool EditUser(string id,string fn, string ln,bool isAdmin, string password)
+        public bool EditUser(string id, string fn, string ln, bool isAdmin, string password)
         {
             SHA256 sha256 = SHA256.Create();
 
@@ -972,7 +992,8 @@ namespace FeedBackSystem
             byte[] hash = sha256.ComputeHash(bytes);
             string HashedPassword = Convert.ToBase64String(hash);
 
-            string sqlStatement = "update reviewer set FirstName = @FN, LastName = @LN, Password = @Pass, Salt = @Salt, AdminAccess = @Admin where ReviewerID = @ID";
+            string sqlStatement =
+                "update reviewer set FirstName = @FN, LastName = @LN, Password = @Pass, Salt = @Salt, AdminAccess = @Admin where ReviewerID = @ID";
 
             using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
             {
@@ -999,10 +1020,11 @@ namespace FeedBackSystem
 
         }
 
-        public bool EditUser(string id,string fn, string ln, bool isAdmin)
+        public bool EditUser(string id, string fn, string ln, bool isAdmin)
         {
 
-            string sqlStatement = "update reviewer set FirstName = @FN, LastName = @LN, AdminAccess = @Admin where ReviewerID = @ID";
+            string sqlStatement =
+                "update reviewer set FirstName = @FN, LastName = @LN, AdminAccess = @Admin where ReviewerID = @ID";
 
             using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
             {
@@ -1045,7 +1067,7 @@ namespace FeedBackSystem
             string tableTitle = "";
             string tableDesc = "";
 
-            switch(type)
+            switch (type)
             {
                 case "Header":
                     tableID = "HeaderID";
@@ -1069,8 +1091,8 @@ namespace FeedBackSystem
                     return false;
             }
 
-            string sqlStatement = "update " + tableName + " set `" + tableTitle + "` = @Title, `" 
-                + tableDesc + "` = @Desc where " + tableID + " = @ID";
+            string sqlStatement = "update " + tableName + " set `" + tableTitle + "` = @Title, `"
+                                  + tableDesc + "` = @Desc where " + tableID + " = @ID";
 
             using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
             {
@@ -1091,5 +1113,399 @@ namespace FeedBackSystem
                 }
             }
         }
+
+
+        public bool UpdateHeader(Header newHeader)
+        {
+            //Get the existing header from the database to compare with the new one
+            Header oldHeader = GetHeader(newHeader.HeaderId);
+
+            oldHeader.HeaderItems.Clear();
+
+            foreach (HeaderItem i in GetHeaderItems(newHeader.HeaderId))
+            {
+                oldHeader.addHeaderItem(i);
+            }
+
+            //If Header title or description has been changed
+            if (!oldHeader.Title.Equals(newHeader.Title) || !oldHeader.Desc.Equals(newHeader.Desc))
+            {
+                EditComponent("Header", oldHeader.HeaderId, newHeader.Title, newHeader.Desc);
+            }
+
+            using (MySqlTransaction trans = _connection.BeginTransaction())
+            {
+                try
+                {
+                    int position = 0;
+                    List<string> feedbackIDs = new List<string>();
+
+
+                    //Get feedback links
+                    string sqlStatement = "SELECT * FROM feedbacksystem.feedback where HeaderID = @HeaderID";
+                    using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
+                    {
+
+                        cmd.Parameters.AddWithValue("@HeaderID", newHeader.HeaderId);
+                        MySqlDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            feedbackIDs.Add(reader["FeedbackID"].ToString());
+                        }
+
+                        reader.Close();
+                    }
+
+
+                    //Check if the header item has been deleted, if yes it would remove the link
+                    foreach (HeaderItem i in oldHeader.HeaderItems)
+                    {
+                        HeaderItem it = newHeader.HeaderItems.Find(y => y.Id.Equals(i.Id));
+
+                        if (it == null)
+                        {
+                            //remove header item link
+                            sqlStatement =
+                                "DELETE FROM headercontains WHERE HeaderID=@HeaderID and HeaderItemID = @HeaderItemID";
+
+                            using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
+                            {
+
+                                cmd.Parameters.AddWithValue("@HeaderID", newHeader.HeaderId);
+                                cmd.Parameters.AddWithValue("@HeaderItemID", i.Id);
+                                cmd.ExecuteNonQuery();
+                            }
+
+                            //Delete header item from feedback
+                            foreach (string id in feedbackIDs)
+                            {
+                                sqlStatement =
+                                    "DELETE FROM feedbackheader WHERE FeedbackID=@FeedbackID and HeaderIID = @HeaderItemID";
+
+                                using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
+                                {
+
+                                    cmd.Parameters.AddWithValue("@FeedbackID", id);
+                                    cmd.Parameters.AddWithValue("@HeaderItemID", i.Id);
+                                    cmd.ExecuteNonQuery();
+                                }
+                            }
+
+                            //Deletion doesn't require turning the feedback as incomplete as it only removes the item and doesn't require any extra input from user
+                        }
+                    }
+
+                    //Goes through each header item
+                    foreach (HeaderItem newitem in newHeader.HeaderItems)
+                    {
+                        //check if the header item exist
+                        HeaderItem olditem = oldHeader.HeaderItems.Find(x => x.Id.Equals(newitem.Id));
+
+                        //if exist
+                        if (olditem != null)
+                        {
+                            //if any changes
+                            if (!newitem.Title.Equals(olditem.Title) || !newitem.InputType.Equals(olditem.InputType) ||
+                                !newitem.ValueItem.SequenceEqual(olditem.ValueItem))
+                            {
+                                //Update Header Item
+                                sqlStatement =
+                                    "UPDATE headeritem SET Title = @Title, InputType = @InputType WHERE  HeaderItemID = @HeaderItemID";
+
+                                using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
+                                {
+
+                                    cmd.Parameters.AddWithValue("@Title", newitem.Title);
+                                    cmd.Parameters.AddWithValue("@InputType", newitem.InputType);
+                                    cmd.Parameters.AddWithValue("@HeaderItemID", newitem.Id);
+                                    cmd.ExecuteNonQuery();
+                                }
+
+                                //Remove link between list and item
+
+                                sqlStatement = "DELETE FROM headeritemlist WHERE HeaderItemID = @HeaderItemID;";
+
+                                using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
+                                {
+
+                                    cmd.Parameters.AddWithValue("@HeaderItemID", newitem.Id);
+                                    cmd.ExecuteNonQuery();
+                                }
+
+                                //Add Link between list and item
+                                sqlStatement =
+                                    "INSERT INTO headeritemlist (HeaderItemID, List) VALUES (@HeaderItemID, @List)";
+                                foreach (string s in newitem.ValueItem)
+                                {
+                                    using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
+                                    {
+
+                                        cmd.Parameters.AddWithValue("@HeaderItemID", newitem.Id);
+                                        cmd.Parameters.AddWithValue("@List", s);
+                                        cmd.ExecuteNonQuery();
+                                    }
+                                }
+
+                                //Set user input type to empty if there is any changes
+                                sqlStatement =
+                                    "UPDATE feedbackheader SET Input = @Input WHERE FeedbackID = @FeedbackID and HeaderIID = @HeaderItemID";
+                                foreach (string id in feedbackIDs)
+                                {
+                                    using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
+                                    {
+                                        cmd.Parameters.AddWithValue("@Input", "");
+                                        cmd.Parameters.AddWithValue("@FeedbackID", id);
+                                        cmd.Parameters.AddWithValue("@HeaderIID", newitem.Id);
+                                        cmd.ExecuteNonQuery();
+                                    }
+                                }
+
+                                //set feedback as incomplete
+                                sqlStatement =
+                                    "UPDATE feedback SET isComplete = @complete WHERE FeedbackID = @FeedbackID";
+                                foreach (string id in feedbackIDs)
+                                {
+                                    using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
+                                    {
+
+                                        cmd.Parameters.AddWithValue("@complete", false);
+                                        cmd.Parameters.AddWithValue("@FeedbackID", id);
+                                        cmd.ExecuteNonQuery();
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            //Insert new Header Item
+                            sqlStatement =
+                                "INSERT INTO headeritem(Title, InputType) VALUES (@itemTitle,@itemInputType); SELECT last_insert_id() as id;";
+                            MySqlDataReader reader;
+
+
+                            using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
+                            {
+                                cmd.Parameters.AddWithValue("@itemTitle", newitem.Title);
+                                cmd.Parameters.AddWithValue("@itemInputType", newitem.InputType);
+                                reader = cmd.ExecuteReader();
+                                reader.Read();
+                                newitem.Id = reader["id"].ToString();
+                                reader.Close();
+                                cmd.Parameters.Clear();
+                            }
+
+                            foreach (string value in newitem.ValueItem)
+                            {
+                                sqlStatement =
+                                    "INSERT INTO headeritemlist(HeaderItemId, List) VALUES (@currentItemID,@value)";
+                                using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
+                                {
+                                    cmd.Parameters.AddWithValue("@currentItemID", newitem.Id);
+                                    cmd.Parameters.AddWithValue("@value", value);
+                                    reader = cmd.ExecuteReader();
+                                    reader.Close();
+                                    cmd.Parameters.Clear();
+                                }
+                            }
+                            //End Insert Header Item
+
+                            //Link Header Item to Header
+                            sqlStatement = "INSERT INTO headercontains(HeaderID,HeaderItemID) VALUES (@headID,@itemID)";
+                            using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
+                            {
+                                cmd.Parameters.AddWithValue("@headID", newHeader.HeaderId);
+                                cmd.Parameters.AddWithValue("@itemID", newitem.Id);
+                                cmd.ExecuteNonQuery();
+                                position++;
+                            }
+
+                            //Insert new Header Item into feedback
+                            foreach (string id in feedbackIDs)
+                            {
+                                sqlStatement =
+                                    "INSERT INTO feedbackheader(FeedbackID,HeaderIID) VALUES (@FeedbackID,@itemID)";
+                                using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
+                                {
+                                    cmd.Parameters.AddWithValue("@FeedbackID", id);
+                                    cmd.Parameters.AddWithValue("@itemID", newitem.Id);
+                                    cmd.ExecuteNonQuery();
+                                }
+                            }
+
+                            //set feedback as incomplete
+                            sqlStatement = "UPDATE feedback SET isComplete = @complete WHERE FeedbackID = @FeedbackID";
+                            foreach (string id in feedbackIDs)
+                            {
+                                using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
+                                {
+
+                                    cmd.Parameters.AddWithValue("@complete", false);
+                                    cmd.Parameters.AddWithValue("@FeedbackID", id);
+                                    cmd.ExecuteNonQuery();
+                                }
+                            }
+
+                        }
+
+                        //Update the Positions of the header item
+                        string sql =
+                            "UPDATE headercontains SET position=@position  WHERE HeaderID=@HeaderID and HeaderItemID=@HeaderItemID";
+
+                        using (MySqlCommand cmd = new MySqlCommand(sql, _connection))
+                        {
+
+                            cmd.Parameters.AddWithValue("@position", position);
+                            cmd.Parameters.AddWithValue("@HeaderID", newHeader.HeaderId);
+                            cmd.Parameters.AddWithValue("@HeaderItemID", newitem.Id);
+                            cmd.ExecuteNonQuery();
+                            position++;
+                        }
+
+                    } //end header item loop
+                    trans.Commit();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    trans.Rollback();
+                    MessageBox.Show(ex.Message);
+                    return false;
+                }
+            }
+        }
+
+        public bool UpdateSection(Section newSection)
+        {
+            Section oldSection = GetSection(newSection.SectionId);
+
+            if (!oldSection.Title.Equals(newSection.Title) || !oldSection.Desc.Equals(newSection.Desc))
+            {
+                EditComponent("Section", newSection.SectionId, newSection.Title, newSection.Desc);
+            }
+
+            using (MySqlTransaction trans = _connection.BeginTransaction())
+            {
+                string sqlStatement;
+                List<string> FeedbackIDs = new List<string>();
+                try
+                {
+
+                    sqlStatement = "DELETE FROM section_code WHERE SectionID = @SectionID";
+                    using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
+                    {
+                        cmd.Parameters.AddWithValue("@SectionID", newSection.SectionId);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    MySqlDataReader reader;
+                    int codeId = -1;
+
+                    foreach (var code in newSection.Codes)
+                    {
+                        bool duplicate = false;
+                        //check codes duplication
+                        sqlStatement = "SELECT codes.CodesID as id FROM feedbacksystem.codes where codes.Code = @code;";
+                        using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
+                        {
+                            cmd.Parameters.AddWithValue("@code", code);
+                            reader = cmd.ExecuteReader();
+
+                            if (reader.HasRows)
+                            {
+                                reader.Read();
+                                codeId = Convert.ToInt16(reader["id"]);
+                                duplicate = true;
+                            }
+                            reader.Close();
+                            cmd.Parameters.Clear();
+                        }
+
+                        //create a new entry if not duplication
+                        if (!duplicate)
+                        {
+                            sqlStatement = "INSERT INTO codes(`Code`) VALUES (@Code); SELECT last_insert_id() as id;";
+                            using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
+                            {
+                                cmd.Parameters.AddWithValue("@Code", code);
+                                reader = cmd.ExecuteReader();
+
+                                if (reader.HasRows)
+                                {
+                                    reader.Read();
+                                    codeId = Convert.ToInt16(reader["id"]);
+                                }
+                                reader.Close();
+                                cmd.Parameters.Clear();
+                            }
+                        }
+
+                        //Link section with codes
+                        sqlStatement = "INSERT INTO section_code VALUES(@CodeID, @SectionID);";
+                        using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
+                        {
+                            cmd.Parameters.AddWithValue("@CodeID", codeId);
+                            cmd.Parameters.AddWithValue("@SectionID", newSection.SectionId);
+                            reader = cmd.ExecuteReader();
+                            reader.Close();
+                            cmd.Parameters.Clear();
+                        }
+
+                        //Empty code given of the feedback
+                        sqlStatement = "UPDATE feedbacksection SET CodeGiven = @CodeGiven WHERE SectionID = @SectionID";
+                        using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
+                        {
+                            cmd.Parameters.AddWithValue("@CodeGiven", "");
+                            cmd.Parameters.AddWithValue("@SectionID", newSection.SectionId);
+                            reader = cmd.ExecuteReader();
+                            reader.Close();
+                            cmd.Parameters.Clear();
+                        }
+
+                        //get all the feedbackid that is associated with this section
+                        sqlStatement = "SELECT distinct(FeedbackID) FROM feedbacksection";
+                        using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
+                        {
+                            reader = cmd.ExecuteReader();
+                            while (reader.Read())
+                            {
+                                FeedbackIDs.Add(reader["FeedbackID"].ToString());
+                            }
+                            reader.Close();
+                        }
+
+                        //set feedback as incomplete
+                        sqlStatement = "UPDATE feedback SET isComplete = @complete WHERE FeedbackID = @FeedbackID";
+                        foreach (string id in FeedbackIDs)
+                        {
+                            using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
+                            {
+
+                                cmd.Parameters.AddWithValue("@complete", false);
+                                cmd.Parameters.AddWithValue("@FeedbackID", id);
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+
+
+                    } //end loop codes
+                    trans.Commit();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    trans.Rollback();
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
     }
 }
+
+
+
+
+

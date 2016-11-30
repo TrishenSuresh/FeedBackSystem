@@ -217,12 +217,21 @@ namespace FeedBackSystem
                 return;
             }
 
+
             _header.Title = HeaderTitleText.Text;
             _header.Desc = HeaderDescText.Text;
 
             MySql sql = new MySql();
             sql.OpenConnection();
-            //Update Table here
+
+            if (sql.UpdateHeader(_header))
+            {
+                MessageBox.Show("Header Successfully Saved");
+                this.DialogResult = DialogResult.OK;
+                Close();
+            }
+
+
             sql.CloseConnection();
 
         }

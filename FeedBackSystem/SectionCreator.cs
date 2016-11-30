@@ -7,10 +7,12 @@ namespace FeedBackSystem
     public partial class SectionCreator : Form
     {
         private bool _update = false;
+        private Section _section;
 
         public SectionCreator()
         {
             InitializeComponent();
+            _section = new Section();
         }
 
         public SectionCreator(string id)
@@ -22,12 +24,12 @@ namespace FeedBackSystem
             MySql sql = new MySql();
             sql.OpenConnection();
 
-            Section sec = sql.GetSection(id);
+            _section = sql.GetSection(id);
 
-            SectionTitleText.Text = sec.Title;
-            SectionDescText.Text = sec.Desc;
+            SectionTitleText.Text = _section.Title;
+            SectionDescText.Text = _section.Desc;
 
-            foreach (string c in sec.Codes)
+            foreach (string c in _section.Codes)
             {
                 CodeBox.AppendText(c+Environment.NewLine);
             }
@@ -50,6 +52,11 @@ namespace FeedBackSystem
                 List<string> codes = new List<string>(CodeBox.Lines);
                 codes.RemoveAll(item => item.Length == 0);
 
+                _section.Title = SectionTitleText.Text;
+                _section.Desc = SectionDescText.Text;
+                _section.Codes.Clear();
+                _section.Codes.AddRange(codes);
+
                 if (!_update)
                 {
                     if (!sql.SaveSection(new Section(SectionTitleText.Text, SectionDescText.Text, codes))) return;
@@ -63,6 +70,13 @@ namespace FeedBackSystem
                 else
                 {
                     //This part updates the section
+                    if (sql.UpdateSection(_section))
+                    {
+                        MessageBox.Show("Section successfully saved");
+                        DialogResult = DialogResult.OK;
+                        Close();
+                    }
+
                 }
             }
 

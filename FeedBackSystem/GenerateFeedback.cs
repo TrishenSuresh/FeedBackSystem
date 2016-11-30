@@ -62,6 +62,9 @@ namespace FeedBackSystem
                     {
                         _currentFeed.Sections.Add(sql.GetSection(id));
                     }
+
+                    _currentFeed.Sections.Reverse();
+
                     FillSection();
                 } 
             }
