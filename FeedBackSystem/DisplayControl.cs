@@ -43,7 +43,7 @@ namespace FeedBackSystem
                 {
                     case "Header":
                         Dt = sql.GetDataSet("SELECT header.HeaderID, header.Name, header.Desc, " +
-                                            "group_concat(headeritem.Title order by headercontains.position ASC SEPARATOR \' | \') as Items " +
+                                            "group_concat(headeritem.Title order by headercontains.PositionIndex ASC SEPARATOR \' | \') as Items " +
                                             "FROM header, headeritem, headercontains " +
                                             "WHERE header.Archived = 0 and header.HeaderID = headercontains.HeaderID AND headeritem.HeaderItemID = headercontains.HeaderItemID " +
                                             "GROUP BY header.HeaderID ORDER BY header.HeaderID");

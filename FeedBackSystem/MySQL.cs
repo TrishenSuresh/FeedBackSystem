@@ -351,7 +351,7 @@ namespace FeedBackSystem
             string sqlStatement =
                 "SELECT Header.HeaderID,headeritem.HeaderItemID,Title,InputType FROM feedbacksystem.headeritem,feedbacksystem.headercontains," +
                 "feedbacksystem.header where headeritem.HeaderItemID = headercontains.HeaderItemID and " +
-                "headercontains.HeaderID = header.HeaderID and header.HeaderID = @HeaderID  order by position asc";
+                "headercontains.HeaderID = header.HeaderID and header.HeaderID = @HeaderID  order by PositionIndex asc";
 
             try
             {
@@ -492,12 +492,12 @@ namespace FeedBackSystem
                     foreach (int itemids in itemsId)
                     {
                         sqlStatement =
-                            "INSERT INTO headercontains(HeaderID,HeaderItemID,position) VALUES (@headID,@itemID,@position);";
+                            "INSERT INTO headercontains(HeaderID,HeaderItemID,PositionIndex) VALUES (@headID,@itemID,@positionIndex);";
                         using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
                         {
                             cmd.Parameters.AddWithValue("@headID", headId);
                             cmd.Parameters.AddWithValue("@itemID", itemids);
-                            cmd.Parameters.AddWithValue("@position", position);
+                            cmd.Parameters.AddWithValue("@positionIndex", position);
                             reader = cmd.ExecuteReader();
                             reader.Close();
                             cmd.Parameters.Clear();
@@ -1334,7 +1334,7 @@ namespace FeedBackSystem
                             }
 
                             //set feedback as incomplete
-                            sqlStatement = "UPDATE feedback SET isComplete = @complete WHERE FeedbackID = @FeedbackID";
+                            sqlStatement = "UPDATE feedback SET IsComplete = @complete WHERE FeedbackID = @FeedbackID";
                             foreach (string id in feedbackIDs)
                             {
                                 using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
@@ -1350,12 +1350,12 @@ namespace FeedBackSystem
 
                         //Update the Positions of the header item
                         string sql =
-                            "UPDATE headercontains SET position=@position  WHERE HeaderID=@HeaderID and HeaderItemID=@HeaderItemID";
+                            "UPDATE headercontains SET PositionIndex=@positionIndex  WHERE HeaderID=@HeaderID and HeaderItemID=@HeaderItemID";
 
                         using (MySqlCommand cmd = new MySqlCommand(sql, _connection))
                         {
 
-                            cmd.Parameters.AddWithValue("@position", position);
+                            cmd.Parameters.AddWithValue("@positionIndex", position);
                             cmd.Parameters.AddWithValue("@HeaderID", newHeader.HeaderId);
                             cmd.Parameters.AddWithValue("@HeaderItemID", newitem.Id);
                             cmd.ExecuteNonQuery();

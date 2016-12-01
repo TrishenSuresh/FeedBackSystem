@@ -124,9 +124,11 @@ namespace FeedBackSystem
             
             int rowIndex = ItemDVG.CurrentCell.RowIndex;
             int rowCount = ItemDVG.RowCount;
+            
             if (rowIndex >= rowCount-1)
             {
-                MessageBox.Show("Sorry, you cannot move this down any further");
+                // Doesn't need to inform the user since it is just annoying for MessageBoxes keep showing up
+                //MessageBox.Show("Sorry, you cannot move this down any further");
                 return;
             }
 

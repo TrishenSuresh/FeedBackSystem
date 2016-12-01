@@ -19,26 +19,23 @@ namespace FeedBackSystem
         public SelectControl(string type)
         {
             InitializeComponent();
-
             ControlType = type;
+            
+            TitleLabel.Text = "List of " + ControlType + "s: ";
+            SelectBtn.Text = "Select " + ControlType;
+            this.Text = "Select " + ControlType;
+
             switch (ControlType)
             {
                 case "Header":
-                    TitleLabel.Text = "List of Headers: ";
-                    SelectBtn.Text = "Select Header";
+                case "Template":
                     Dgv.MultiSelect = false;
                     break;
                 case "Section":
-                    TitleLabel.Text = "List of Sections: ";
-                    SelectBtn.Text = "Select Section";
                     Dgv.MultiSelect = true;
                     break;
-                case "Template":
-                    TitleLabel.Text = "List of Templates:";
-                    SelectBtn.Text = "Select Template";
-                    Dgv.MultiSelect = false;
-                    break;
             }
+
             SetDgv();
         }
 
@@ -53,12 +50,10 @@ namespace FeedBackSystem
                 {
                     case "Header":
                         Dt = sql.GetDataSet("SELECT header.HeaderID, header.Name, header.Desc, " +
-                            "group_concat(headeritem.Title order by headeritem.HeaderItemID ASC SEPARATOR ' | ') as Items " +
-                            "FROM header, headeritem, headercontains " +
-                            "WHERE header.Archived = 0 and header.HeaderID = headercontains.HeaderID AND " +
-                            "headeritem.HeaderItemID = headercontains.HeaderItemID " +
-                            "GROUP BY header.HeaderID " +
-                            "ORDER BY header.HeaderID");
+                                           "group_concat(headeritem.Title order by headercontains.PositionIndex ASC SEPARATOR \' | \') as Items " +
+                                           "FROM header, headeritem, headercontains " +
+                                           "WHERE header.Archived = 0 and header.HeaderID = headercontains.HeaderID AND headeritem.HeaderItemID = headercontains.HeaderItemID " +
+                                           "GROUP BY header.HeaderID ORDER BY header.HeaderID");
                         Dt.Columns["HeaderId"].ColumnName = "Header ID";
                         Dt.Columns["Desc"].ColumnName = "Description";
                         break;

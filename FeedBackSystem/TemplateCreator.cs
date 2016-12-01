@@ -18,7 +18,7 @@ namespace FeedBackSystem
         public TemplateCreator()
         {
             InitializeComponent();
-            ContentTable.Padding = new Padding(0, 0, SystemInformation.VerticalScrollBarWidth, 0);
+           // ContentTable.Padding = new Padding(0, 0, SystemInformation.VerticalScrollBarWidth, 0);
         }
 
         private void AddSectionBtn_Click(object sender, EventArgs e)
@@ -28,7 +28,7 @@ namespace FeedBackSystem
             RowStyle style = new RowStyle { SizeType = SizeType.AutoSize };
 
             SectionTable.Padding = new Padding(0, 0, SystemInformation.VerticalScrollBarWidth, 0);
-            HeaderControls.Padding = new Padding(0, 0, SystemInformation.VerticalScrollBarWidth, 0);
+            //HeaderControls.Padding = new Padding(0, 0, SystemInformation.VerticalScrollBarWidth, 0);
 
             SectionTable.RowStyles.Add(style);
 
@@ -44,6 +44,8 @@ namespace FeedBackSystem
 
                     MySql sql = new MySql();
                     sql.OpenConnection();
+
+                    form._ids.Reverse();
 
                     foreach (string id  in form._ids)
                     {
@@ -118,14 +120,14 @@ namespace FeedBackSystem
 
                     HeaderPlacement place = new HeaderPlacement();
 
-                    ContentTable.Controls.Remove(ContentTable.GetControlFromPosition(0, 0));
+                    HeaderPanel.Controls.Clear();
 
                     foreach (HeaderItem item in selectedHeader.HeaderItems)
                     {
                         place.AddItem(item);
                     }
 
-                    ContentTable.Controls.Add(place,0,0);
+                    HeaderPanel.Controls.Add(place);
 
                     ChangeHeader.Visible = true;
 

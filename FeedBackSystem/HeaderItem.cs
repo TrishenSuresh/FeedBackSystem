@@ -27,7 +27,7 @@ namespace FeedBackSystem
             ValueItem = new List<string>();
         }
 
-        //create a header with a list of value item -> List
+        //create a header with a list of value item
         public HeaderItem(string title, string inputType, List<string> value)
         {
             this.Title = title;
@@ -37,6 +37,7 @@ namespace FeedBackSystem
             ValueItem.AddRange(value);
         }
 
+        //create a header with a list of value item when the id is known (from db)
         public HeaderItem(string id, string title, string inputType, List<string> value)
         {
             this.Id = id;

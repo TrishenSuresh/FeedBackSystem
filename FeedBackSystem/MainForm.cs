@@ -62,5 +62,11 @@ namespace FeedBackSystem
             DisplayControl display = new DisplayControl("Template") { Dock = DockStyle.Fill };
             MainPanel.Controls.Add(display);
         }
+
+        private void BackHome_Click(object sender, EventArgs e)
+        {
+            MainPanel.Controls.Clear();
+            MainPanel.Controls.Add(new Home());
+        }
     }
 }
