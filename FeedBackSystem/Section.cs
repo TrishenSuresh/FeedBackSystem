@@ -13,7 +13,6 @@ namespace FeedBackSystem
         public string CodeChosen { get; set; }
         public bool IsChecked { get; set; }
 
-
         public Section()
         {
             
@@ -31,6 +30,15 @@ namespace FeedBackSystem
             SectionId = sectionId;
             Title = title;
             Desc = desc;
+        }
+        
+        // Constructor for Section with user input
+        public Section(string id, string comment, string codeGiven, bool isChecked)
+        {
+            this.SectionId = id;
+            this.Comment = comment;
+            this.CodeChosen = codeGiven;
+            this.IsChecked = isChecked;
         }
 
         public void AddCode(string code)

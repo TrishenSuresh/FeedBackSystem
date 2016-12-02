@@ -12,6 +12,7 @@ namespace FeedBackSystem
             InitializeComponent();
             
             MainPanel.Controls.Add(new Home());
+            BackHome.Visible = false;
 
             var adobePath = Registry.GetValue(@"HKEY_CLASSES_ROOT\Software\Adobe\Acrobat\Exe", string.Empty, string.Empty);
 
@@ -32,7 +33,10 @@ namespace FeedBackSystem
 
         private void UserListBtn(object sender, EventArgs eventArgs)
         {
-            new UserList().ShowDialog();
+            MainPanel.Controls.Clear();
+            UserList ul = new UserList { Dock = DockStyle.Fill };
+            MainPanel.Controls.Add(ul);
+            BackHome.Visible = true;
         }
 
         private void giveFeedbackToolStripMenuItem_Click(object sender, EventArgs e)
@@ -40,6 +44,7 @@ namespace FeedBackSystem
             MainPanel.Controls.Clear();
             GenerateFeedback usercontroller = new GenerateFeedback {Dock = DockStyle.Fill};
             MainPanel.Controls.Add(usercontroller);
+            BackHome.Visible = true;
         }
 
         private void headerToolStrip_Click(object sender, EventArgs e)
@@ -47,6 +52,7 @@ namespace FeedBackSystem
             MainPanel.Controls.Clear();
             DisplayControl display = new DisplayControl("Header") { Dock = DockStyle.Fill };
             MainPanel.Controls.Add(display);
+            BackHome.Visible = true;
         }
 
         private void sectionToolStrip_Click(object sender, EventArgs e)
@@ -54,6 +60,7 @@ namespace FeedBackSystem
             MainPanel.Controls.Clear();
             DisplayControl display = new DisplayControl("Section") { Dock = DockStyle.Fill };
             MainPanel.Controls.Add(display);
+            BackHome.Visible = true;
         }
 
         private void templateToolStrip_Click(object sender, EventArgs e)
@@ -61,12 +68,14 @@ namespace FeedBackSystem
             MainPanel.Controls.Clear();
             DisplayControl display = new DisplayControl("Template") { Dock = DockStyle.Fill };
             MainPanel.Controls.Add(display);
+            BackHome.Visible = true;
         }
 
         private void BackHome_Click(object sender, EventArgs e)
         {
             MainPanel.Controls.Clear();
             MainPanel.Controls.Add(new Home());
+            BackHome.Visible = false;
         }
     }
 }

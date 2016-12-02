@@ -54,6 +54,7 @@ namespace FeedBackSystem
 
                 _section.Title = SectionTitleText.Text;
                 _section.Desc = SectionDescText.Text;
+                _section.Codes = new List<string>();
                 _section.Codes.Clear();
                 _section.Codes.AddRange(codes);
 

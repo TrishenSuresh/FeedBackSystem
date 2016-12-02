@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace FeedBackSystem
 {
-    public partial class UserList : Form
+    public partial class UserList : UserControl
     {
         public UserList()
         {

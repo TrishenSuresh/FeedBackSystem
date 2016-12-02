@@ -80,10 +80,10 @@ namespace FeedBackSystem
             HeaderControls.Padding = new Padding(0, 0, SystemInformation.VerticalScrollBarWidth, 0);
 
             SectionTable.RowStyles.Add(style);
-            
+
             foreach (Section s in _currentFeed.Sections)
             {
-                SectionTable.Controls.Add(new CheckBox { Anchor = AnchorStyles.Left, Name = "checker" + s.SectionId, AutoSize = true }, 0, row);
+                SectionTable.Controls.Add(new CheckBox { Anchor = AnchorStyles.Left, Name = "checker" + s.SectionId, AutoSize = true, Checked = (object.ReferenceEquals(s.IsChecked, null) ? false : s.IsChecked) }, 0, row);
 
                 SectionTable.Controls.Add(
                     new Label
@@ -105,11 +105,17 @@ namespace FeedBackSystem
                     codes.Items.Add(code);
                 }
 
+                if(!object.ReferenceEquals(s.CodeChosen, null))
+                {
+                    codes.SelectedItem = (s.Codes.Find(x => x.Equals(s.CodeChosen)));
+                }
+
                 SectionTable.Controls.Add(codes, 2, row);
                 RichTextBox comment = new RichTextBox
                 { 
                     Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top,
-                    Name = "comment" + s.SectionId
+                    Name = "comment" + s.SectionId,
+                    Text = (object.ReferenceEquals(s.Comment, null) ? null : s.Comment)
                 };
 
                 SectionTable.Controls.Add(comment, 1, row + 1);
@@ -140,17 +146,44 @@ namespace FeedBackSystem
                 {
                     PDFDisplay.DocumentText = "<HTML><CENTER>No PDF found</CENTER></HTML>";
                 }
-
-                if(_currentFeed.Header != null)
+                
+                MySql sql = new MySql();
+                sql.OpenConnection();
+                
+                DataTable Dt = sql.GetDataSet("SELECT * FROM feedbacksystem.feedback WHERE feedback.PositionID = " + _currentFeed.Position._positionId + " AND feedback.AppID = " + _currentFeed.Applicant.Id);
+                if(Dt != null && Dt.Rows.Count > 0)
                 {
-                    //in order to reset the header items value for the cascading
-                    MySql sql = new MySql();
-                    sql.OpenConnection();
-                    _currentFeed.Header.HeaderItems = sql.GetHeaderItems(_currentFeed.Header.HeaderId);
-                    sql.CloseConnection();
-
+                    Feedback tmpFeedback = sql.GetFeedback(Dt.Rows[0]["FeedbackID"].ToString());
+                    _currentFeed.Header = tmpFeedback.Header;
+                    _currentFeed.Sections = tmpFeedback.Sections;
                     FillHeader();
+                    FillSection();
+                    sql.CloseConnection();
+                    return;
+                } else
+                {
+                    if (_currentFeed.Header != null)
+                    {
+                        _currentFeed.Header.HeaderItems.Clear();
+                        //in order to reset the header items value for the cascading
+                        _currentFeed.Header.HeaderItems = sql.GetHeaderItems(_currentFeed.Header.HeaderId);
+
+                        FillHeader();
+                    }
+
+                    if(_currentFeed.Sections.Count > 0)
+                    {
+                        foreach(Section sec in _currentFeed.Sections)
+                        {
+                            sec.Comment = null;
+                            sec.CodeChosen = null;
+                            sec.IsChecked = false;
+                        }
+                        FillSection();
+                    }
                 }
+                
+                sql.CloseConnection();
                 SetTemplateBtn.Enabled = true;
             }
         }
@@ -369,6 +402,13 @@ namespace FeedBackSystem
                 }
 
                 sql.CloseConnection();
+
+                _currentFeed.Applicant = null;
+                _currentFeed.Header = null;
+                _currentFeed.Sections.Clear();
+                ContentTable.Controls.Remove(ContentTable.GetControlFromPosition(0, 0));
+                SectionTable.Controls.Clear();
+                PDFDisplay.DocumentText = "";
             }
 
         }

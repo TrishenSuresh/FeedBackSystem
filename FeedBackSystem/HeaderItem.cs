@@ -18,14 +18,7 @@ namespace FeedBackSystem
         public List<string> ValueItem { get; set; }
 
 
-        public HeaderItem()
-        {
-            Id = "";
-            Title = "";
-            InputType = "";
-            ValueChosen = "";
-            ValueItem = new List<string>();
-        }
+        public HeaderItem() { }
 
         //create a header with a list of value item
         public HeaderItem(string title, string inputType, List<string> value)

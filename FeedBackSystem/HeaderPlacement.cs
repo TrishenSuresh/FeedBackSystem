@@ -36,18 +36,17 @@ namespace FeedBackSystem
                     TextAlign = ContentAlignment.MiddleLeft,
                     AutoSize = true,
                 };
-                title.DoubleClick += EditItem;
+
                 HeaderTable.Controls.Add(title, _column[_counter], _row);
 
             switch (itemType.InputType)
             {
                 case "Text":
-
                     TextBox text = new TextBox
                     {
                         Anchor = AnchorStyles.Left | AnchorStyles.Right,
                         AutoSize = true,
-                        Text = itemType.ValueItem[0],
+                        Text = object.ReferenceEquals(itemType.ValueChosen, null) ? itemType.ValueItem[0] : itemType.ValueChosen,
                         Name = itemType.Id
                     };
                     HeaderTable.Controls.Add(text, _column[_counter]+1,_row);
@@ -55,7 +54,6 @@ namespace FeedBackSystem
                     break;
 
                 case "List":
-
                     ComboBox list = new ComboBox
                     {
                         DropDownStyle = ComboBoxStyle.DropDownList,
@@ -69,69 +67,47 @@ namespace FeedBackSystem
                         list.Items.Add(s);
                     }
 
+                    list.SelectedItem = object.ReferenceEquals(itemType.ValueChosen, null) ? null : itemType.ValueChosen;
+
                     HeaderTable.Controls.Add(list, _column[_counter] + 1, _row);
                     HeaderTable.SetColumnSpan(list,3);
-
                     break;
-                        /*
-                case "Query":
 
-                    ComboBox listQuery = new ComboBox
-                    {
-                        DropDownStyle = ComboBoxStyle.DropDownList,
-                        Anchor = AnchorStyles.Left | AnchorStyles.Right,
-                        AutoSize = true,
-                        Name = "header" + itemType.Id
-                    };
-
-
-                    foreach (string s in itemType.ValueItem)
-                    {
-                        listQuery.Items.Add(s);
-                    }
-
-                    HeaderTable.Controls.Add(listQuery, _column[_counter] + 1, _row);
-                    HeaderTable.SetColumnSpan(listQuery, 3);
-
-                    break;
-                    */
                 case "Date":
-
-                    DateTime time = DateTime.Now;
-
                     switch (itemType.ValueItem[0])
                     {
-                        case "Review":
+                        case "Manual":
+                            DateTime time = object.ReferenceEquals(itemType.ValueChosen, null) ? DateTime.Now : DateTime.ParseExact(itemType.ValueChosen, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture) ;
+                            //DateTime time = DateTime.Now;
+
+                            DateTimePicker date = new DateTimePicker
+                            {
+                                Value = time,
+                                Format = DateTimePickerFormat.Custom,
+                                CustomFormat = @"dd/MM/yyyy",
+                                Anchor = AnchorStyles.Left | AnchorStyles.Right,
+                                AutoSize = true,
+                                Name = "header" + itemType.Id
+                            };
+
+                            HeaderTable.Controls.Add(date, _column[_counter] + 1, _row);
+                            HeaderTable.SetColumnSpan(date, 3);
                             break;
                         case "Today":
-                            time = DateTime.Now;
+                            Label today = new Label { Text = DateTime.Today.ToShortDateString(), TextAlign = ContentAlignment.BottomLeft, Anchor = AnchorStyles.Left, AutoSize = true, Name = "header" + itemType.Id };
+                            HeaderTable.Controls.Add(today, _column[_counter] + 1, _row);
+                            HeaderTable.SetColumnSpan(today, 3);
                             break;
                     }
-                        
-                        
-                    DateTimePicker date = new DateTimePicker
-                    {
-                        Value = time,
-                        Format = DateTimePickerFormat.Custom,
-                        CustomFormat = @"dd/MM/yyyy",
-                        Anchor = AnchorStyles.Left | AnchorStyles.Right,
-                        AutoSize = true,
-                        Name = "header" + itemType.Id
-                    };
-
-                    HeaderTable.Controls.Add(date, _column[_counter] + 1, _row);
-                    HeaderTable.SetColumnSpan(date,3);
-
                     break;
 
                 case "Label":
                 case "Query":
-                    Label label = new Label {Text = itemType.ValueItem[0], TextAlign = ContentAlignment.BottomLeft, Anchor = AnchorStyles.Left, AutoSize = true, Name = "header" + itemType.Id };
+                    Label label = new Label {Text = object.ReferenceEquals(itemType.ValueChosen, null) ? itemType.ValueItem[0] : itemType.ValueChosen
+                        , TextAlign = ContentAlignment.BottomLeft, Anchor = AnchorStyles.Left, AutoSize = true, Name = "header" + itemType.Id };
                     HeaderTable.Controls.Add(label, _column[_counter] + 1, _row);
                     HeaderTable.SetColumnSpan(label,3);
-
                     break;
-
             }
 
             _headeritems.Add(itemType);
@@ -155,50 +131,7 @@ namespace FeedBackSystem
 
         }
         // end add item
-
-        private void EditItem(object sender, EventArgs eventArgs)
-        {
-            string title;
-            string inputType;
-
-            Label control = sender as Label;
-            title = control.Text;
-
-            if (_headeritems.FindIndex(x => x.Title == title) <= 3)
-            {
-                MessageBox.Show("Sorry, you are not allowed to edit that");
-                return;
-            }
-
-            List<HeaderItem> headerItem = new List<HeaderItem>();
-            headerItem.AddRange(_headeritems);
-            
-
-            HeaderItem item = headerItem.Find(x => x.Title == title);
-
-            using (HeaderItemCreator form = new HeaderItemCreator(item))
-            {
-                var result = form.ShowDialog();
-
-                if (result != DialogResult.OK) return;
-                int index = headerItem.FindIndex(x => x.Title == title);
-                headerItem.RemoveAt(index);
-                HeaderItem itemNew = form.headitem;
-                headerItem.Insert(index,itemNew);
-
-                ResetTable();
-                _headeritems.Clear();
-                foreach (HeaderItem i in headerItem)
-                {
-                    AddItem(i);
-                }
-            }
-
-
-        }
-
-
-
+        
         public void ResetTable()
         {
             HeaderTable.Controls.Clear();

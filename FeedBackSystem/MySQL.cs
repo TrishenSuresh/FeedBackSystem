@@ -320,6 +320,7 @@ namespace FeedBackSystem
         {
             string sqlStatement = "SELECT * FROM feedbacksystem.header where HeaderID = @HeaderID";
             Header header = new Header();
+
             try
             {
                 MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection);
@@ -338,7 +339,7 @@ namespace FeedBackSystem
             }
             catch (Exception genExp)
             {
-                MessageBox.Show(genExp.Message);
+                MessageBox.Show(genExp.ToString());
             }
 
             return header;
@@ -1500,6 +1501,102 @@ namespace FeedBackSystem
             }
 
             return true;
+        }
+
+        public Feedback GetFeedback(string id)
+        {
+            Feedback feedback = new Feedback();
+            
+            try
+            {
+                //get and set the header with the header items (default values)
+                string sqlStatement = "SELECT * FROM feedbacksystem.feedback where FeedbackID = @ID";
+                using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
+                {
+                    cmd.Parameters.AddWithValue("@ID", id);
+
+                    MySqlDataReader reader = cmd.ExecuteReader();
+                    string hid = "";
+
+                    if (reader.Read())
+                    {
+                        hid = reader["HeaderID"].ToString();
+                    }
+                    reader.Close();
+                    feedback.Header = GetHeader(hid);
+                    feedback.Header.HeaderItems.Clear();
+                    
+                    foreach (HeaderItem i in GetHeaderItems(feedback.Header.HeaderId))
+                    {
+                        feedback.Header.addHeaderItem(i);
+                    }
+
+                    cmd.Parameters.Clear();
+                }
+
+                //update the header items with the user previous input
+                sqlStatement = "SELECT * FROM feedbacksystem.feedbackheader where FeedbackID = @ID";
+
+                using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
+                {
+                    cmd.Parameters.AddWithValue("@ID", id);
+
+                    MySqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        string headerID = reader["HeaderIID"].ToString();
+                        string userInputtedValue = reader["Input"].ToString();
+                        //HeaderItem item = feedback.Header.HeaderItems.Find(y => y.Id.Equals(reader["HeaderIID"].ToString()));
+                        
+                        foreach(HeaderItem hi in feedback.Header.HeaderItems)
+                        {
+                            if (hi.Id.Equals(headerID))
+                            {
+                                hi.ValueChosen = userInputtedValue;
+                            }
+                        }
+                    }
+
+                    reader.Close();
+                }
+
+                //get and set the sections
+                sqlStatement = "SELECT * FROM feedbacksystem.feedbacksection where FeedbackID = @ID";
+                using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
+                {
+                    cmd.Parameters.AddWithValue("@ID", id);
+
+                    MySqlDataReader reader = cmd.ExecuteReader();
+                    List<Section> sectionDB = new List<Section>();
+                    
+                    while (reader.Read())
+                    {
+                        sectionDB.Add(new Section(reader["SectionID"].ToString(), reader["Comment"].ToString(),
+                            reader["CodeGiven"].ToString(), (reader["IsChecked"].ToString().Equals("True") ? true : false) ));
+                    }
+                    
+                    reader.Close();
+
+                    foreach (Section sec in sectionDB)
+                    {
+                        Section tempSec = GetSection(sec.SectionId);
+                        tempSec.Comment = sec.Comment;
+                        tempSec.CodeChosen = sec.CodeChosen;
+                        tempSec.IsChecked = sec.IsChecked;
+                        feedback.Sections.Add(tempSec);
+                    }
+
+                    cmd.Parameters.Clear();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+            return feedback;
+
         }
 
     }
