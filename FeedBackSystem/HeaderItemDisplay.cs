@@ -296,5 +296,11 @@ namespace FeedBackSystem
                 MoveUp.Enabled = true;
             }
         }
+
+        private void CancelBtn_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.No;
+            this.Close();
+        }
     }
 }

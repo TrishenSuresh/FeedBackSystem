@@ -36,7 +36,6 @@
             this.templateToolStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.feedbackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.giveFeedbackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewFeedbackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reportIssueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.creatorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,7 +50,7 @@
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 1.435897F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 98.5641F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 33F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 34F));
             this.tableLayoutPanel1.Controls.Add(this.Menu, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.MainPanel, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.BackHome, 1, 2);
@@ -95,29 +94,28 @@
             // headerToolStrip
             // 
             this.headerToolStrip.Name = "headerToolStrip";
-            this.headerToolStrip.Size = new System.Drawing.Size(211, 30);
+            this.headerToolStrip.Size = new System.Drawing.Size(168, 30);
             this.headerToolStrip.Text = "Header";
             this.headerToolStrip.Click += new System.EventHandler(this.headerToolStrip_Click);
             // 
             // sectionToolStrip
             // 
             this.sectionToolStrip.Name = "sectionToolStrip";
-            this.sectionToolStrip.Size = new System.Drawing.Size(211, 30);
+            this.sectionToolStrip.Size = new System.Drawing.Size(168, 30);
             this.sectionToolStrip.Text = "Section";
             this.sectionToolStrip.Click += new System.EventHandler(this.sectionToolStrip_Click);
             // 
             // templateToolStrip
             // 
             this.templateToolStrip.Name = "templateToolStrip";
-            this.templateToolStrip.Size = new System.Drawing.Size(211, 30);
+            this.templateToolStrip.Size = new System.Drawing.Size(168, 30);
             this.templateToolStrip.Text = "Template";
             this.templateToolStrip.Click += new System.EventHandler(this.templateToolStrip_Click);
             // 
             // feedbackToolStripMenuItem
             // 
             this.feedbackToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.giveFeedbackToolStripMenuItem,
-            this.viewFeedbackToolStripMenuItem});
+            this.giveFeedbackToolStripMenuItem});
             this.feedbackToolStripMenuItem.Name = "feedbackToolStripMenuItem";
             this.feedbackToolStripMenuItem.Size = new System.Drawing.Size(99, 39);
             this.feedbackToolStripMenuItem.Text = "Feedback";
@@ -125,15 +123,9 @@
             // giveFeedbackToolStripMenuItem
             // 
             this.giveFeedbackToolStripMenuItem.Name = "giveFeedbackToolStripMenuItem";
-            this.giveFeedbackToolStripMenuItem.Size = new System.Drawing.Size(214, 30);
-            this.giveFeedbackToolStripMenuItem.Text = "Give Feedback";
+            this.giveFeedbackToolStripMenuItem.Size = new System.Drawing.Size(247, 30);
+            this.giveFeedbackToolStripMenuItem.Text = "Generate Feedback";
             this.giveFeedbackToolStripMenuItem.Click += new System.EventHandler(this.giveFeedbackToolStripMenuItem_Click);
-            // 
-            // viewFeedbackToolStripMenuItem
-            // 
-            this.viewFeedbackToolStripMenuItem.Name = "viewFeedbackToolStripMenuItem";
-            this.viewFeedbackToolStripMenuItem.Size = new System.Drawing.Size(214, 30);
-            this.viewFeedbackToolStripMenuItem.Text = "View Feedback";
             // 
             // aboutToolStripMenuItem
             // 
@@ -147,13 +139,13 @@
             // reportIssueToolStripMenuItem
             // 
             this.reportIssueToolStripMenuItem.Name = "reportIssueToolStripMenuItem";
-            this.reportIssueToolStripMenuItem.Size = new System.Drawing.Size(195, 30);
+            this.reportIssueToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
             this.reportIssueToolStripMenuItem.Text = "Report Issue";
             // 
             // creatorsToolStripMenuItem
             // 
             this.creatorsToolStripMenuItem.Name = "creatorsToolStripMenuItem";
-            this.creatorsToolStripMenuItem.Size = new System.Drawing.Size(195, 30);
+            this.creatorsToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
             this.creatorsToolStripMenuItem.Text = "Creators";
             // 
             // MainPanel
@@ -164,7 +156,7 @@
             this.MainPanel.Location = new System.Drawing.Point(30, 50);
             this.MainPanel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MainPanel.Name = "MainPanel";
-            this.MainPanel.Size = new System.Drawing.Size(1778, 951);
+            this.MainPanel.Size = new System.Drawing.Size(1777, 951);
             this.MainPanel.TabIndex = 1;
             // 
             // BackHome
@@ -173,7 +165,7 @@
             this.BackHome.Dock = System.Windows.Forms.DockStyle.Right;
             this.BackHome.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BackHome.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.BackHome.Location = new System.Drawing.Point(1708, 1006);
+            this.BackHome.Location = new System.Drawing.Point(1707, 1006);
             this.BackHome.Name = "BackHome";
             this.BackHome.Size = new System.Drawing.Size(101, 32);
             this.BackHome.TabIndex = 2;
@@ -207,7 +199,6 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem feedbackToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem giveFeedbackToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem viewFeedbackToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reportIssueToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem creatorsToolStripMenuItem;

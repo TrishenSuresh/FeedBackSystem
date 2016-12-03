@@ -102,6 +102,8 @@
             this.Controls.Add(this.DeleteBtn);
             this.Controls.Add(this.TitleLabel);
             this.Controls.Add(this.IndexList);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "DeleteBox";
             this.Text = "Delete";
             this.ResumeLayout(false);

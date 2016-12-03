@@ -23,6 +23,8 @@ namespace FeedBackSystem
 
         private void AddSectionBtn_Click(object sender, EventArgs e)
         {
+            SectionPanel.Controls.Clear();
+            SectionPanel.Controls.Add(SectionTable);
             SectionTable.Controls.Clear();
 
             RowStyle style = new RowStyle { SizeType = SizeType.AutoSize };
@@ -93,7 +95,8 @@ namespace FeedBackSystem
                         _row++;
                     }
 
-                    AddSectionBtn.Text = "Change Section";
+                    //ChangeSectionBtn.Text = "Change Section";
+                    ChangeSectionBtn.Visible = true;
 
                     _currentTemplate.Sections.Clear();
                     _currentTemplate.Sections.AddRange(section);
@@ -113,8 +116,13 @@ namespace FeedBackSystem
                 {
                     MySql sql = new MySql();
                     sql.OpenConnection();
-
                     Header selectedHeader = sql.GetHeader(form._ids[0]);
+
+                    selectedHeader.HeaderItems.Clear();
+                    foreach (HeaderItem i in sql.GetHeaderItems(selectedHeader.HeaderId))
+                    {
+                        selectedHeader.addHeaderItem(i);
+                    }
 
                     sql.CloseConnection();
 
@@ -130,6 +138,8 @@ namespace FeedBackSystem
                     HeaderPanel.Controls.Add(place);
 
                     ChangeHeader.Visible = true;
+                    HorizontalLine.Visible = true;
+                    TextLabel.Visible = true;
 
                     _currentTemplate.Header = selectedHeader;
                 }
@@ -146,11 +156,11 @@ namespace FeedBackSystem
                 return;
             }
 
-            if (DescText.Text.Length <= 0)
-            {
-                MessageBox.Show("Please insert the description","Missing Field");
-                return;
-            }
+            //if (DescText.Text.Length <= 0)
+            //{
+            //    MessageBox.Show("Please insert the description","Missing Field");
+            //    return;
+            //}
 
             sql.OpenConnection();
 
@@ -163,6 +173,12 @@ namespace FeedBackSystem
             }
             sql.CloseConnection();
 
+        }
+
+        private void CancelBtn_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.No;
+            this.Close();
         }
     }
 }
