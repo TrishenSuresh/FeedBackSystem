@@ -154,14 +154,19 @@ namespace FeedBackSystem
                 if(Dt != null && Dt.Rows.Count > 0)
                 {
                     Feedback tmpFeedback = sql.GetFeedback(Dt.Rows[0]["FeedbackID"].ToString());
+                    _currentFeed.FeedbackID = Dt.Rows[0]["FeedbackID"].ToString();
                     _currentFeed.Header = tmpFeedback.Header;
                     _currentFeed.Sections = tmpFeedback.Sections;
                     FillHeader();
                     FillSection();
                     sql.CloseConnection();
+
+                    SaveFeedbackBtn.Text = "Update Feedback";
+
                     return;
                 } else
                 {
+                    SaveFeedbackBtn.Text = "Save Feedback";
                     if (_currentFeed.Header != null)
                     {
                         _currentFeed.Header.HeaderItems.Clear();
@@ -375,10 +380,15 @@ namespace FeedBackSystem
 
             MySql sql = new MySql();
             sql.OpenConnection();
-            if (sql.SaveFeedback(_currentFeed))
-                MessageBox.Show("Sucessfully inserted into the database");
-            else
-                return;
+            if (String.IsNullOrEmpty(_currentFeed.FeedbackID))
+            {
+                if (sql.SaveFeedback(_currentFeed))
+                    MessageBox.Show("Sucessfully inserted into the database"); 
+            } else
+            {
+                if (sql.UpdateFeedback(_currentFeed))
+                    MessageBox.Show("Sucessfully updated the feedback.");
+            }
 
             sql.CloseConnection();
 
@@ -409,6 +419,8 @@ namespace FeedBackSystem
                 ContentTable.Controls.Remove(ContentTable.GetControlFromPosition(0, 0));
                 SectionTable.Controls.Clear();
                 PDFDisplay.DocumentText = "";
+
+                SaveFeedbackBtn.Text = "Save Feedback";
             }
 
         }

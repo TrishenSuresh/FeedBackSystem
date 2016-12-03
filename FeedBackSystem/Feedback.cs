@@ -8,6 +8,7 @@ namespace FeedBackSystem
 {
     class Feedback
     {
+        public string FeedbackID;
         public Applicant Applicant;
         public Position Position;
         public string ReviewerId;

@@ -723,13 +723,13 @@ namespace FeedBackSystem
             {
                 try
                 {
-                    //Insert the feedback
-                    string sqlStatement =
-                        "INSERT INTO feedback(`AppID`, `ReviewID`, `PositionID`,`HeaderID`) VALUES (@AppID,@ReviewID,@PositionID,@HeaderID); SELECT last_insert_id() as id;";
+                    string sqlStatement = "";
                     MySqlDataReader reader;
-
                     int feedbackId;
 
+                    // Insert the feedback
+                    sqlStatement =
+                        "INSERT INTO feedback(`AppID`, `ReviewID`, `PositionID`,`HeaderID`) VALUES (@AppID,@ReviewID,@PositionID,@HeaderID); SELECT last_insert_id() as id;";
                     using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
                     {
                         cmd.Parameters.AddWithValue("@AppID", feedback.Applicant.Id);
@@ -780,6 +780,77 @@ namespace FeedBackSystem
                         }
 
                     } //end loop sections
+
+                    trans.Commit();
+                }
+                catch (Exception ex)
+                {
+                    trans.Rollback();
+                    MessageBox.Show(ex.Message);
+                    return false;
+                }
+
+            }
+            return true;
+        }
+
+        public bool UpdateFeedback(Feedback feedback)
+        {
+            //update assuming they cannot change the header and sections
+            using (MySqlTransaction trans = _connection.BeginTransaction())
+            {
+                try
+                {
+                    string sqlStatement = "";
+                    MySqlDataReader reader;
+                    int feedbackId = Convert.ToInt16(feedback.FeedbackID);
+                    
+                    // update the feedback on reviewer
+                    sqlStatement =
+                        "UPDATE feedback SET `ReviewID` = @ReviewID WHERE FeedbackID = @FeedbackID;";
+                    using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
+                    {
+                        cmd.Parameters.AddWithValue("@ReviewID", feedback.ReviewerId);
+                        cmd.Parameters.AddWithValue("@FeedbackID", feedbackId);
+                        reader = cmd.ExecuteReader();
+                        reader.Close();
+                        cmd.Parameters.Clear();
+                    }
+
+                    // update header items
+                    foreach (HeaderItem item in feedback.Header.HeaderItems)
+                    {
+                        sqlStatement =
+                            "UPDATE feedbackheader SET `Input` = @Input WHERE FeedbackID = @FeedbackID AND HeaderIID = @HeaderItemID;";
+                        using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
+                        {
+                            cmd.Parameters.AddWithValue("@FeedbackID", feedbackId);
+                            cmd.Parameters.AddWithValue("@HeaderItemID", item.Id);
+                            cmd.Parameters.AddWithValue("@Input", item.ValueChosen);
+                            reader = cmd.ExecuteReader();
+                            reader.Close();
+                            cmd.Parameters.Clear();
+                        }
+
+                    } //end loop header item
+
+                    // update sections
+                    foreach (Section sec in feedback.Sections)
+                    {
+                        sqlStatement =
+                            "UPDATE feedbacksection SET `Comment` = @Comment, `CodeGiven` = @Code,`IsChecked` = @Checked WHERE FeedbackID = @FeedbackID AND SectionID = @SectionID;";
+                        using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
+                        {
+                            cmd.Parameters.AddWithValue("@FeedbackID", feedbackId);
+                            cmd.Parameters.AddWithValue("@SectionID", sec.SectionId);
+                            cmd.Parameters.AddWithValue("@Comment", sec.Comment);
+                            cmd.Parameters.AddWithValue("@Code", sec.CodeChosen);
+                            cmd.Parameters.AddWithValue("@Checked", sec.IsChecked);
+                            reader = cmd.ExecuteReader();
+                            reader.Close();
+                            cmd.Parameters.Clear();
+                        }
+                    }
 
                     trans.Commit();
                 }

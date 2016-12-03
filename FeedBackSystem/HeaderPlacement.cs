@@ -94,7 +94,7 @@ namespace FeedBackSystem
                             HeaderTable.SetColumnSpan(date, 3);
                             break;
                         case "Today":
-                            Label today = new Label { Text = DateTime.Today.ToShortDateString(), TextAlign = ContentAlignment.BottomLeft, Anchor = AnchorStyles.Left, AutoSize = true, Name = "header" + itemType.Id };
+                            Label today = new Label { Text = object.ReferenceEquals(itemType.ValueChosen, null) ? DateTime.Today.ToShortDateString() : itemType.ValueChosen, TextAlign = ContentAlignment.BottomLeft, Anchor = AnchorStyles.Left, AutoSize = true, Name = "header" + itemType.Id };
                             HeaderTable.Controls.Add(today, _column[_counter] + 1, _row);
                             HeaderTable.SetColumnSpan(today, 3);
                             break;
