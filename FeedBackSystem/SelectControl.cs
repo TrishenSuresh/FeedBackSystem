@@ -130,6 +130,12 @@ namespace FeedBackSystem
                 SelectBtn.Text = "Select " + ControlType;
             }
         }
+
+        private void CancelBtn_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.No;
+            Close();
+        }
     }
 
 

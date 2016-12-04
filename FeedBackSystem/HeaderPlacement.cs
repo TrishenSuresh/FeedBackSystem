@@ -103,8 +103,8 @@ namespace FeedBackSystem
 
                 case "Label":
                 case "Query":
-                    Label label = new Label {Text = object.ReferenceEquals(itemType.ValueChosen, null) ? itemType.ValueItem[0] : itemType.ValueChosen
-                        , TextAlign = ContentAlignment.BottomLeft, Anchor = AnchorStyles.Left, AutoSize = true, Name = "header" + itemType.Id };
+                    TextBox label = new TextBox {Text = object.ReferenceEquals(itemType.ValueChosen, null) ? itemType.ValueItem[0] : itemType.ValueChosen
+                        ,Enabled = false ,Anchor = AnchorStyles.Left | AnchorStyles.Right, AutoSize = true, Name = "header" + itemType.Id };
                     HeaderTable.Controls.Add(label, _column[_counter] + 1, _row);
                     HeaderTable.SetColumnSpan(label,3);
                     break;

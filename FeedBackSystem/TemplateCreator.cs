@@ -21,90 +21,90 @@ namespace FeedBackSystem
            // ContentTable.Padding = new Padding(0, 0, SystemInformation.VerticalScrollBarWidth, 0);
         }
 
-        private void AddSectionBtn_Click(object sender, EventArgs e)
-        {
-            SectionPanel.Controls.Clear();
-            SectionPanel.Controls.Add(SectionTable);
-            SectionTable.Controls.Clear();
+        //private void AddSectionBtn_Click(object sender, EventArgs e)
+        //{
+        //    SectionPanel.Controls.Clear();
+        //    SectionPanel.Controls.Add(SectionTable);
+        //    SectionTable.Controls.Clear();
 
-            RowStyle style = new RowStyle { SizeType = SizeType.AutoSize };
+        //    RowStyle style = new RowStyle { SizeType = SizeType.AutoSize };
 
-            SectionTable.Padding = new Padding(0, 0, SystemInformation.VerticalScrollBarWidth, 0);
-            //HeaderControls.Padding = new Padding(0, 0, SystemInformation.VerticalScrollBarWidth, 0);
+        //    SectionTable.Padding = new Padding(0, 0, SystemInformation.VerticalScrollBarWidth, 0);
+        //    //HeaderControls.Padding = new Padding(0, 0, SystemInformation.VerticalScrollBarWidth, 0);
 
-            SectionTable.RowStyles.Add(style);
+        //    SectionTable.RowStyles.Add(style);
 
 
-            using (SelectControl form = new SelectControl("Section"))
-            {
-                var result = form.ShowDialog();
+        //    using (SelectControl form = new SelectControl("Section"))
+        //    {
+        //        var result = form.ShowDialog();
 
-                if (result == DialogResult.OK)
-                {
+        //        if (result == DialogResult.OK)
+        //        {
 
-                    List<Section> section = new List<Section>();
+        //            List<Section> section = new List<Section>();
 
-                    MySql sql = new MySql();
-                    sql.OpenConnection();
+        //            MySql sql = new MySql();
+        //            sql.OpenConnection();
 
-                    form._ids.Reverse();
+        //            form._ids.Reverse();
 
-                    foreach (string id  in form._ids)
-                    {
-                        section.Add(sql.GetSection(id));
-                    }
+        //            foreach (string id  in form._ids)
+        //            {
+        //                section.Add(sql.GetSection(id));
+        //            }
 
-                    sql.CloseConnection();
+        //            sql.CloseConnection();
 
-                    foreach (Section s in section)
-                    {
-                        SectionTable.Controls.Add(new CheckBox { Anchor = AnchorStyles.Left, Name = "checker" + s.SectionId, AutoSize = true }, 0, _row);
+        //            foreach (Section s in section)
+        //            {
+        //                SectionTable.Controls.Add(new CheckBox { Anchor = AnchorStyles.Left, Name = "checker" + s.SectionId, AutoSize = true }, 0, _row);
 
-                        SectionTable.Controls.Add(
-                            new Label
-                            {
-                                Text = s.Title,
-                                Anchor = AnchorStyles.Left,
-                                TextAlign = ContentAlignment.MiddleLeft
-                            }, 1, _row);
+        //                SectionTable.Controls.Add(
+        //                    new Label
+        //                    {
+        //                        Text = s.Title,
+        //                        Anchor = AnchorStyles.Left,
+        //                        TextAlign = ContentAlignment.MiddleLeft
+        //                    }, 1, _row);
 
-                        ComboBox codes = new ComboBox
-                        {
-                            DropDownStyle = ComboBoxStyle.DropDownList,
-                            Anchor = AnchorStyles.Right,
-                            Name = "codes" + s.SectionId
-                        };
+        //                ComboBox codes = new ComboBox
+        //                {
+        //                    DropDownStyle = ComboBoxStyle.DropDownList,
+        //                    Anchor = AnchorStyles.Right,
+        //                    Name = "codes" + s.SectionId
+        //                };
 
-                        foreach (string code in s.Codes)
-                        {
-                            codes.Items.Add(code);
-                        }
+        //                foreach (string code in s.Codes)
+        //                {
+        //                    codes.Items.Add(code);
+        //                }
 
-                        SectionTable.Controls.Add(codes, 2, _row);
+        //                SectionTable.Controls.Add(codes, 2, _row);
 
-                        RichTextBox comment = new RichTextBox
-                        {
-                            Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top,
-                            Name = "comment" + s.SectionId
-                        };
+        //                RichTextBox comment = new RichTextBox
+        //                {
+        //                    Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top,
+        //                    Name = "comment" + s.SectionId
+        //                };
 
-                        SectionTable.Controls.Add(comment, 1, _row + 1);
-                        SectionTable.SetColumnSpan(comment,2);
+        //                SectionTable.Controls.Add(comment, 1, _row + 1);
+        //                SectionTable.SetColumnSpan(comment,2);
 
-                        _row++;
-                        _row++;
-                    }
+        //                _row++;
+        //                _row++;
+        //            }
 
-                    //ChangeSectionBtn.Text = "Change Section";
-                    ChangeSectionBtn.Visible = true;
+        //            //ChangeSectionBtn.Text = "Change Section";
+        //            ChangeSectionBtn.Enabled = true;
 
-                    _currentTemplate.Sections.Clear();
-                    _currentTemplate.Sections.AddRange(section);
+        //            _currentTemplate.Sections.Clear();
+        //            _currentTemplate.Sections.AddRange(section);
 
-                }
-            }
+        //        }
+        //    }
 
-        }
+        //}
 
         private void AddHeaderBtn_Click(object sender, EventArgs e)
         {
@@ -137,7 +137,7 @@ namespace FeedBackSystem
 
                     HeaderPanel.Controls.Add(place);
 
-                    ChangeHeader.Visible = true;
+                    ChangeHeader.Enabled = true;
                     HorizontalLine.Visible = true;
                     TextLabel.Visible = true;
 
@@ -153,6 +153,14 @@ namespace FeedBackSystem
             if (TitleText.Text.Length <= 0)
             {
                 MessageBox.Show("Please insert the title","Missing Field");
+                return;
+            }
+
+            _currentTemplate.Sections = Sections.SelectedSections;
+
+            if (_currentTemplate.Sections.Count <= 0)
+            {
+                MessageBox.Show("Please choose the sections to be included in the template.","Missing Sections");
                 return;
             }
 

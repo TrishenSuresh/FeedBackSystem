@@ -147,5 +147,11 @@ namespace FeedBackSystem
                 Close();
             }
         }
+
+        private void CnacelBtn_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.No;
+            this.Close();
+        }
     }
 }

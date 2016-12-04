@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
 using MySql.Data.MySqlClient;
 using System.Data;
+using System.Drawing;
+using System.Windows.Forms.VisualStyles;
+using ContentAlignment = System.Drawing.ContentAlignment;
 
 namespace FeedBackSystem
 {
@@ -46,27 +48,53 @@ namespace FeedBackSystem
         }
 
         private void AddSectionBtn_Click(object sender, EventArgs e) { setSection(); }
+
         private void setSection()
         {
             _currentFeed.Sections.Clear();
 
-            using (SelectControl form = new SelectControl("Section"))
+            //using (SelectControl form = new SelectControl("Section"))
+            //{
+            //    var result = form.ShowDialog();
+
+            //    if (result == DialogResult.OK)
+            //    {
+            //        MySql sql = new MySql();
+            //        sql.OpenConnection();
+            //        foreach (string id in form._ids)
+            //        {
+            //            _currentFeed.Sections.Add(sql.GetSection(id));
+            //        }
+
+            //        _currentFeed.Sections.Reverse();
+
+            //        FillSection();
+            //    } 
+            //}
+
+            Form window = new Form { Text = "Select Sections", ControlBox = false, FormBorderStyle = FormBorderStyle.FixedDialog, StartPosition = FormStartPosition.CenterParent};
+
+            window.Size = new Size(1320, 330);
+
+            window.Controls.Add(new SectionSelection {Name = "SectionSelection"});
+
+            Button ok = new Button { Location = new Point(1200, 250), Text = "Ok" };
+            ok.Click += (s, e) => { window.DialogResult = DialogResult.OK; window.Close(); };
+            window.Controls.Add(ok);
+
+
+            var result = window.ShowDialog();
+
+            if (result == DialogResult.OK)
             {
-                var result = form.ShowDialog();
+                SectionSelection sectionSelection = (SectionSelection)window.Controls.Find("SectionSelection", true)[0];
 
-                if (result == DialogResult.OK)
+                foreach (Section s in sectionSelection.SelectedSections)
                 {
-                    MySql sql = new MySql();
-                    sql.OpenConnection();
-                    foreach (string id in form._ids)
-                    {
-                        _currentFeed.Sections.Add(sql.GetSection(id));
-                    }
+                    _currentFeed.Sections.Add(s);
+                }
 
-                    _currentFeed.Sections.Reverse();
-
-                    FillSection();
-                } 
+                FillSection();
             }
         }
 
@@ -94,10 +122,11 @@ namespace FeedBackSystem
                     }, 1, row);
 
                 ComboBox codes = new ComboBox
-                    {
-                        DropDownStyle = ComboBoxStyle.DropDownList,
-                        Anchor = AnchorStyles.Right,
-                        Name = "codes" + s.SectionId
+                {
+                    DropDownStyle = ComboBoxStyle.DropDownList,
+                    Anchor = AnchorStyles.Right,
+                    Name = "codes" + s.SectionId,
+                    FlatStyle = FlatStyle.Flat
                     };
 
                 foreach (string code in s.Codes)
@@ -313,13 +342,14 @@ namespace FeedBackSystem
             foreach (HeaderItem item in _currentFeed.Header.HeaderItems)
             {
 
-                System.Windows.Forms.Control control = Controls.Find("header" + item.Id, true)[0];
+                Control control = Controls.Find("header" + item.Id, true)[0];
 
                 try
                 {
                     switch (control.GetType().Name)
                     {
                         case "TextBox":
+                        case "Label":
                             item.ValueChosen = ((TextBox)control).Text;
                             break;
                         case "ComboBox":
@@ -327,9 +357,6 @@ namespace FeedBackSystem
                             break;
                         case "DateTimePicker":
                             item.ValueChosen = ((DateTimePicker)control).Value.ToString("dd/MM/yyyy");
-                            break;
-                        case "Label":
-                            item.ValueChosen = ((Label)control).Text;
                             break;
                     }
 

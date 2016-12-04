@@ -31,6 +31,7 @@
             this.SelectBtn = new System.Windows.Forms.Button();
             this.Dgv = new System.Windows.Forms.DataGridView();
             this.TitleLabel = new System.Windows.Forms.Label();
+            this.CancelBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.Dgv)).BeginInit();
             this.SuspendLayout();
             // 
@@ -76,15 +77,31 @@
             this.TitleLabel.TabIndex = 3;
             this.TitleLabel.Text = "Default";
             // 
+            // CancelBtn
+            // 
+            this.CancelBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.CancelBtn.Location = new System.Drawing.Point(735, 342);
+            this.CancelBtn.Margin = new System.Windows.Forms.Padding(2);
+            this.CancelBtn.Name = "CancelBtn";
+            this.CancelBtn.Size = new System.Drawing.Size(127, 25);
+            this.CancelBtn.TabIndex = 6;
+            this.CancelBtn.Text = "Cancel";
+            this.CancelBtn.UseVisualStyleBackColor = true;
+            this.CancelBtn.Click += new System.EventHandler(this.CancelBtn_Click);
+            // 
             // SelectControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1047, 414);
+            this.ControlBox = false;
+            this.Controls.Add(this.CancelBtn);
             this.Controls.Add(this.SelectBtn);
             this.Controls.Add(this.Dgv);
             this.Controls.Add(this.TitleLabel);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "SelectControl";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "SelectControl";
             ((System.ComponentModel.ISupportInitialize)(this.Dgv)).EndInit();
             this.ResumeLayout(false);
@@ -97,5 +114,6 @@
         private System.Windows.Forms.Button SelectBtn;
         private System.Windows.Forms.DataGridView Dgv;
         private System.Windows.Forms.Label TitleLabel;
+        private System.Windows.Forms.Button CancelBtn;
     }
 }

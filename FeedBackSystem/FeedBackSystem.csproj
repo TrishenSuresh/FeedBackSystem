@@ -33,6 +33,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="itextsharp, Version=5.5.10.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.10\lib\itextsharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="itextsharp.xmlworker, Version=5.5.10.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itextsharp.xmlworker.5.5.10\lib\itextsharp.xmlworker.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -52,6 +60,12 @@
     </Compile>
     <Compile Include="HeaderItemDisplay.Designer.cs">
       <DependentUpon>HeaderItemDisplay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SectionSelection.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SectionSelection.Designer.cs">
+      <DependentUpon>SectionSelection.cs</DependentUpon>
     </Compile>
     <Compile Include="UserInfo.cs">
       <SubType>Form</SubType>
@@ -164,12 +178,6 @@
     <Compile Include="SectionCreator.Designer.cs">
       <DependentUpon>SectionCreator.cs</DependentUpon>
     </Compile>
-    <Compile Include="SectionPlacement.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="SectionPlacement.Designer.cs">
-      <DependentUpon>SectionPlacement.cs</DependentUpon>
-    </Compile>
     <Compile Include="SelectControl.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -185,13 +193,16 @@
       <DependentUpon>TemplateCreator.cs</DependentUpon>
     </Compile>
     <Compile Include="UserList.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UserList.Designer.cs">
       <DependentUpon>UserList.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="HeaderItemDisplay.resx">
       <DependentUpon>HeaderItemDisplay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SectionSelection.resx">
+      <DependentUpon>SectionSelection.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserInfo.resx">
       <DependentUpon>UserInfo.cs</DependentUpon>
@@ -253,9 +264,6 @@
     <EmbeddedResource Include="SectionCreator.resx">
       <DependentUpon>SectionCreator.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SectionPlacement.resx">
-      <DependentUpon>SectionPlacement.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="SelectControl.resx">
       <DependentUpon>SelectControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -265,7 +273,9 @@
     <EmbeddedResource Include="UserList.resx">
       <DependentUpon>UserList.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\DataSources\HeaderItem.datasource" />
+    <None Include="Properties\DataSources\Section.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
