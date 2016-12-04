@@ -77,5 +77,16 @@ namespace FeedBackSystem
             MainPanel.Controls.Add(new Home());
             BackHome.Visible = false;
         }
+
+        private void Exit_Click(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show("Are you sure you want to exit?", "Exiting System", MessageBoxButtons.YesNo);
+
+            if (result == DialogResult.Yes)
+            {
+                this.Close();
+            }
+            
+        }
     }
 }

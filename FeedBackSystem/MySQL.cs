@@ -4,6 +4,7 @@ using MySql.Data.MySqlClient;
 using System.Windows.Forms;
 using System.Data;
 using System;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -727,15 +728,20 @@ namespace FeedBackSystem
                     MySqlDataReader reader;
                     int feedbackId;
 
+                    //Generate PDF Path
+                    byte[] pdfBytes = PDFGeneration.Generate(feedback);
+                    
+
                     // Insert the feedback
                     sqlStatement =
-                        "INSERT INTO feedback(`AppID`, `ReviewID`, `PositionID`,`HeaderID`) VALUES (@AppID,@ReviewID,@PositionID,@HeaderID); SELECT last_insert_id() as id;";
+                        "INSERT INTO feedback(`AppID`, `ReviewID`, `PositionID`,`HeaderID`,`PDF`) VALUES (@AppID,@ReviewID,@PositionID,@HeaderID,@PDF); SELECT last_insert_id() as id;";
                     using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
                     {
                         cmd.Parameters.AddWithValue("@AppID", feedback.Applicant.Id);
                         cmd.Parameters.AddWithValue("@ReviewID", feedback.ReviewerId);
                         cmd.Parameters.AddWithValue("@PositionID", feedback.Position._positionId);
                         cmd.Parameters.AddWithValue("@HeaderID", feedback.Header.HeaderId);
+                        cmd.Parameters.AddWithValue("@PDF", pdfBytes);
                         reader = cmd.ExecuteReader();
                         reader.Read();
                         feedbackId = Convert.ToInt16(reader["id"]);

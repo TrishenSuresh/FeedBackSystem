@@ -166,8 +166,7 @@ namespace FeedBackSystem
 
                 if (app.Pdf != null)
                 {
-                    string tempFile = Path.GetTempFileName();
-                    tempFile = Path.ChangeExtension(tempFile, "pdf");
+                    string tempFile = Path.GetTempPath()+"temp.pdf";
                     File.WriteAllBytes(tempFile, app.Pdf);
                     PDFDisplay.Navigate(tempFile);
                 }

@@ -61,6 +61,14 @@
     <Compile Include="HeaderItemDisplay.Designer.cs">
       <DependentUpon>HeaderItemDisplay.cs</DependentUpon>
     </Compile>
+    <Compile Include="PDF Generation Tester.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PDF Generation Tester.Designer.cs">
+      <DependentUpon>PDF Generation Tester.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PDFfooter.cs" />
+    <Compile Include="PDFGeneration.cs" />
     <Compile Include="SectionSelection.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -201,6 +209,9 @@
     <EmbeddedResource Include="HeaderItemDisplay.resx">
       <DependentUpon>HeaderItemDisplay.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PDF Generation Tester.resx">
+      <DependentUpon>PDF Generation Tester.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SectionSelection.resx">
       <DependentUpon>SectionSelection.cs</DependentUpon>
     </EmbeddedResource>
@@ -288,6 +299,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
