@@ -59,7 +59,6 @@
             this.Controls.Add(this.web);
             this.Name = "PDF_Generation";
             this.Text = "PDF_Generation";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PDF_Generation_FormClosing);
             this.ResumeLayout(false);
 
         }

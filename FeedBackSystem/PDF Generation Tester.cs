@@ -32,10 +32,12 @@ namespace FeedBackSystem
         private int _counter = 0;
         private int _limit = 0;
         List<byte[]> byteses = new List<byte[]>();
-        TempFileCollection temp = new TempFileCollection(Path.GetTempPath(),false);
 
         public PDF_Generation()
         {
+
+            Directory.CreateDirectory(Path.GetTempPath() + @"FeedBackSystem\");
+
             InitializeComponent();
  
             var sql = new MySql();
@@ -52,10 +54,7 @@ namespace FeedBackSystem
             }
 
             _limit = byteses.Count;
-            string tempPdf = Path.GetTempFileName();
-            temp.AddFile(tempPdf, false);
-           
-            File.WriteAllBytes(tempPdf, byteses[0]);
+            string tempPdf = TempFileHandler.MakeTempFilePdf(byteses[_counter]);
             web.Navigate(tempPdf);
             
             sql.CloseConnection();
@@ -70,18 +69,11 @@ namespace FeedBackSystem
             if (_counter >= _limit)
                 _counter = 0;
 
-            string tempPdf = Path.GetTempFileName();
-            temp.AddFile(tempPdf,false);
-
-            File.WriteAllBytes(tempPdf, byteses[_counter]);
+            string tempPdf = TempFileHandler.MakeTempFilePdf(byteses[_counter]);
             web.Navigate(tempPdf);
 
         }
 
-        private void PDF_Generation_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            temp.Delete();
-        }
     }
 
     

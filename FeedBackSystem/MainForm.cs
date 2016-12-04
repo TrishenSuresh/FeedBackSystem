@@ -21,6 +21,8 @@ namespace FeedBackSystem
                 MessageBox.Show("Please install adobe reader to fully utilize the system's functionality","Adobe Reader Not Found",MessageBoxButtons.OK);
             }
 
+            TempFileHandler.CleanTempFile();
+
             if (Reviewer.IsAdmin)
             {
                 ToolStripMenuItem AdminButton = new ToolStripMenuItem("Admin");
@@ -87,6 +89,11 @@ namespace FeedBackSystem
                 this.Close();
             }
             
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            TempFileHandler.CleanTempSession();
         }
     }
 }

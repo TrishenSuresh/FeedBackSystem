@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.Exit = new System.Windows.Forms.Label();
             this.Menu = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.headerToolStrip = new System.Windows.Forms.ToolStripMenuItem();
@@ -41,7 +42,6 @@
             this.creatorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainPanel = new System.Windows.Forms.Panel();
             this.BackHome = new System.Windows.Forms.Label();
-            this.Exit = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.Menu.SuspendLayout();
             this.SuspendLayout();
@@ -52,7 +52,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 1.435897F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 98.5641F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 37F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 21F));
             this.tableLayoutPanel1.Controls.Add(this.Exit, 2, 2);
             this.tableLayoutPanel1.Controls.Add(this.Menu, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.MainPanel, 1, 1);
@@ -67,6 +67,20 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1231, 675);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
+            // Exit
+            // 
+            this.Exit.AutoSize = true;
+            this.Exit.Dock = System.Windows.Forms.DockStyle.Right;
+            this.Exit.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Exit.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.Exit.Location = new System.Drawing.Point(1179, 654);
+            this.Exit.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.Exit.Name = "Exit";
+            this.Exit.Size = new System.Drawing.Size(28, 21);
+            this.Exit.TabIndex = 3;
+            this.Exit.Text = "Exit";
+            this.Exit.Click += new System.EventHandler(this.Exit_Click);
+            // 
             // Menu
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.Menu, 3);
@@ -78,7 +92,7 @@
             this.aboutToolStripMenuItem});
             this.Menu.Location = new System.Drawing.Point(0, 0);
             this.Menu.Name = "Menu";
-            this.Menu.Size = new System.Drawing.Size(1210, 29);
+            this.Menu.Size = new System.Drawing.Size(1209, 29);
             this.Menu.TabIndex = 0;
             this.Menu.Text = "menuStrip1";
             // 
@@ -157,7 +171,7 @@
             this.tableLayoutPanel1.SetColumnSpan(this.MainPanel, 2);
             this.MainPanel.Location = new System.Drawing.Point(19, 32);
             this.MainPanel.Name = "MainPanel";
-            this.MainPanel.Size = new System.Drawing.Size(1188, 619);
+            this.MainPanel.Size = new System.Drawing.Size(1187, 619);
             this.MainPanel.TabIndex = 1;
             // 
             // BackHome
@@ -166,27 +180,13 @@
             this.BackHome.Dock = System.Windows.Forms.DockStyle.Right;
             this.BackHome.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BackHome.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.BackHome.Location = new System.Drawing.Point(1099, 654);
+            this.BackHome.Location = new System.Drawing.Point(1098, 654);
             this.BackHome.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.BackHome.Name = "BackHome";
             this.BackHome.Size = new System.Drawing.Size(72, 21);
             this.BackHome.TabIndex = 2;
             this.BackHome.Text = "Back Home";
             this.BackHome.Click += new System.EventHandler(this.BackHome_Click);
-            // 
-            // Exit
-            // 
-            this.Exit.AutoSize = true;
-            this.Exit.Dock = System.Windows.Forms.DockStyle.Right;
-            this.Exit.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Exit.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.Exit.Location = new System.Drawing.Point(1180, 654);
-            this.Exit.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.Exit.Name = "Exit";
-            this.Exit.Size = new System.Drawing.Size(28, 21);
-            this.Exit.TabIndex = 3;
-            this.Exit.Text = "Exit";
-            this.Exit.Click += new System.EventHandler(this.Exit_Click);
             // 
             // MainForm
             // 
@@ -200,6 +200,7 @@
             this.Name = "MainForm";
             this.Text = "Feedback Generating System";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.Menu.ResumeLayout(false);

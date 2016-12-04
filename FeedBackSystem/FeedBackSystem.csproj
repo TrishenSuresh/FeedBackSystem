@@ -75,6 +75,7 @@
     <Compile Include="SectionSelection.Designer.cs">
       <DependentUpon>SectionSelection.cs</DependentUpon>
     </Compile>
+    <Compile Include="TempFileHandler.cs" />
     <Compile Include="UserInfo.cs">
       <SubType>Form</SubType>
     </Compile>
