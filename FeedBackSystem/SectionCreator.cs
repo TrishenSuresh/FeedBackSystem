@@ -74,6 +74,7 @@ namespace FeedBackSystem
                     if (sql.UpdateSection(_section))
                     {
                         MessageBox.Show("Section successfully saved");
+                        sql.CloseConnection();
                         DialogResult = DialogResult.OK;
                         Close();
                     }

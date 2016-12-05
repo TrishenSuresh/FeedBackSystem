@@ -222,7 +222,7 @@ namespace FeedBackSystem
                     }
                     break;
                 case "Template":
-                    using (TemplateCreator creator = new TemplateCreator())
+                    using (TemplateCreator creator = new TemplateCreator(id))
                     {
                         creator.ShowDialog();
                         if (creator.DialogResult == DialogResult.OK)

@@ -63,6 +63,18 @@ namespace FeedBackSystem
             sql.CloseConnection();
         }
 
+        public void UpdateSelectedSections(List<Section> sections)
+        {
+            SelectedSections.AddRange(sections);
+
+            foreach (Section s in sections)
+            {
+                AvailableSections.RemoveAll(x => x.SectionId.Equals(s.SectionId));
+            }
+
+            SelectedSectionDGV.DataSource = SelectedSections;
+        }
+
         private void AvailableSectionDGV_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             int row = 0;

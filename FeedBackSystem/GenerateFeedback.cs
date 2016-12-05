@@ -400,22 +400,32 @@ namespace FeedBackSystem
 
 
             }
-            
+
             //end of field checkers
 
             MySql sql = new MySql();
             sql.OpenConnection();
-            if (String.IsNullOrEmpty(_currentFeed.FeedbackID))
+            try
             {
-                if (sql.SaveFeedback(_currentFeed))
-                    MessageBox.Show("Sucessfully inserted into the database"); 
-            } else
-            {
-                if (sql.UpdateFeedback(_currentFeed))
-                    MessageBox.Show("Sucessfully updated the feedback.");
+                if (String.IsNullOrEmpty(_currentFeed.FeedbackID))
+                {
+                    if (sql.SaveFeedback(_currentFeed))
+                        MessageBox.Show("Sucessfully inserted into the database");
+                }
+                else
+                {
+                    if (sql.UpdateFeedback(_currentFeed))
+                        MessageBox.Show("Sucessfully updated the feedback.");
+                }
             }
-
-            sql.CloseConnection();
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.ToString(), "Ops! Error occured!");
+            }
+            finally
+            {
+                sql.CloseConnection();
+            }
 
         }
 

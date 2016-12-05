@@ -147,8 +147,8 @@ namespace FeedBackSystem
                 Close();
             }
         }
-
-        private void CnacelBtn_Click(object sender, EventArgs e)
+        
+        private void CancelBtn_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.No;
             this.Close();

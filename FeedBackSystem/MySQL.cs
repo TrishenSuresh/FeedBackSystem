@@ -927,6 +927,238 @@ namespace FeedBackSystem
             return true;
         }
 
+        public bool UpdateTemplate(Header header, List<Section> sections, string title, string desc, string id)
+        {
+            using (MySqlTransaction trans = _connection.BeginTransaction())
+            {
+                try
+                {
+                    //Update the template
+                    string sqlStatement =
+                        "UPDATE template SET `HeaderID` = @HeaderID, `TemplateTitle` = @Title, `TemplateDesc` = @Desc, `TemplateAuthor` = @Author WHERE TemplateID = @id";
+                    MySqlDataReader reader;
+                    
+                    using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
+                    {
+                        cmd.Parameters.AddWithValue("@HeaderID", header.HeaderId);
+                        cmd.Parameters.AddWithValue("@Title", title);
+                        cmd.Parameters.AddWithValue("@Desc", desc);
+                        cmd.Parameters.AddWithValue("@Author", Reviewer.Id);
+                        cmd.Parameters.AddWithValue("@id", id);
+                        reader = cmd.ExecuteReader();
+                        reader.Close();
+                        cmd.Parameters.Clear();
+                    }
+
+                    // remove all sections linked to this template
+                    sqlStatement =
+                            "DELETE FROM template_section WHERE `TemplateID` = @TemplateID;";
+                    using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
+                    {
+                        cmd.Parameters.AddWithValue("@TemplateID", id);
+                        reader = cmd.ExecuteReader();
+                        reader.Close();
+                        cmd.Parameters.Clear();
+                    }
+
+                    foreach (Section s in sections)
+                    {
+                        // link template with sections
+                        sqlStatement =
+                            "INSERT INTO template_section(`TemplateID`,`SectionID`) VALUES (@TemplateID,@SectionID);";
+                        using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
+                        {
+                            cmd.Parameters.AddWithValue("@TemplateID", id);
+                            cmd.Parameters.AddWithValue("@SectionID", s.SectionId);
+                            reader = cmd.ExecuteReader();
+                            reader.Close();
+                            cmd.Parameters.Clear();
+                        }
+
+                    } //end loop section
+
+                    ////////////////////////end updates for template//////////////////////
+
+                    List<string> affectedFIDs = new List<string>();
+                    bool sameHeader = false;
+
+                    //selecting all the affected feedbacks
+                    sqlStatement =
+                           "SELECT * FROM feedback WHERE `TemplateID` = @TemplateID;";
+                    using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
+                    {
+                        cmd.Parameters.AddWithValue("@TemplateID", id);
+                        reader = cmd.ExecuteReader();
+                        while(reader.Read())
+                            affectedFIDs.Add(reader["FeedbackID"].ToString());
+                        if (reader["HeaderID"].ToString().Equals(header.HeaderId))
+                        {
+                            sameHeader = true;
+                        }
+                        reader.Close();
+                        cmd.Parameters.Clear();
+                    }
+
+                    //loop through all the affected feedbacks
+                    foreach (string fid in affectedFIDs)
+                    {
+                        bool requireFeedbackUpdate = false;
+
+                        if (!sameHeader)
+                        {
+                            //update the header field in the feedback
+                            sqlStatement =
+                                "UPDATE feedback SET `HeaderID` = @HeaderID WHERE FeedbackID = @id";
+
+                            using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
+                            {
+                                cmd.Parameters.AddWithValue("@HeaderID", header.HeaderId);
+                                cmd.Parameters.AddWithValue("@id", fid);
+                                reader = cmd.ExecuteReader();
+                                reader.Close();
+                                cmd.Parameters.Clear();
+                            }
+
+                            //grab the list of header items id for this header
+                            List<string> itemsID = new List<string>();
+                            List<HeaderItem> headerItems = GetHeaderItems(header.HeaderId);
+                            foreach (HeaderItem item in headerItems)
+                            {
+                                itemsID.Add(item.Id);
+                            }
+                            string headerItemsID = string.Join(",", itemsID);
+
+                            //remove the header items in the feedback which are not part of this header
+                            sqlStatement =
+                                "DELETE FROM feedbackheader WHERE FeedbackID = @id AND HeaderIID NOT IN (" + headerItemsID + ");";
+
+                            using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
+                            {
+                                cmd.Parameters.AddWithValue("@id", fid);
+                                reader = cmd.ExecuteReader();
+                                reader.Close();
+                                cmd.Parameters.Clear();
+                            }
+                            
+                            foreach(HeaderItem item in headerItems)
+                            {
+                                sqlStatement =
+                                    "SELECT * FROM feedbackheader WHERE `FeedbackID` = @FeedbackID AND `HeaderIID` = @HeaderIID;";
+                                using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
+                                {
+                                    cmd.Parameters.AddWithValue("@FeedbackID", fid);
+                                    cmd.Parameters.AddWithValue("@HeaderIID", item.Id);
+                                    reader = cmd.ExecuteReader();
+                                    if (reader.HasRows)
+                                    {
+                                        reader.Close();
+                                        cmd.Parameters.Clear();
+                                        continue;
+                                    }
+                                    else
+                                    {
+                                        reader.Close();
+                                        cmd.Parameters.Clear();
+                                        sqlStatement =
+                                            "INSERT INTO feedbackheader(`FeedbackID`,`HeaderIID`) VALUES (@FeedbackID,@HeaderIID);";
+                                        using (MySqlCommand cmd2 = new MySqlCommand(sqlStatement, _connection, trans))
+                                        {
+                                            cmd2.Parameters.AddWithValue("@FeedbackID", fid);
+                                            cmd2.Parameters.AddWithValue("@HeaderIID", item.Id);
+                                            reader = cmd2.ExecuteReader();
+                                            reader.Close();
+                                            cmd2.Parameters.Clear();
+                                        }
+                                        requireFeedbackUpdate = true;
+                                    }
+
+                                }
+                            }
+                        }//end if not same header
+
+                        //update sections
+
+                        List<string> sectionIDs = new List<string>();
+                        foreach (Section section in sections)
+                        {
+                            sectionIDs.Add(section.SectionId);
+                        }
+                        string sectionIDstr = string.Join(",", sectionIDs);
+
+                        //remove the sections in the feedback which are not part of this template
+                        sqlStatement =
+                            "DELETE FROM feedbacksection WHERE FeedbackID = @id AND SectionID NOT IN (" + sectionIDstr + ");";
+
+                        using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
+                        {
+                            cmd.Parameters.AddWithValue("@id", fid);
+                            reader = cmd.ExecuteReader();
+                            reader.Close();
+                            cmd.Parameters.Clear();
+                        }
+
+                        foreach (Section item in sections)
+                        {
+                            sqlStatement =
+                                "SELECT * FROM feedbacksection WHERE `FeedbackID` = @FeedbackID AND `SectionID` = @SectionID;";
+                            using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
+                            {
+                                cmd.Parameters.AddWithValue("@FeedbackID", fid);
+                                cmd.Parameters.AddWithValue("@SectionID", item.SectionId);
+                                reader = cmd.ExecuteReader();
+                                if (reader.HasRows)
+                                {
+                                    reader.Close();
+                                    cmd.Parameters.Clear();
+                                    continue;
+                                }
+                                else
+                                {
+                                    reader.Close();
+                                    cmd.Parameters.Clear();
+                                    sqlStatement =
+                                        "INSERT INTO feedbacksection(`FeedbackID`,`SectionID`) VALUES (@FeedbackID,@SectionID);";
+                                    using (MySqlCommand cmd2 = new MySqlCommand(sqlStatement, _connection, trans))
+                                    {
+                                        cmd2.Parameters.AddWithValue("@FeedbackID", fid);
+                                        cmd2.Parameters.AddWithValue("@SectionID", item.SectionId);
+                                        reader = cmd2.ExecuteReader();
+                                        reader.Close();
+                                        cmd2.Parameters.Clear();
+                                    }
+                                    requireFeedbackUpdate = true;
+                                }
+
+                            }
+                        }
+
+                        //update the feedback to incomplete
+                        if (requireFeedbackUpdate)
+                        {
+                            sqlStatement = "UPDATE feedback SET IsComplete = @complete WHERE FeedbackID = @FeedbackID";
+                            using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
+                            {
+                                cmd.Parameters.AddWithValue("@complete", false);
+                                cmd.Parameters.AddWithValue("@FeedbackID", id);
+                                cmd.ExecuteNonQuery();
+                            }
+
+                        }
+                    }//end foreach affected feedbacks
+
+                    trans.Commit();
+                }
+                catch (Exception ex)
+                {
+                    trans.Rollback();
+                    MessageBox.Show(ex.Message);
+                    return false;
+                }
+
+            }
+            return true;
+        }
+
         public bool ArchiveHeader(string id)
         {
             string sqlStatement = "UPDATE header SET Archived=@Archive WHERE HeaderID=@ID";
@@ -1674,6 +1906,73 @@ namespace FeedBackSystem
 
             return feedback;
 
+        }
+
+        public Template GetTemplate(string id)
+        {
+            Template template = new FeedBackSystem.Template();
+
+            try
+            {
+                //get the template details and header id 
+                string sqlStatement = "SELECT * FROM feedbacksystem.template where TemplateID = @ID";
+                using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
+                {
+                    cmd.Parameters.AddWithValue("@ID", id);
+
+                    MySqlDataReader reader = cmd.ExecuteReader();
+                    string hid = "";
+
+                    if (reader.Read())
+                    {
+                        hid = reader["HeaderID"].ToString();
+                        template.Title = reader["TemplateTitle"].ToString();
+                        template.Desc = reader["TemplateDesc"].ToString();
+                        //author is not neccessary in this circumstance
+                    }
+                    reader.Close();
+                    template.Header = GetHeader(hid);
+                    template.Header.HeaderItems.Clear();
+
+                    foreach (HeaderItem i in GetHeaderItems(template.Header.HeaderId))
+                    {
+                        template.Header.addHeaderItem(i);
+                    }
+
+                    cmd.Parameters.Clear();
+                }
+                
+                //get and set the sections
+                sqlStatement = "SELECT * FROM feedbacksystem.template_section where TemplateID = @ID";
+                using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
+                {
+                    cmd.Parameters.AddWithValue("@ID", id);
+
+                    MySqlDataReader reader = cmd.ExecuteReader();
+                    List<string> secID = new List<string>();
+                    template.Sections = new List<Section>();
+
+                    while (reader.Read())
+                    {
+                        secID.Add(reader["SectionID"].ToString());
+                    }
+
+                    reader.Close();
+
+                    foreach (string sid in secID)
+                    {
+                        template.Sections.Add(GetSection(sid));
+                    }
+
+                    cmd.Parameters.Clear();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+            return template;
         }
 
     }

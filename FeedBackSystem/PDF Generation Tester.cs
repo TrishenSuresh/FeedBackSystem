@@ -54,7 +54,7 @@ namespace FeedBackSystem
             }
 
             _limit = byteses.Count;
-            string tempPdf = TempFileHandler.MakeTempFilePdf(byteses[_counter]);
+            string tempPdf = TempFileHandler.MakeTempFile(byteses[_counter]);
             web.Navigate(tempPdf);
             
             sql.CloseConnection();
@@ -69,7 +69,7 @@ namespace FeedBackSystem
             if (_counter >= _limit)
                 _counter = 0;
 
-            string tempPdf = TempFileHandler.MakeTempFilePdf(byteses[_counter]);
+            string tempPdf = TempFileHandler.MakeTempFile(byteses[_counter]);
             web.Navigate(tempPdf);
 
         }

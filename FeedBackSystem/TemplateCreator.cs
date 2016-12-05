@@ -14,11 +14,47 @@ namespace FeedBackSystem
     {
         private int _row = 0;
         Template _currentTemplate = new Template();
+        private bool isUpdate = false;
 
         public TemplateCreator()
         {
             InitializeComponent();
            // ContentTable.Padding = new Padding(0, 0, SystemInformation.VerticalScrollBarWidth, 0);
+        }
+
+        public TemplateCreator(string id)
+        {
+            InitializeComponent();
+
+            MySql sql = new MySql();
+            sql.OpenConnection();
+
+            _currentTemplate = sql.GetTemplate(id);
+            _currentTemplate.Id = id;
+
+            TitleText.Text = _currentTemplate.Title;
+            DescText.Text = _currentTemplate.Desc;
+
+            //place in the header
+            HeaderPlacement place = new HeaderPlacement();
+            HeaderPanel.Controls.Clear();
+            foreach (HeaderItem item in _currentTemplate.Header.HeaderItems)
+            {
+                place.AddItem(item);
+            }
+
+            HeaderPanel.Controls.Add(place);
+
+            ChangeHeader.Enabled = true;
+            HorizontalLine.Visible = true;
+            TextLabel.Visible = true;
+            
+            Sections.UpdateSelectedSections(_currentTemplate.Sections);
+                
+            sql.CloseConnection();
+
+            SaveTemplate.Text = "Update Template";
+            isUpdate = true;
         }
 
         //private void AddSectionBtn_Click(object sender, EventArgs e)
@@ -148,8 +184,6 @@ namespace FeedBackSystem
 
         private void SaveTemplateBtn_Click(object sender, EventArgs e)
         {
-            MySql sql = new MySql();
-
             if (TitleText.Text.Length <= 0)
             {
                 MessageBox.Show("Please insert the title","Missing Field");
@@ -170,16 +204,37 @@ namespace FeedBackSystem
             //    return;
             //}
 
+            MySql sql = new MySql();
             sql.OpenConnection();
 
-            if (sql.SaveTemplate(_currentTemplate.Header, _currentTemplate.Sections, TitleText.Text, DescText.Text))
+            try
             {
-                MessageBox.Show("Template successfully saved");
-                
+                if (!isUpdate)
+                {
+                    if (sql.SaveTemplate(_currentTemplate.Header, _currentTemplate.Sections, TitleText.Text, DescText.Text))
+                    {
+                        MessageBox.Show("Template successfully saved!");
+                    }
+                } else
+                {
+                    if(sql.UpdateTemplate(_currentTemplate.Header, _currentTemplate.Sections, TitleText.Text, DescText.Text, _currentTemplate.Id))
+                    {
+                        MessageBox.Show("Template successfully updated!");
+                    }
+                }
+
+
                 this.DialogResult = DialogResult.OK;
                 Close();
             }
-            sql.CloseConnection();
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.ToString(), "Ops! Error occured!");
+            }
+            finally
+            {
+                sql.CloseConnection();
+            }
 
         }
 
