@@ -74,11 +74,11 @@ namespace FeedBackSystem
 
             Form window = new Form { Text = "Select Sections", ControlBox = false, FormBorderStyle = FormBorderStyle.FixedDialog, StartPosition = FormStartPosition.CenterParent};
 
-            window.Size = new Size(1320, 330);
+            window.Size = new Size(980, 330);
 
             window.Controls.Add(new SectionSelection {Name = "SectionSelection"});
 
-            Button ok = new Button { Location = new Point(1200, 250), Text = "Ok" };
+            Button ok = new Button { Location = new Point(870, 250), Text = "Ok" };
             ok.Click += (s, e) => { window.DialogResult = DialogResult.OK; window.Close(); };
             window.Controls.Add(ok);
 

@@ -39,17 +39,15 @@
             this.CancelBtn = new System.Windows.Forms.Button();
             this.HorizontalLine = new System.Windows.Forms.Label();
             this.TextLabel = new System.Windows.Forms.Label();
-            this.SectionPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.Sections = new FeedBackSystem.SectionSelection();
             this.HeaderPanel.SuspendLayout();
-            this.SectionPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // ChangeHeader
             // 
             this.ChangeHeader.AutoSize = true;
             this.ChangeHeader.Enabled = false;
-            this.ChangeHeader.Location = new System.Drawing.Point(1607, 743);
+            this.ChangeHeader.Location = new System.Drawing.Point(1147, 715);
             this.ChangeHeader.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.ChangeHeader.Name = "ChangeHeader";
             this.ChangeHeader.Size = new System.Drawing.Size(138, 35);
@@ -97,7 +95,7 @@
             // SaveTemplate
             // 
             this.SaveTemplate.AutoSize = true;
-            this.SaveTemplate.Location = new System.Drawing.Point(1754, 743);
+            this.SaveTemplate.Location = new System.Drawing.Point(1297, 715);
             this.SaveTemplate.Margin = new System.Windows.Forms.Padding(4, 5, 10, 9);
             this.SaveTemplate.Name = "SaveTemplate";
             this.SaveTemplate.Size = new System.Drawing.Size(134, 35);
@@ -112,7 +110,7 @@
             this.HeaderPanel.Location = new System.Drawing.Point(13, 125);
             this.HeaderPanel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.HeaderPanel.Name = "HeaderPanel";
-            this.HeaderPanel.Size = new System.Drawing.Size(1886, 168);
+            this.HeaderPanel.Size = new System.Drawing.Size(1419, 168);
             this.HeaderPanel.TabIndex = 15;
             // 
             // AddHeaderBtn
@@ -121,7 +119,7 @@
             this.AddHeaderBtn.Location = new System.Drawing.Point(0, 0);
             this.AddHeaderBtn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.AddHeaderBtn.Name = "AddHeaderBtn";
-            this.AddHeaderBtn.Size = new System.Drawing.Size(1886, 168);
+            this.AddHeaderBtn.Size = new System.Drawing.Size(1419, 168);
             this.AddHeaderBtn.TabIndex = 1;
             this.AddHeaderBtn.Text = "Add Header";
             this.AddHeaderBtn.UseVisualStyleBackColor = true;
@@ -129,7 +127,7 @@
             // 
             // CancelBtn
             // 
-            this.CancelBtn.Location = new System.Drawing.Point(1458, 743);
+            this.CancelBtn.Location = new System.Drawing.Point(999, 715);
             this.CancelBtn.Margin = new System.Windows.Forms.Padding(4, 5, 10, 9);
             this.CancelBtn.Name = "CancelBtn";
             this.CancelBtn.Size = new System.Drawing.Size(134, 35);
@@ -143,7 +141,7 @@
             this.HorizontalLine.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.HorizontalLine.Location = new System.Drawing.Point(-9, 105);
             this.HorizontalLine.Name = "HorizontalLine";
-            this.HorizontalLine.Size = new System.Drawing.Size(1977, 15);
+            this.HorizontalLine.Size = new System.Drawing.Size(1470, 15);
             this.HorizontalLine.TabIndex = 18;
             this.HorizontalLine.Visible = false;
             // 
@@ -157,22 +155,12 @@
             this.TextLabel.Text = "How the header would look like during the generating feedback:";
             this.TextLabel.Visible = false;
             // 
-            // SectionPanel
-            // 
-            this.SectionPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.SectionPanel.Controls.Add(this.Sections);
-            this.SectionPanel.Location = new System.Drawing.Point(14, 314);
-            this.SectionPanel.Name = "SectionPanel";
-            this.SectionPanel.Size = new System.Drawing.Size(1873, 397);
-            this.SectionPanel.TabIndex = 21;
-            // 
             // Sections
             // 
-            this.Sections.Location = new System.Drawing.Point(6, 8);
+            this.Sections.Location = new System.Drawing.Point(15, 317);
             this.Sections.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this.Sections.Name = "Sections";
-            this.Sections.Size = new System.Drawing.Size(1867, 367);
+            this.Sections.Size = new System.Drawing.Size(1440, 385);
             this.Sections.TabIndex = 20;
             // 
             // TemplateCreator
@@ -180,9 +168,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1912, 808);
+            this.ClientSize = new System.Drawing.Size(1459, 808);
             this.ControlBox = false;
-            this.Controls.Add(this.SectionPanel);
+            this.Controls.Add(this.Sections);
             this.Controls.Add(this.TextLabel);
             this.Controls.Add(this.HorizontalLine);
             this.Controls.Add(this.CancelBtn);
@@ -199,7 +187,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Create Template";
             this.HeaderPanel.ResumeLayout(false);
-            this.SectionPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -218,6 +205,5 @@
         private System.Windows.Forms.Label TextLabel;
         private System.Windows.Forms.Button AddHeaderBtn;
         private SectionSelection Sections;
-        private System.Windows.Forms.FlowLayoutPanel SectionPanel;
     }
 }

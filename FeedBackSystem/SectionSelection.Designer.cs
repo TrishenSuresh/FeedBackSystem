@@ -56,12 +56,12 @@
             this.descDataGridViewTextBoxColumn,
             this.Codes});
             this.AvailableSectionDGV.DataSource = this.sectionBindingSource;
-            this.AvailableSectionDGV.Location = new System.Drawing.Point(4, 48);
+            this.AvailableSectionDGV.Location = new System.Drawing.Point(15, 48);
             this.AvailableSectionDGV.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.AvailableSectionDGV.Name = "AvailableSectionDGV";
             this.AvailableSectionDGV.ReadOnly = true;
             this.AvailableSectionDGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.AvailableSectionDGV.Size = new System.Drawing.Size(855, 326);
+            this.AvailableSectionDGV.Size = new System.Drawing.Size(642, 326);
             this.AvailableSectionDGV.TabIndex = 0;
             this.AvailableSectionDGV.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.AvailableSectionDGV_CellClick);
             this.AvailableSectionDGV.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.AvailableSectionDGV_DataBindingComplete);
@@ -93,7 +93,7 @@
             // AddBtn
             // 
             this.AddBtn.Font = new System.Drawing.Font("Courier New", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AddBtn.Location = new System.Drawing.Point(867, 154);
+            this.AddBtn.Location = new System.Drawing.Point(665, 154);
             this.AddBtn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.AddBtn.Name = "AddBtn";
             this.AddBtn.Size = new System.Drawing.Size(112, 35);
@@ -105,7 +105,7 @@
             // RemoveBtn
             // 
             this.RemoveBtn.Font = new System.Drawing.Font("Courier New", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RemoveBtn.Location = new System.Drawing.Point(867, 219);
+            this.RemoveBtn.Location = new System.Drawing.Point(665, 199);
             this.RemoveBtn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.RemoveBtn.Name = "RemoveBtn";
             this.RemoveBtn.Size = new System.Drawing.Size(112, 35);
@@ -117,7 +117,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 18);
+            this.label1.Location = new System.Drawing.Point(17, 18);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(138, 20);
@@ -127,7 +127,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(983, 18);
+            this.label2.Location = new System.Drawing.Point(781, 23);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(138, 20);
@@ -143,12 +143,12 @@
             this.dataGridViewTextBoxColumn2,
             this.dataGridViewTextBoxColumn3});
             this.SelectedSectionDGV.DataSource = this.sectionBindingSource;
-            this.SelectedSectionDGV.Location = new System.Drawing.Point(987, 48);
+            this.SelectedSectionDGV.Location = new System.Drawing.Point(785, 48);
             this.SelectedSectionDGV.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.SelectedSectionDGV.Name = "SelectedSectionDGV";
             this.SelectedSectionDGV.ReadOnly = true;
             this.SelectedSectionDGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.SelectedSectionDGV.Size = new System.Drawing.Size(855, 326);
+            this.SelectedSectionDGV.Size = new System.Drawing.Size(642, 326);
             this.SelectedSectionDGV.TabIndex = 6;
             this.SelectedSectionDGV.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.SelectedSectionDGV_CellClick);
             this.SelectedSectionDGV.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.SelectedSectionDGV_DataBindingComplete);
@@ -185,7 +185,7 @@
             this.Controls.Add(this.AvailableSectionDGV);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "SectionSelection";
-            this.Size = new System.Drawing.Size(1854, 394);
+            this.Size = new System.Drawing.Size(1450, 384);
             ((System.ComponentModel.ISupportInitialize)(this.AvailableSectionDGV)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sectionBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SelectedSectionDGV)).EndInit();
