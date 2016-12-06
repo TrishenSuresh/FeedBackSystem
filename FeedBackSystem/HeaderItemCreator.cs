@@ -13,7 +13,8 @@ namespace FeedBackSystem
         {
             InitializeComponent();
             InputTypeList.SelectedIndex = 0;
-            headitem = new HeaderItem();
+        
+            headitem = new HeaderItem {ValueItem = new List<string>()};
 
             InputTypeHelp.Image = new Icon(SystemIcons.Question, 32, 32).ToBitmap();
         }
@@ -96,7 +97,8 @@ namespace FeedBackSystem
                 headitem.Title = InputTitle.Text+":";
                 
                 headitem.InputType = InputTypeList.Text;
-                headitem.ValueItem.Clear();
+                if(headitem.ValueItem.Count >= 0)
+                    headitem.ValueItem.Clear();
 
                 switch (headitem.InputType)
                 {

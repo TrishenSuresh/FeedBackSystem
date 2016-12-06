@@ -37,6 +37,8 @@ namespace FeedBackSystem
                     AutoSize = true,
                 };
 
+                title.Font = new Font(title.Font,FontStyle.Bold);
+
                 HeaderTable.Controls.Add(title, _column[_counter], _row);
 
             switch (itemType.InputType)
@@ -47,7 +49,7 @@ namespace FeedBackSystem
                         Anchor = AnchorStyles.Left | AnchorStyles.Right,
                         AutoSize = true,
                         Text = object.ReferenceEquals(itemType.ValueChosen, null) ? itemType.ValueItem[0] : itemType.ValueChosen,
-                        Name = itemType.Id
+                        Name = "header"+itemType.Id
                     };
                     HeaderTable.Controls.Add(text, _column[_counter]+1,_row);
                     HeaderTable.SetColumnSpan(text, 3);

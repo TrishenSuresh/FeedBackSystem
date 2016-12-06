@@ -118,7 +118,8 @@ namespace FeedBackSystem
                     {
                         Text = s.Title,
                         Anchor = AnchorStyles.Left,
-                        TextAlign = ContentAlignment.MiddleLeft
+                        TextAlign = ContentAlignment.MiddleLeft,
+                        AutoSize = true
                     }, 1, row);
 
                 ComboBox codes = new ComboBox
@@ -339,7 +340,7 @@ namespace FeedBackSystem
             //check if there are null values in the header 
             foreach (HeaderItem item in _currentFeed.Header.HeaderItems)
             {
-
+                
                 Control control = Controls.Find("header" + item.Id, true)[0];
 
                 try
@@ -514,6 +515,7 @@ namespace FeedBackSystem
 
                             _currentFeed.Header = sql.GetHeader(template.Rows[0][1].ToString());
                             _currentFeed.Header.HeaderItems = sql.GetHeaderItems(_currentFeed.Header.HeaderId);
+                            _currentFeed.TemplateId = form._ids[0];
 
                             FillHeader();
                             

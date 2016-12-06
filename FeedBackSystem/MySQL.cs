@@ -734,7 +734,7 @@ namespace FeedBackSystem
 
                     // Insert the feedback
                     sqlStatement =
-                        "INSERT INTO feedback(`AppID`, `ReviewID`, `PositionID`,`HeaderID`,`PDF`) VALUES (@AppID,@ReviewID,@PositionID,@HeaderID,@PDF); SELECT last_insert_id() as id;";
+                        "INSERT INTO feedback(`AppID`, `ReviewID`, `PositionID`,`HeaderID`,`File`) VALUES (@AppID,@ReviewID,@PositionID,@HeaderID,@PDF); SELECT last_insert_id() as id;";
                     using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
                     {
                         cmd.Parameters.AddWithValue("@AppID", feedback.Applicant.Id);
@@ -747,6 +747,21 @@ namespace FeedBackSystem
                         feedbackId = Convert.ToInt16(reader["id"]);
                         reader.Close();
                         cmd.Parameters.Clear();
+                    }
+
+                    //If template is used, it would insert it
+                    if (!string.IsNullOrEmpty(feedback.TemplateId))
+                    {
+                        sqlStatement =
+                        "UPDATE feedback SET TemplateID=@TemplateID WHERE FeedbackID=@FeedbackID";
+                        using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
+                        {
+                            cmd.Parameters.AddWithValue("@TemplateID", feedback.TemplateId);
+                            cmd.Parameters.AddWithValue("@FeedbackID", feedbackId);
+                            reader = cmd.ExecuteReader();
+                            reader.Close();
+                            cmd.Parameters.Clear();
+                        }
                     }
 
                     //loop header items
@@ -858,6 +873,20 @@ namespace FeedBackSystem
                         }
                     }
 
+
+                    //Generate new PDF
+                    byte[] newPdf = PDFGeneration.Generate(feedback);
+                    sqlStatement =
+                            "UPDATE feedback SET File = @PDF WHERE FeedbackID = @FeedbackID";
+                    using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
+                    {
+                        cmd.Parameters.AddWithValue("@FeedbackID", feedbackId);
+                        cmd.Parameters.AddWithValue("@PDF", newPdf);
+                        reader = cmd.ExecuteReader();
+                        reader.Close();
+                        cmd.Parameters.Clear();
+                    }
+
                     trans.Commit();
                 }
                 catch (Exception ex)
@@ -937,7 +966,7 @@ namespace FeedBackSystem
                     string sqlStatement =
                         "UPDATE template SET `HeaderID` = @HeaderID, `TemplateTitle` = @Title, `TemplateDesc` = @Desc, `TemplateAuthor` = @Author WHERE TemplateID = @id";
                     MySqlDataReader reader;
-                    
+
                     using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
                     {
                         cmd.Parameters.AddWithValue("@HeaderID", header.HeaderId);
@@ -978,7 +1007,7 @@ namespace FeedBackSystem
                     } //end loop section
 
                     ////////////////////////end updates for template//////////////////////
-
+                    
                     List<string> affectedFIDs = new List<string>();
                     bool sameHeader = false;
 
@@ -991,14 +1020,19 @@ namespace FeedBackSystem
                         reader = cmd.ExecuteReader();
                         while(reader.Read())
                             affectedFIDs.Add(reader["FeedbackID"].ToString());
-                        if (reader["HeaderID"].ToString().Equals(header.HeaderId))
+
+                        if (reader.HasRows)
                         {
-                            sameHeader = true;
+                            if (reader["HeaderID"].ToString().Equals(header.HeaderId))
+                            {
+                                sameHeader = true;
+                            }
                         }
+
                         reader.Close();
                         cmd.Parameters.Clear();
                     }
-
+                    
                     //loop through all the affected feedbacks
                     foreach (string fid in affectedFIDs)
                     {

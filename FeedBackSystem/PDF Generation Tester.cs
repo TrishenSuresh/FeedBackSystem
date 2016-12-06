@@ -44,13 +44,13 @@ namespace FeedBackSystem
 
             sql.OpenConnection();
 
-            MySqlCommand cmd = new MySqlCommand("SELECT PDF FROM feedbacksystem.feedback", sql.GetConnection());
+            MySqlCommand cmd = new MySqlCommand("SELECT File FROM feedbacksystem.feedback", sql.GetConnection());
 
             MySqlDataReader reader = cmd.ExecuteReader();
 
             while (reader.Read())
             {
-                byteses.Add((byte[])reader["PDF"]);
+                byteses.Add((byte[])reader["File"]);
             }
 
             _limit = byteses.Count;
