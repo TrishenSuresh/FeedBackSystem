@@ -92,7 +92,7 @@ namespace FeedBackSystem
                 {
                     foreach (string s in ids)
                     {
-                        sql.ArchiveUser(s);
+                        sql.ArchiveComponent(s, "Reviewer");
                     }
 
                     MessageBox.Show("Successfully Deleted");

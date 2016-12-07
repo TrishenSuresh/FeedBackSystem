@@ -225,7 +225,7 @@ namespace FeedBackSystem
             List<Section> sectionList = new List<Section>();
             DataTable dataTable = new DataTable();
 
-            string sqlStatement = "SELECT * FROM feedbacksystem.sections";
+            string sqlStatement = "SELECT * FROM feedbacksystem.section";
 
             try
             {
@@ -265,7 +265,7 @@ namespace FeedBackSystem
             Section section = new Section();
             DataTable dataTable = new DataTable();
 
-            string sqlStatement = "SELECT * FROM feedbacksystem.sections where SectionID = @ID";
+            string sqlStatement = "SELECT * FROM feedbacksystem.section where SectionID = @ID";
 
             try
             {
@@ -302,7 +302,7 @@ namespace FeedBackSystem
 
             MySqlCommand cmd =
                 new MySqlCommand(
-                    "SELECT codes.Code FROM sections,section_code,codes where sections.SectionID = section_code.SectionID and section_code.CodesID = codes.CodesID and sections.SectionID = @SectionID",
+                    "SELECT codes.Code FROM section,section_code,codes where section.SectionID = section_code.SectionID and section_code.CodesID = codes.CodesID and section.SectionID = @SectionID",
                     _connection);
 
             cmd.Parameters.AddWithValue("@SectionID", sectionId);
@@ -574,7 +574,7 @@ namespace FeedBackSystem
                 {
                     //Insert the section
                     string sqlStatement =
-                        "INSERT INTO sections(`Title`, `Desc`) VALUES (@Title,@Desc); SELECT last_insert_id() as id;";
+                        "INSERT INTO section(`Title`, `Desc`) VALUES (@Title,@Desc); SELECT last_insert_id() as id;";
                     MySqlDataReader reader;
 
                     int sectionId;
@@ -1182,11 +1182,13 @@ namespace FeedBackSystem
             return true;
         }
 
-        public bool ArchiveHeader(string id)
+        public bool ArchiveComponent(string id, string table)
         {
-            string sqlStatement = "UPDATE header SET Archived=@Archive WHERE HeaderID=@ID";
+            string tableName = table.ToLower();
+            string IdName = table + "ID";
 
-
+            string sqlStatement = "UPDATE " + tableName + " SET Archived=@Archive WHERE " + IdName + "=@ID";
+            
             using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
             {
                 try
@@ -1205,79 +1207,7 @@ namespace FeedBackSystem
                 }
             }
         }
-
-        public bool ArchiveUser(string id)
-        {
-            string sqlStatement = "UPDATE reviewer SET Archived=@Archive WHERE ReviewerID=@ID";
-
-
-            using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
-            {
-                try
-                {
-                    cmd.Parameters.AddWithValue("@Archive", true);
-                    cmd.Parameters.AddWithValue("@ID", id);
-
-                    cmd.ExecuteNonQuery();
-
-                    return true;
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show(e.Message);
-                    return false;
-                }
-            }
-        }
-
-        public bool ArchiveSection(string id)
-        {
-            string sqlStatement = "UPDATE sections SET Archived=@Archive WHERE SectionID=@ID";
-
-
-            using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
-            {
-                try
-                {
-                    cmd.Parameters.AddWithValue("@Archive", true);
-                    cmd.Parameters.AddWithValue("@ID", id);
-
-                    cmd.ExecuteNonQuery();
-
-                    return true;
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show(e.Message);
-                    return false;
-                }
-            }
-        }
-
-        public bool ArchiveTemplate(string id)
-        {
-            string sqlStatement = "UPDATE template SET Archived=@Archive WHERE TemplateID=@ID";
-
-
-            using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
-            {
-                try
-                {
-                    cmd.Parameters.AddWithValue("@Archive", true);
-                    cmd.Parameters.AddWithValue("@ID", id);
-
-                    cmd.ExecuteNonQuery();
-
-                    return true;
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show(e.Message);
-                    return false;
-                }
-            }
-        }
-
+        
         public bool AddUser(string fn, string ln, string password, bool isAdmin)
         {
             SHA256 sha256 = SHA256.Create();
@@ -1395,28 +1325,22 @@ namespace FeedBackSystem
 
         public bool EditComponent(string type, string id, string title, string desc)
         {
-            string tableID = "";
-            string tableName = "";
+            string tableID = type + "ID";
+            string tableName = type.ToLower();
             string tableTitle = "";
             string tableDesc = "";
 
             switch (type)
             {
                 case "Header":
-                    tableID = "HeaderID";
-                    tableName = "header";
                     tableTitle = "Name";
                     tableDesc = "Desc";
                     break;
                 case "Section":
-                    tableID = "SectionID";
-                    tableName = "sections";
                     tableTitle = "Title";
                     tableDesc = "Desc";
                     break;
                 case "Template":
-                    tableID = "TemplateID";
-                    tableName = "template";
                     tableTitle = "TemplateTitle";
                     tableDesc = "TemplateDesc";
                     break;

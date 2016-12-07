@@ -58,24 +58,24 @@ namespace FeedBackSystem
                         Dt.Columns["Desc"].ColumnName = "Description";
                         break;
                     case "Section":
-                        Dt = sql.GetDataSet("SELECT sections.SectionID, sections.Title, sections.Desc, " +
+                        Dt = sql.GetDataSet("SELECT section.SectionID, section.Title, section.Desc, " +
                             "group_concat(codes.Code order by codes.CodesID ASC SEPARATOR ' | ') as Codes " +
-                            "FROM sections, section_code, codes " +
-                            "WHERE sections.Archived = 0 and sections.SectionID = section_code.SectionID AND " +
+                            "FROM section, section_code, codes " +
+                            "WHERE section.Archived = 0 and section.SectionID = section_code.SectionID AND " +
                             "section_code.CodesID = codes.CodesID " +
-                            "group by sections.SectionID " +
-                            "order by sections.SectionID");
+                            "group by section.SectionID " +
+                            "order by section.SectionID");
                         Dt.Columns["SectionID"].ColumnName = "Section ID";
                         Dt.Columns["Desc"].ColumnName = "Description";
                         break;
                     case "Template":
                         Dt = sql.GetDataSet("SELECT template.TemplateID AS 'Template ID', template.TemplateTitle AS 'Template Title', " +
                             "template.TemplateDesc AS 'Template Description', header.Name as 'Header Name', " +
-                            "GROUP_CONCAT(sections.Title order by sections.SectionID SEPARATOR ' | ') as Sections , " +
+                            "GROUP_CONCAT(section.Title order by section.SectionID SEPARATOR ' | ') as Sections , " +
                             "CONCAT(reviewer.FirstName,' ', reviewer.LastName) AS 'Author Name' " +
-                            "FROM template, template_section, reviewer, header, sections " +
+                            "FROM template, template_section, reviewer, header, section " +
                             "WHERE template.Archived = 0 and template.TemplateID = template_section.TemplateID " +
-                            "AND template_section.SectionID = sections.SectionID " +
+                            "AND template_section.SectionID = section.SectionID " +
                             "AND template.HeaderID = header.HeaderID " +
                             "AND template.TemplateAuthor = reviewer.ReviewerID " +
                             "GROUP BY template.TemplateID " +
