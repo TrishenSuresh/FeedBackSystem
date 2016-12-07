@@ -825,13 +825,16 @@ namespace FeedBackSystem
                     string sqlStatement = "";
                     MySqlDataReader reader;
                     int feedbackId = Convert.ToInt16(feedback.FeedbackID);
-                    
+                    byte[] newPdf = PDFGeneration.Generate(feedback);
+
                     // update the feedback on reviewer
                     sqlStatement =
-                        "UPDATE feedback SET `ReviewID` = @ReviewID WHERE FeedbackID = @FeedbackID;";
+                        "UPDATE feedback SET `ReviewID` = @ReviewID,`IsComplete` = @complete, File = @PDF WHERE FeedbackID = @FeedbackID;";
                     using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
                     {
                         cmd.Parameters.AddWithValue("@ReviewID", feedback.ReviewerId);
+                        cmd.Parameters.AddWithValue("@complete", true);
+                        cmd.Parameters.AddWithValue("@PDF", newPdf);
                         cmd.Parameters.AddWithValue("@FeedbackID", feedbackId);
                         reader = cmd.ExecuteReader();
                         reader.Close();
@@ -871,20 +874,6 @@ namespace FeedBackSystem
                             reader.Close();
                             cmd.Parameters.Clear();
                         }
-                    }
-
-
-                    //Generate new PDF
-                    byte[] newPdf = PDFGeneration.Generate(feedback);
-                    sqlStatement =
-                            "UPDATE feedback SET File = @PDF WHERE FeedbackID = @FeedbackID";
-                    using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
-                    {
-                        cmd.Parameters.AddWithValue("@FeedbackID", feedbackId);
-                        cmd.Parameters.AddWithValue("@PDF", newPdf);
-                        reader = cmd.ExecuteReader();
-                        reader.Close();
-                        cmd.Parameters.Clear();
                     }
 
                     trans.Commit();
@@ -1940,6 +1929,40 @@ namespace FeedBackSystem
 
             return feedback;
 
+        }
+
+        public List<Applicant> GetEmailList(string positionID)
+        {
+            List<Applicant> apps = new List<Applicant>();
+
+            try
+            {
+                //get all the feedbacks of this position
+                string sqlStatement = "SELECT CONCAT(applicant.FirstName,' ',applicant.LastName) AS 'Name', " + 
+                        "applicant.Email,feedback.`File`, feedback.FeedbackID " + 
+                        "FROM feedback,applicant " + 
+                        "WHERE applicant.ApplicantID = feedback.AppID " +
+                        "AND feedback.PositionID = @PosID and feedback.IsComplete IS TRUE;";
+                using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
+                {
+                    cmd.Parameters.AddWithValue("@PosID", positionID);
+
+                    MySqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        apps.Add(new Applicant(reader["Name"].ToString(), reader["Email"].ToString(), (byte[])reader["File"]));
+                    }
+                    reader.Close();
+                    cmd.Parameters.Clear();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+            return apps;
         }
 
         public Template GetTemplate(string id)

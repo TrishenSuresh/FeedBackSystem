@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.Windows.Forms.VisualStyles;
 using ContentAlignment = System.Drawing.ContentAlignment;
+using System.Net.Mail;
 
 namespace FeedBackSystem
 {
@@ -408,6 +409,7 @@ namespace FeedBackSystem
             sql.OpenConnection();
             try
             {
+                //update or insert the feedback
                 if (String.IsNullOrEmpty(_currentFeed.FeedbackID))
                 {
                     if (sql.SaveFeedback(_currentFeed))
@@ -417,6 +419,71 @@ namespace FeedBackSystem
                 {
                     if (sql.UpdateFeedback(_currentFeed))
                         MessageBox.Show("Sucessfully updated the feedback.");
+                }
+
+                //check whether all the applications is completed
+                string applicationCount = "";
+                string feedbackCount = "";
+
+                DataTable applicationDt = sql.GetDataSet("SELECT COUNT(*) AS PositionApplied FROM positionapplied WHERE PositionID = " + _currentFeed.Position._positionId + ";");
+                if (applicationDt != null && applicationDt.Rows.Count > 0)
+                {
+                    applicationCount = applicationDt.Rows[0]["PositionApplied"].ToString();
+                }
+
+                /* 
+                 * shouldnt cause any issue even when there is different batch 
+                 * (different entry in positionapplied for the same position and applicant)
+                 */
+                DataTable feedbackDt = sql.GetDataSet("SELECT COUNT(*) AS FeedbackGiven FROM feedback WHERE PositionID = " + _currentFeed.Position._positionId 
+                    + " AND IsComplete IS TRUE ;");
+                if (feedbackDt != null && feedbackDt.Rows.Count > 0)
+                {
+                    feedbackCount = feedbackDt.Rows[0]["FeedbackGiven"].ToString();
+                }
+
+                if (applicationCount.Equals(feedbackCount)) //means all of the applications have generated the feedback
+                {
+                    
+                    var result = MessageBox.Show("All the feedbacks for this current position: " + _currentFeed.Position._positionName + " is completed. \n Please choose the file name of the attachehment to be send to the applicants. \n Yes for Applicant name or No for Applicant code"
+                        , "Select file name", MessageBoxButtons.YesNo);
+
+                    //true for name false for code
+                    bool filename = (result == DialogResult.Yes ? true : false); 
+
+                    try
+                    {
+                        int count = 0;
+                        MailMessage mail = new MailMessage();
+                        SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+                        mail.From = new MailAddress("happytechfeedbacksystem@gmail.com");
+                        mail.Subject = "Application feedback for " + _currentFeed.Position._positionName + " in HappyTech.";
+                       
+                        foreach (Applicant app in sql.GetEmailList(_currentFeed.Position._positionId)) {
+                            string currentFilename = (filename ? app.Name : app.Id);
+
+                            mail.To.Add(new MailAddress(app.Email));
+                            mail.Body = "Hi " + app.Name + ",\nPlease find the attached file as the feedback from us regarding your application at HappyTech. \n\nRegards,\nHappy Tech HR";
+
+
+                            System.Net.Mail.Attachment attachment;
+                            attachment = new System.Net.Mail.Attachment(TempFileHandler.MakeTempFilePdf(app.Pdf, currentFilename));
+                            mail.Attachments.Add(attachment);
+
+                            SmtpServer.Port = 587;
+                            SmtpServer.DeliveryMethod = SmtpDeliveryMethod.Network;
+                            SmtpServer.UseDefaultCredentials = false;
+                            SmtpServer.Credentials = new System.Net.NetworkCredential("happytechfeedbacksystem@gmail.com", "happytech123");
+                            SmtpServer.EnableSsl = true;
+
+                            SmtpServer.Send(mail);
+                            count++;
+                        }
+                        MessageBox.Show("Total of " + count + " emails are sent.");
+                    } catch (Exception exc)
+                    {
+                        throw exc;
+                    }
                 }
             }
             catch (Exception exc)

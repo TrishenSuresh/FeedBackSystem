@@ -24,5 +24,13 @@ namespace FeedBackSystem
             Date = dt.ToString("dd-MM-yyyy");
         }
 
+        //constructor for sending email -> neccesary details are name, email, pdf
+        public Applicant(string name, string email, byte[] pdf)
+        {
+            Name = name;
+            Email = email;
+            Pdf = pdf;
+        }
+
     }
 }
