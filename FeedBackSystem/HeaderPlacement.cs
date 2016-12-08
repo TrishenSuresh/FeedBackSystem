@@ -132,7 +132,7 @@ namespace FeedBackSystem
                         //    AutoSize = true,
                         //    Name = "header" + itemType.Id
                         //};
-                        TextBox label = new TextBox {Text = object.ReferenceEquals(itemType.ValueChosen, null) ? itemType.ValueItem[0] : itemType.ValueChosen
+                        TextBox label = new TextBox {Text = object.ReferenceEquals(itemType.ValueChosen, "") ? itemType.ValueItem[0] : itemType.ValueChosen
                         ,ReadOnly = true ,Anchor = AnchorStyles.Left | AnchorStyles.Right, AutoSize = true, Name = "header" + itemType.Id,Enabled = enable
                         };
                     HeaderTable.Controls.Add(label, _column[_counter] + 1, _row);

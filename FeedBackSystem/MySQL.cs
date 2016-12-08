@@ -1458,6 +1458,7 @@ namespace FeedBackSystem
                     //Goes through each header item
                     foreach (HeaderItem newitem in newHeader.HeaderItems)
                     {
+
                         //check if the header item exist
                         HeaderItem olditem = oldHeader.HeaderItems.Find(x => x.Id.Equals(newitem.Id));
 
@@ -1505,7 +1506,7 @@ namespace FeedBackSystem
                                         cmd.ExecuteNonQuery();
                                     }
                                 }
-
+                                
                                 //Set user input type to empty if there is any changes
                                 sqlStatement =
                                     "UPDATE feedbackheader SET Input = @Input WHERE FeedbackID = @FeedbackID and HeaderIID = @HeaderItemID";
@@ -1515,7 +1516,7 @@ namespace FeedBackSystem
                                     {
                                         cmd.Parameters.AddWithValue("@Input", "");
                                         cmd.Parameters.AddWithValue("@FeedbackID", id);
-                                        cmd.Parameters.AddWithValue("@HeaderIID", newitem.Id);
+                                        cmd.Parameters.AddWithValue("@HeaderItemID", newitem.Id);
                                         cmd.ExecuteNonQuery();
                                     }
                                 }

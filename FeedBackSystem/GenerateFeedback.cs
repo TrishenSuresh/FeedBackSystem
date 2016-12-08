@@ -23,7 +23,6 @@ namespace FeedBackSystem
             SectionTable.VerticalScroll.Enabled = false;
             ContentTable.VerticalScroll.Enabled = true;
             SectionTable.HorizontalScroll.Enabled = false;
-            //AddHeaderBtn.Enabled = false;
             AddHeaderBtn.Visible = false;
             AddSectionBtn.Visible = false;
             SetTemplateBtn.Enabled = false;
@@ -228,13 +227,8 @@ namespace FeedBackSystem
 
         private void FillHeader()
         {
-            bool enable = true;
             //check whether all the applicants for this position is completed. 
-            if (CheckPositionIsCompleted())
-            {
-                enable = false;
-            }
-
+            bool enable = !CheckPositionIsCompleted();
             HeaderPlacement place = new HeaderPlacement(enable);
 
             ContentTable.Controls.Remove(ContentTable.GetControlFromPosition(0, 0));
@@ -279,6 +273,8 @@ namespace FeedBackSystem
             }
             
             ContentTable.Controls.Add(place, 0, 0);
+
+            SaveFeedbackBtn.Enabled = enable;
         }
 
         private void AddHeaderBtn_Click(object sender, EventArgs e)

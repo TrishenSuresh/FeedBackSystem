@@ -28,7 +28,7 @@ namespace FeedBackSystem
             foreach (HeaderItem item in feed.Header.HeaderItems)
             {
                 htmlString += @"<TD style=""white-space: nowrap;padding: 2% 0"">" + item.Title.TrimEnd(':') + "</TD>";
-                htmlString += @"<TD style=""white-space: nowrap;padding: 2% 0"">:" + item.ValueChosen + "</TD>";
+                htmlString += @"<TD style=""white-space: nowrap;padding: 2% 0""> : " + item.ValueChosen + "</TD>";
 
                 counter++;
 
