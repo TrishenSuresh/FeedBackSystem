@@ -15,6 +15,7 @@ namespace FeedBackSystem
         private readonly int[] _column = {1, 6, 11};
         private int _counter;
         public List<HeaderItem> _headeritems = new List<HeaderItem>();
+        public bool enable = true;
 
         public HeaderPlacement()
         {
@@ -22,14 +23,20 @@ namespace FeedBackSystem
             _row = 0;
             InitializeComponent();
         }
+        public HeaderPlacement(bool enable)
+        {
+            _counter = 0;
+            _row = 0;
+            InitializeComponent();
+            this.enable = enable;
+        }
 
         public void AddItem(HeaderItem itemType)
         {
 
             try
             {
-
-                Label title = new Label
+                    Label title = new Label
                 {
                     Text = itemType.Title,
                     Anchor = AnchorStyles.Left,
@@ -49,19 +56,21 @@ namespace FeedBackSystem
                         Anchor = AnchorStyles.Left | AnchorStyles.Right,
                         AutoSize = true,
                         Text = object.ReferenceEquals(itemType.ValueChosen, null) ? itemType.ValueItem[0] : itemType.ValueChosen,
-                        Name = "header"+itemType.Id
+                        Name = "header" + itemType.Id,
+                        Enabled = enable
                     };
                     HeaderTable.Controls.Add(text, _column[_counter]+1,_row);
                     HeaderTable.SetColumnSpan(text, 3);
                     break;
 
                 case "List":
-                    ComboBox list = new ComboBox
-                    {
-                        DropDownStyle = ComboBoxStyle.DropDownList,
-                        Anchor = AnchorStyles.Left | AnchorStyles.Right,
-                        AutoSize = true,
-                        Name = "header" + itemType.Id
+                        ComboBox list = new ComboBox
+                        {
+                            DropDownStyle = ComboBoxStyle.DropDownList,
+                            Anchor = AnchorStyles.Left | AnchorStyles.Right,
+                            AutoSize = true,
+                            Name = "header" + itemType.Id,
+                            Enabled = enable
                     };
 
                     foreach (string s in itemType.ValueItem)
@@ -89,7 +98,8 @@ namespace FeedBackSystem
                                 CustomFormat = @"dd/MM/yyyy",
                                 Anchor = AnchorStyles.Left | AnchorStyles.Right,
                                 AutoSize = true,
-                                Name = "header" + itemType.Id
+                                Name = "header" + itemType.Id,
+                                Enabled = enable
                             };
 
                             HeaderTable.Controls.Add(date, _column[_counter] + 1, _row);
@@ -103,7 +113,8 @@ namespace FeedBackSystem
                                     ReadOnly = true,
                                     Anchor = AnchorStyles.Left | AnchorStyles.Right,
                                     AutoSize = true,
-                                    Name = "header" + itemType.Id
+                                    Name = "header" + itemType.Id,
+                                    Enabled = enable
                                 };
                                 HeaderTable.Controls.Add(today, _column[_counter] + 1, _row);
                             HeaderTable.SetColumnSpan(today, 3);
@@ -122,7 +133,8 @@ namespace FeedBackSystem
                         //    Name = "header" + itemType.Id
                         //};
                         TextBox label = new TextBox {Text = object.ReferenceEquals(itemType.ValueChosen, null) ? itemType.ValueItem[0] : itemType.ValueChosen
-                        ,ReadOnly = true ,Anchor = AnchorStyles.Left | AnchorStyles.Right, AutoSize = true, Name = "header" + itemType.Id };
+                        ,ReadOnly = true ,Anchor = AnchorStyles.Left | AnchorStyles.Right, AutoSize = true, Name = "header" + itemType.Id,Enabled = enable
+                        };
                     HeaderTable.Controls.Add(label, _column[_counter] + 1, _row);
                     HeaderTable.SetColumnSpan(label,3);
                     break;

@@ -180,11 +180,13 @@ namespace FeedBackSystem
                 return;
             }
 
+            //optional field
+            /*
             if (HeaderDescText.Text.Length <= 0)
             {
                 MessageBox.Show("Please fill in the description");
                 return;
-            }
+            }*/
 
             _header.Title = HeaderTitleText.Text;
             _header.Desc = HeaderDescText.Text;

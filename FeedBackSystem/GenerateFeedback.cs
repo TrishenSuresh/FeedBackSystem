@@ -101,6 +101,7 @@ namespace FeedBackSystem
 
         private void FillSection()
         {
+            bool enable = !CheckPositionIsCompleted();
             SectionTable.Controls.Clear();
 
             RowStyle style = new RowStyle { SizeType = SizeType.AutoSize };
@@ -112,7 +113,7 @@ namespace FeedBackSystem
 
             foreach (Section s in _currentFeed.Sections)
             {
-                SectionTable.Controls.Add(new CheckBox { Anchor = AnchorStyles.Left, Name = "checker" + s.SectionId, AutoSize = true, Checked = (object.ReferenceEquals(s.IsChecked, null) ? false : s.IsChecked) }, 0, row);
+                SectionTable.Controls.Add(new CheckBox { Anchor = AnchorStyles.Left, Name = "checker" + s.SectionId, AutoSize = true, Checked = (object.ReferenceEquals(s.IsChecked, null) ? false : s.IsChecked), Enabled = enable }, 0, row);
 
                 SectionTable.Controls.Add(
                     new Label
@@ -128,8 +129,9 @@ namespace FeedBackSystem
                     DropDownStyle = ComboBoxStyle.DropDownList,
                     Anchor = AnchorStyles.Right,
                     Name = "codes" + s.SectionId,
-                    FlatStyle = FlatStyle.Flat
-                    };
+                    FlatStyle = FlatStyle.Flat,
+                    Enabled = enable
+                };
 
                 foreach (string code in s.Codes)
                 {
@@ -146,7 +148,8 @@ namespace FeedBackSystem
                 { 
                     Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top,
                     Name = "comment" + s.SectionId,
-                    Text = (object.ReferenceEquals(s.Comment, null) ? null : s.Comment)
+                    Text = (object.ReferenceEquals(s.Comment, null) ? null : s.Comment),
+                    Enabled = enable
                 };
 
                 SectionTable.Controls.Add(comment, 1, row + 1);
@@ -225,7 +228,14 @@ namespace FeedBackSystem
 
         private void FillHeader()
         {
-            HeaderPlacement place = new HeaderPlacement();
+            bool enable = true;
+            //check whether all the applicants for this position is completed. 
+            if (CheckPositionIsCompleted())
+            {
+                enable = false;
+            }
+
+            HeaderPlacement place = new HeaderPlacement(enable);
 
             ContentTable.Controls.Remove(ContentTable.GetControlFromPosition(0, 0));
 
@@ -425,28 +435,9 @@ namespace FeedBackSystem
                         MessageBox.Show("Sucessfully updated the feedback.");
                 }
 
-                //check whether all the applications is completed
-                string applicationCount = "";
-                string feedbackCount = "";
+                //checks whether is all the applications for the position is completed
 
-                DataTable applicationDt = sql.GetDataSet("SELECT COUNT(*) AS PositionApplied FROM positionapplied WHERE PositionID = " + _currentFeed.Position._positionId + ";");
-                if (applicationDt != null && applicationDt.Rows.Count > 0)
-                {
-                    applicationCount = applicationDt.Rows[0]["PositionApplied"].ToString();
-                }
-
-                /* 
-                 * shouldnt cause any issue even when there is different batch 
-                 * (different entry in positionapplied for the same position and applicant)
-                 */
-                DataTable feedbackDt = sql.GetDataSet("SELECT COUNT(*) AS FeedbackGiven FROM feedback WHERE PositionID = " + _currentFeed.Position._positionId 
-                    + " AND IsComplete IS TRUE ;");
-                if (feedbackDt != null && feedbackDt.Rows.Count > 0)
-                {
-                    feedbackCount = feedbackDt.Rows[0]["FeedbackGiven"].ToString();
-                }
-
-                if (applicationCount.Equals(feedbackCount)) //means all of the applications have generated the feedback
+                if (CheckPositionIsCompleted()) //means all of the applications have generated the feedback
                 {
                     
                     var result = MessageBox.Show("All the feedbacks for this current position: " + _currentFeed.Position._positionName + " is completed. \n Please choose the file name of the attachehment to be send to the applicants. \n Yes for Applicant name or No for Applicant code"
@@ -497,6 +488,40 @@ namespace FeedBackSystem
                 sql.CloseConnection();
             }
 
+        }
+
+        private bool CheckPositionIsCompleted()
+        {
+            MySql sql = new MySql();
+            sql.OpenConnection();
+
+            //check whether all the applications is completed
+            string applicationCount = "";
+            string feedbackCount = "";
+
+            DataTable applicationDt = sql.GetDataSet("SELECT COUNT(*) AS PositionApplied FROM positionapplied WHERE PositionID = " + _currentFeed.Position._positionId + ";");
+            if (applicationDt != null && applicationDt.Rows.Count > 0)
+            {
+                applicationCount = applicationDt.Rows[0]["PositionApplied"].ToString();
+            }
+
+            /* 
+             * shouldnt cause any issue even when there is different batch 
+             * (different entry in positionapplied for the same position and applicant)
+             */
+            DataTable feedbackDt = sql.GetDataSet("SELECT COUNT(*) AS FeedbackGiven FROM feedback WHERE PositionID = " + _currentFeed.Position._positionId
+                + " AND IsComplete IS TRUE ;");
+            if (feedbackDt != null && feedbackDt.Rows.Count > 0)
+            {
+                feedbackCount = feedbackDt.Rows[0]["FeedbackGiven"].ToString();
+            }
+
+            if (applicationCount.Equals(feedbackCount))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         private void PositionList_SelectedIndexChanged(object sender, EventArgs e)

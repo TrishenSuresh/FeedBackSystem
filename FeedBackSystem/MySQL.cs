@@ -225,7 +225,7 @@ namespace FeedBackSystem
             List<Section> sectionList = new List<Section>();
             DataTable dataTable = new DataTable();
 
-            string sqlStatement = "SELECT * FROM feedbacksystem.section";
+            string sqlStatement = "SELECT * FROM feedbacksystem.section WHERE Archived IS FALSE";
 
             try
             {
