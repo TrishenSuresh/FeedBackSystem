@@ -196,6 +196,7 @@ namespace FeedBackSystem
                 } else
                 {
                     SaveFeedbackBtn.Text = "Save Feedback";
+                    _currentFeed.FeedbackID = "";
                     if (_currentFeed.Header != null)
                     {
                         _currentFeed.Header.HeaderItems.Clear();
@@ -358,6 +359,9 @@ namespace FeedBackSystem
                         case "DateTimePicker":
                             item.ValueChosen = ((DateTimePicker)control).Value.ToString("dd/MM/yyyy");
                             break;
+                        //case "Label":
+                          //  item.ValueChosen = ((Label)control).Text;
+                            //break;
                     }
 
                     if (item.ValueChosen.Length <= 0)
@@ -454,18 +458,16 @@ namespace FeedBackSystem
                     try
                     {
                         int count = 0;
-                        MailMessage mail = new MailMessage();
+                        
                         SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
-                        mail.From = new MailAddress("happytechfeedbacksystem@gmail.com");
-                        mail.Subject = "Application feedback for " + _currentFeed.Position._positionName + " in HappyTech.";
+                        
                        
                         foreach (Applicant app in sql.GetEmailList(_currentFeed.Position._positionId)) {
                             string currentFilename = (filename ? app.Name : app.Id);
-
-                            mail.To.Add(new MailAddress(app.Email));
+                            MailMessage mail = new MailMessage(new MailAddress("happytechfeedbacksystem@gmail.com"), new MailAddress(app.Email));
+                            mail.Subject = "Application feedback for " + _currentFeed.Position._positionName + " in HappyTech.";
                             mail.Body = "Hi " + app.Name + ",\nPlease find the attached file as the feedback from us regarding your application at HappyTech. \n\nRegards,\nHappy Tech HR";
-
-
+                            
                             System.Net.Mail.Attachment attachment;
                             attachment = new System.Net.Mail.Attachment(TempFileHandler.MakeTempFilePdf(app.Pdf, currentFilename));
                             mail.Attachments.Add(attachment);

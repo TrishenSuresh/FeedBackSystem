@@ -54,7 +54,7 @@ namespace FeedBackSystem
 
             DataTable users =
                 sql.GetDataSet(
-                    "SELECT ReviewerID, FirstName, LastName, IF(AdminAccess = 1, \'yes\', \'no\') as AdminAccess FROM feedbacksystem.reviewer where Archived = 0;");
+                    "SELECT ReviewerID, FirstName, LastName, Email, IF(AdminAccess = 1, \'yes\', \'no\') as AdminAccess FROM feedbacksystem.reviewer where Archived = 0;");
 
             UserDGV.DataSource = users;
 
@@ -63,7 +63,7 @@ namespace FeedBackSystem
                 UserDGV.Columns[a].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             }
 
-            UserDGV.Columns[UserDGV.ColumnCount - 1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            UserDGV.Columns[UserDGV.ColumnCount - 2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
 
             sql.CloseConnection();
         }

@@ -95,5 +95,21 @@ namespace FeedBackSystem
         {
             TempFileHandler.CleanTempSession();
         }
+
+        private void reportIssueToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MainPanel.Controls.Clear();
+            ReportIssue report = new ReportIssue() { Dock = DockStyle.Fill };
+            MainPanel.Controls.Add(report);
+            BackHome.Visible = true;
+        }
+
+        private void creatorsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MainPanel.Controls.Clear();
+            Creator creator = new Creator() { Dock = DockStyle.Fill };
+            MainPanel.Controls.Add(creator);
+            BackHome.Visible = true;
+        }
     }
 }

@@ -96,8 +96,16 @@ namespace FeedBackSystem
                             HeaderTable.SetColumnSpan(date, 3);
                             break;
                         case "Today":
-                            Label today = new Label { Text = object.ReferenceEquals(itemType.ValueChosen, null) ? DateTime.Today.ToShortDateString() : itemType.ValueChosen, TextAlign = ContentAlignment.BottomLeft, Anchor = AnchorStyles.Left, AutoSize = true, Name = "header" + itemType.Id };
-                            HeaderTable.Controls.Add(today, _column[_counter] + 1, _row);
+                                //Label today = new Label { Text = object.ReferenceEquals(itemType.ValueChosen, null) ? DateTime.Today.ToShortDateString() : itemType.ValueChosen, TextAlign = ContentAlignment.BottomLeft, Anchor = AnchorStyles.Left, AutoSize = true, Name = "header" + itemType.Id };
+                                TextBox today = new TextBox
+                                {
+                                    Text = object.ReferenceEquals(itemType.ValueChosen, null) ? DateTime.Today.ToShortDateString() : itemType.ValueChosen,
+                                    ReadOnly = true,
+                                    Anchor = AnchorStyles.Left | AnchorStyles.Right,
+                                    AutoSize = true,
+                                    Name = "header" + itemType.Id
+                                };
+                                HeaderTable.Controls.Add(today, _column[_counter] + 1, _row);
                             HeaderTable.SetColumnSpan(today, 3);
                             break;
                     }
@@ -105,8 +113,16 @@ namespace FeedBackSystem
 
                 case "Label":
                 case "Query":
-                    TextBox label = new TextBox {Text = object.ReferenceEquals(itemType.ValueChosen, null) ? itemType.ValueItem[0] : itemType.ValueChosen
-                        ,Enabled = false ,Anchor = AnchorStyles.Left | AnchorStyles.Right, AutoSize = true, Name = "header" + itemType.Id };
+                        //Label label = new Label
+                        //{
+                        //    Text = object.ReferenceEquals(itemType.ValueChosen, null) ? itemType.ValueItem[0] : itemType.ValueChosen,
+                        //    TextAlign = ContentAlignment.BottomLeft,
+                        //    Anchor = AnchorStyles.Left,
+                        //    AutoSize = true,
+                        //    Name = "header" + itemType.Id
+                        //};
+                        TextBox label = new TextBox {Text = object.ReferenceEquals(itemType.ValueChosen, null) ? itemType.ValueItem[0] : itemType.ValueChosen
+                        ,ReadOnly = true ,Anchor = AnchorStyles.Left | AnchorStyles.Right, AutoSize = true, Name = "header" + itemType.Id };
                     HeaderTable.Controls.Add(label, _column[_counter] + 1, _row);
                     HeaderTable.SetColumnSpan(label,3);
                     break;

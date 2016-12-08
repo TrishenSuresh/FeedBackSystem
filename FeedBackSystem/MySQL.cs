@@ -525,7 +525,7 @@ namespace FeedBackSystem
             SHA256 sha256 = SHA256.Create();
 
             string sqlStatement =
-                "SELECT concat(TRIM(FirstName),\".\",TRIM(LastName)) as username, reviewer.Password, Salt, ReviewerID,AdminAccess FROM feedbacksystem.reviewer where concat(TRIM(FirstName),\".\",TRIM(LastName))  like @Username and Archived = '0'";
+                "SELECT concat(TRIM(FirstName),\".\",TRIM(LastName)) as username, reviewer.Password, Salt, ReviewerID,AdminAccess,Email FROM feedbacksystem.reviewer where concat(TRIM(FirstName),\".\",TRIM(LastName))  like @Username and Archived = '0'";
 
             using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
             {
@@ -544,6 +544,7 @@ namespace FeedBackSystem
                         Reviewer.Id = Convert.ToInt32(reader["ReviewerID"]);
                         Reviewer.Name = reader["username"].ToString().Replace(".", " ");
                         Reviewer.IsAdmin = (bool) reader["AdminAccess"];
+                        Reviewer.Email = reader["Email"].ToString();
                         reader.Close();
                         return true;
                     }
@@ -1208,7 +1209,7 @@ namespace FeedBackSystem
             }
         }
         
-        public bool AddUser(string fn, string ln, string password, bool isAdmin)
+        public bool AddUser(string fn, string ln, string password, bool isAdmin, string email)
         {
             SHA256 sha256 = SHA256.Create();
 
@@ -1219,7 +1220,7 @@ namespace FeedBackSystem
             string HashedPassword = Convert.ToBase64String(hash);
 
             string sqlStatement =
-                "insert into reviewer(FirstName,LastName,Password,Salt,AdminAccess) values (@FN,@LN,@Pass,@Salt,@Admin)";
+                "insert into reviewer(FirstName,LastName,Password,Salt,AdminAccess,Email) values (@FN,@LN,@Pass,@Salt,@Admin,@Email)";
 
             using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection))
             {
@@ -1230,6 +1231,7 @@ namespace FeedBackSystem
                     cmd.Parameters.AddWithValue("@Pass", HashedPassword);
                     cmd.Parameters.AddWithValue("@Salt", salt);
                     cmd.Parameters.AddWithValue("@Admin", isAdmin);
+                    cmd.Parameters.AddWithValue("@Email", email);
 
                     cmd.ExecuteNonQuery();
 
@@ -1862,7 +1864,7 @@ namespace FeedBackSystem
             try
             {
                 //get all the feedbacks of this position
-                string sqlStatement = "SELECT CONCAT(applicant.FirstName,' ',applicant.LastName) AS 'Name', " + 
+                string sqlStatement = "SELECT applicant.ApplicantID, CONCAT(applicant.FirstName,' ',applicant.LastName) AS 'Name', " + 
                         "applicant.Email,feedback.`File`, feedback.FeedbackID " + 
                         "FROM feedback,applicant " + 
                         "WHERE applicant.ApplicantID = feedback.AppID " +
@@ -1875,7 +1877,7 @@ namespace FeedBackSystem
 
                     while (reader.Read())
                     {
-                        apps.Add(new Applicant(reader["Name"].ToString(), reader["Email"].ToString(), (byte[])reader["File"]));
+                        apps.Add(new Applicant(reader["ApplicantID"].ToString(), reader["Name"].ToString(), reader["Email"].ToString(), (byte[])reader["File"]));
                     }
                     reader.Close();
                     cmd.Parameters.Clear();

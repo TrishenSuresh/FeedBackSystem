@@ -51,20 +51,21 @@
             this.tableLayoutPanel1.ColumnCount = 4;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 1.435897F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 98.5641F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 37F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 21F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 56F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 33F));
             this.tableLayoutPanel1.Controls.Add(this.Exit, 2, 2);
             this.tableLayoutPanel1.Controls.Add(this.Menu, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.MainPanel, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.BackHome, 1, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.532967F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 95.46703F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1231, 675);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1846, 1038);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // Exit
@@ -73,10 +74,9 @@
             this.Exit.Dock = System.Windows.Forms.DockStyle.Right;
             this.Exit.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Exit.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.Exit.Location = new System.Drawing.Point(1179, 654);
-            this.Exit.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.Exit.Location = new System.Drawing.Point(1770, 1006);
             this.Exit.Name = "Exit";
-            this.Exit.Size = new System.Drawing.Size(28, 21);
+            this.Exit.Size = new System.Drawing.Size(39, 32);
             this.Exit.TabIndex = 3;
             this.Exit.Text = "Exit";
             this.Exit.Click += new System.EventHandler(this.Exit_Click);
@@ -92,7 +92,8 @@
             this.aboutToolStripMenuItem});
             this.Menu.Location = new System.Drawing.Point(0, 0);
             this.Menu.Name = "Menu";
-            this.Menu.Size = new System.Drawing.Size(1209, 29);
+            this.Menu.Padding = new System.Windows.Forms.Padding(9, 3, 0, 3);
+            this.Menu.Size = new System.Drawing.Size(1812, 45);
             this.Menu.TabIndex = 0;
             this.Menu.Text = "menuStrip1";
             // 
@@ -103,27 +104,27 @@
             this.sectionToolStrip,
             this.templateToolStrip});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(56, 25);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(78, 39);
             this.fileToolStripMenuItem.Text = "Review";
             // 
             // headerToolStrip
             // 
             this.headerToolStrip.Name = "headerToolStrip";
-            this.headerToolStrip.Size = new System.Drawing.Size(123, 22);
+            this.headerToolStrip.Size = new System.Drawing.Size(168, 30);
             this.headerToolStrip.Text = "Header";
             this.headerToolStrip.Click += new System.EventHandler(this.headerToolStrip_Click);
             // 
             // sectionToolStrip
             // 
             this.sectionToolStrip.Name = "sectionToolStrip";
-            this.sectionToolStrip.Size = new System.Drawing.Size(123, 22);
+            this.sectionToolStrip.Size = new System.Drawing.Size(168, 30);
             this.sectionToolStrip.Text = "Section";
             this.sectionToolStrip.Click += new System.EventHandler(this.sectionToolStrip_Click);
             // 
             // templateToolStrip
             // 
             this.templateToolStrip.Name = "templateToolStrip";
-            this.templateToolStrip.Size = new System.Drawing.Size(123, 22);
+            this.templateToolStrip.Size = new System.Drawing.Size(168, 30);
             this.templateToolStrip.Text = "Template";
             this.templateToolStrip.Click += new System.EventHandler(this.templateToolStrip_Click);
             // 
@@ -132,13 +133,13 @@
             this.feedbackToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.giveFeedbackToolStripMenuItem});
             this.feedbackToolStripMenuItem.Name = "feedbackToolStripMenuItem";
-            this.feedbackToolStripMenuItem.Size = new System.Drawing.Size(69, 25);
+            this.feedbackToolStripMenuItem.Size = new System.Drawing.Size(99, 39);
             this.feedbackToolStripMenuItem.Text = "Feedback";
             // 
             // giveFeedbackToolStripMenuItem
             // 
             this.giveFeedbackToolStripMenuItem.Name = "giveFeedbackToolStripMenuItem";
-            this.giveFeedbackToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.giveFeedbackToolStripMenuItem.Size = new System.Drawing.Size(247, 30);
             this.giveFeedbackToolStripMenuItem.Text = "Generate Feedback";
             this.giveFeedbackToolStripMenuItem.Click += new System.EventHandler(this.giveFeedbackToolStripMenuItem_Click);
             // 
@@ -148,20 +149,22 @@
             this.reportIssueToolStripMenuItem,
             this.creatorsToolStripMenuItem});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 25);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(74, 39);
             this.aboutToolStripMenuItem.Text = "About";
             // 
             // reportIssueToolStripMenuItem
             // 
             this.reportIssueToolStripMenuItem.Name = "reportIssueToolStripMenuItem";
-            this.reportIssueToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.reportIssueToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
             this.reportIssueToolStripMenuItem.Text = "Report Issue";
+            this.reportIssueToolStripMenuItem.Click += new System.EventHandler(this.reportIssueToolStripMenuItem_Click);
             // 
             // creatorsToolStripMenuItem
             // 
             this.creatorsToolStripMenuItem.Name = "creatorsToolStripMenuItem";
-            this.creatorsToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.creatorsToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
             this.creatorsToolStripMenuItem.Text = "Creators";
+            this.creatorsToolStripMenuItem.Click += new System.EventHandler(this.creatorsToolStripMenuItem_Click);
             // 
             // MainPanel
             // 
@@ -169,9 +172,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.SetColumnSpan(this.MainPanel, 2);
-            this.MainPanel.Location = new System.Drawing.Point(19, 32);
+            this.MainPanel.Location = new System.Drawing.Point(29, 50);
+            this.MainPanel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MainPanel.Name = "MainPanel";
-            this.MainPanel.Size = new System.Drawing.Size(1187, 619);
+            this.MainPanel.Size = new System.Drawing.Size(1779, 951);
             this.MainPanel.TabIndex = 1;
             // 
             // BackHome
@@ -180,23 +184,23 @@
             this.BackHome.Dock = System.Windows.Forms.DockStyle.Right;
             this.BackHome.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BackHome.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.BackHome.Location = new System.Drawing.Point(1098, 654);
-            this.BackHome.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.BackHome.Location = new System.Drawing.Point(1652, 1006);
             this.BackHome.Name = "BackHome";
-            this.BackHome.Size = new System.Drawing.Size(72, 21);
+            this.BackHome.Size = new System.Drawing.Size(101, 32);
             this.BackHome.TabIndex = 2;
             this.BackHome.Text = "Back Home";
             this.BackHome.Click += new System.EventHandler(this.BackHome_Click);
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1231, 675);
+            this.ClientSize = new System.Drawing.Size(1846, 1038);
             this.ControlBox = false;
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.Menu;
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "MainForm";
             this.Text = "Feedback Generating System";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;

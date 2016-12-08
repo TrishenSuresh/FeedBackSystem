@@ -25,8 +25,9 @@ namespace FeedBackSystem
         }
 
         //constructor for sending email -> neccesary details are name, email, pdf
-        public Applicant(string name, string email, byte[] pdf)
+        public Applicant(string id, string name, string email, byte[] pdf)
         {
+            Id = id;
             Name = name;
             Email = email;
             Pdf = pdf;

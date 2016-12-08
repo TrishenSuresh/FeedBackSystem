@@ -41,10 +41,11 @@ namespace FeedBackSystem
 
             AddUserBtn.Text = "Save User";
             this.id = id;
-            FirstName.Text = user.Rows[0][1].ToString();
-            LastName.Text = user.Rows[0][2].ToString();
+            FirstName.Text = user.Rows[0]["FirstName"].ToString();
+            LastName.Text = user.Rows[0]["LastName"].ToString();
+            EmailText.Text = user.Rows[0]["Email"].ToString();
 
-            bool admin = (bool)user.Rows[0][5];
+            bool admin = (bool)user.Rows[0]["AdminAccess"];
 
             if (admin)
             {
@@ -57,9 +58,6 @@ namespace FeedBackSystem
 
             AddUserBtn.Click -= AddUserBtn_Click;
             AddUserBtn.Click += SaveUserBtn_Click;
-
-
-
         }
 
         private void AddUserBtn_Click(object sender, EventArgs e)
@@ -78,6 +76,8 @@ namespace FeedBackSystem
                 if(AdminPrivilege.SelectedIndex == -1)
                     throw new Exception();
 
+                if (EmailText.Text.Length <= 0)
+                    throw new Exception();
             }
             catch (Exception)
             {
@@ -90,7 +90,7 @@ namespace FeedBackSystem
             MySql sql = new MySql();
             sql.OpenConnection();
 
-            if(sql.AddUser(FirstName.Text,LastName.Text,Password.Text,admin))
+            if(sql.AddUser(FirstName.Text,LastName.Text,Password.Text,admin, EmailText.Text))
             {
                 MessageBox.Show("User Successfully Added");
                 sql.CloseConnection();
