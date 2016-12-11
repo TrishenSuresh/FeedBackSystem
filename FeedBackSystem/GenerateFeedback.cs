@@ -385,6 +385,7 @@ namespace FeedBackSystem
                 }
             }
 
+            bool sectionChecked = false;
             //check if there is null values in the sections
             foreach (Section s in _currentFeed.Sections)
             {
@@ -410,7 +411,17 @@ namespace FeedBackSystem
                     return;
                 }
 
+                if (s.IsChecked)
+                {
+                    sectionChecked = true;
+                }
 
+            }
+
+            if (!sectionChecked)
+            {
+                MessageBox.Show("Please check at least one section!", "Missing attributes!");
+                return;
             }
 
             //end of field checkers
@@ -605,7 +616,7 @@ namespace FeedBackSystem
 
                             _currentFeed.Header = sql.GetHeader(template.Rows[0][1].ToString());
                             _currentFeed.Header.HeaderItems = sql.GetHeaderItems(_currentFeed.Header.HeaderId);
-                            _currentFeed.TemplateId = form._ids[0];
+                            _currentFeed.Template = sql.GetTemplate(form._ids[0]);
 
                             FillHeader();
                             

@@ -12,7 +12,6 @@ namespace FeedBackSystem
 {
     public partial class TemplateCreator : Form
     {
-        private int _row = 0;
         Template _currentTemplate = new Template();
         private bool isUpdate = false;
 
@@ -30,7 +29,6 @@ namespace FeedBackSystem
             sql.OpenConnection();
 
             _currentTemplate = sql.GetTemplate(id);
-            _currentTemplate.Id = id;
 
             TitleText.Text = _currentTemplate.Title;
             DescText.Text = _currentTemplate.Desc;

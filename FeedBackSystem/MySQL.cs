@@ -731,11 +731,11 @@ namespace FeedBackSystem
 
                     //Generate PDF Path
                     byte[] pdfBytes = PDFGeneration.Generate(feedback);
-                    
+                    bool templateExist = !object.ReferenceEquals(feedback.Template, null);
 
                     // Insert the feedback
                     sqlStatement =
-                        "INSERT INTO feedback(`AppID`, `ReviewID`, `PositionID`,`HeaderID`,`File`) VALUES (@AppID,@ReviewID,@PositionID,@HeaderID,@PDF); SELECT last_insert_id() as id;";
+                        "INSERT INTO feedback(`AppID`, `ReviewID`, `PositionID`,`HeaderID`,`File` " + (templateExist ? ",`TemplateID` " : "") + " ) VALUES (@AppID,@ReviewID,@PositionID,@HeaderID,@PDF" + (templateExist ? ",@TemplateID" : "") + " ); SELECT last_insert_id() as id;";
                     using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
                     {
                         cmd.Parameters.AddWithValue("@AppID", feedback.Applicant.Id);
@@ -743,26 +743,12 @@ namespace FeedBackSystem
                         cmd.Parameters.AddWithValue("@PositionID", feedback.Position._positionId);
                         cmd.Parameters.AddWithValue("@HeaderID", feedback.Header.HeaderId);
                         cmd.Parameters.AddWithValue("@PDF", pdfBytes);
+                        if (templateExist) cmd.Parameters.AddWithValue("@TemplateID", feedback.Template.Id);
                         reader = cmd.ExecuteReader();
                         reader.Read();
                         feedbackId = Convert.ToInt16(reader["id"]);
                         reader.Close();
                         cmd.Parameters.Clear();
-                    }
-
-                    //If template is used, it would insert it
-                    if (!string.IsNullOrEmpty(feedback.TemplateId))
-                    {
-                        sqlStatement =
-                        "UPDATE feedback SET TemplateID=@TemplateID WHERE FeedbackID=@FeedbackID";
-                        using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
-                        {
-                            cmd.Parameters.AddWithValue("@TemplateID", feedback.TemplateId);
-                            cmd.Parameters.AddWithValue("@FeedbackID", feedbackId);
-                            reader = cmd.ExecuteReader();
-                            reader.Close();
-                            cmd.Parameters.Clear();
-                        }
                     }
 
                     //loop header items
@@ -1909,6 +1895,7 @@ namespace FeedBackSystem
 
                     if (reader.Read())
                     {
+                        template.Id = (reader["TemplateID"].ToString());
                         hid = reader["HeaderID"].ToString();
                         template.Title = reader["TemplateTitle"].ToString();
                         template.Desc = reader["TemplateDesc"].ToString();
