@@ -789,7 +789,22 @@ namespace FeedBackSystem
 
                     } //end loop sections
 
+                    //save the PDF
+                    SaveFileDialog fileDialog = new SaveFileDialog();
+                    fileDialog.Title = "Save the feedback as..";
+                    fileDialog.Filter = "PDF File|*.pdf";
+                    fileDialog.DefaultExt = ".pdf";
+                    fileDialog.FileName = feedback.Applicant.Name;
+                    var result = fileDialog.ShowDialog();
+                    if (fileDialog.FileName != "" && result == DialogResult.OK)
+                    {
+                       File.WriteAllBytes(fileDialog.FileName,pdfBytes);
+                    }
+  
                     trans.Commit();
+
+                  
+
                 }
                 catch (Exception ex)
                 {
@@ -861,6 +876,18 @@ namespace FeedBackSystem
                             reader.Close();
                             cmd.Parameters.Clear();
                         }
+                    }
+
+                    //save the PDF
+                    SaveFileDialog fileDialog = new SaveFileDialog();
+                    fileDialog.Title = "Save the feedback as..";
+                    fileDialog.Filter = "PDF File|*.pdf";
+                    fileDialog.DefaultExt = ".pdf";
+                    fileDialog.FileName = feedback.Applicant.Name;
+                    var result = fileDialog.ShowDialog();
+                    if (fileDialog.FileName != "" && result == DialogResult.OK)
+                    {
+                        File.WriteAllBytes(fileDialog.FileName, newPdf);
                     }
 
                     trans.Commit();

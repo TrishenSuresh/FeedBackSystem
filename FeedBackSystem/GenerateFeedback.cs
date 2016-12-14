@@ -434,12 +434,12 @@ namespace FeedBackSystem
                 if (String.IsNullOrEmpty(_currentFeed.FeedbackID))
                 {
                     if (sql.SaveFeedback(_currentFeed))
-                        MessageBox.Show("Sucessfully inserted into the database");
+                        MessageBox.Show("Feedback successfully saved.");
                 }
                 else
                 {
                     if (sql.UpdateFeedback(_currentFeed))
-                        MessageBox.Show("Sucessfully updated the feedback.");
+                        MessageBox.Show("Feedback successfully updated.");
                 }
 
                 //checks whether is all the applications for the position is completed
