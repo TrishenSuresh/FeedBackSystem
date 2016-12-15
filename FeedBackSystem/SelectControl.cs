@@ -16,6 +16,7 @@ namespace FeedBackSystem
         public string ControlType;
         public List<string> _ids = new List<string>();
 
+        //constructor that construct the class according to the type
         public SelectControl(string type)
         {
             InitializeComponent();
@@ -24,17 +25,8 @@ namespace FeedBackSystem
             TitleLabel.Text = "List of " + ControlType + "s: ";
             SelectBtn.Text = "Select " + ControlType;
             this.Text = "Select " + ControlType;
-
-            switch (ControlType)
-            {
-                case "Header":
-                case "Template":
-                    Dgv.MultiSelect = false;
-                    break;
-                case "Section":
-                    Dgv.MultiSelect = true;
-                    break;
-            }
+            
+            Dgv.MultiSelect = false;
 
             SetDgv();
         }
@@ -55,17 +47,6 @@ namespace FeedBackSystem
                                            "WHERE header.Archived = 0 and header.HeaderID = headercontains.HeaderID AND headeritem.HeaderItemID = headercontains.HeaderItemID " +
                                            "GROUP BY header.HeaderID ORDER BY header.HeaderID");
                         Dt.Columns["HeaderId"].ColumnName = "Header ID";
-                        Dt.Columns["Desc"].ColumnName = "Description";
-                        break;
-                    case "Section":
-                        Dt = sql.GetDataSet("SELECT section.SectionID, section.Title, section.Desc, " +
-                            "group_concat(codes.Code order by codes.CodesID ASC SEPARATOR ' | ') as Codes " +
-                            "FROM section, section_code, codes " +
-                            "WHERE section.Archived = 0 and section.SectionID = section_code.SectionID AND " +
-                            "section_code.CodesID = codes.CodesID " +
-                            "group by section.SectionID " +
-                            "order by section.SectionID");
-                        Dt.Columns["SectionID"].ColumnName = "Section ID";
                         Dt.Columns["Desc"].ColumnName = "Description";
                         break;
                     case "Template":

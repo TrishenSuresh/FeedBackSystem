@@ -13,11 +13,14 @@ namespace FeedBackSystem
     public partial class DisplayControl : System.Windows.Forms.UserControl
     {
         string ControlType;
+
+        //default constructor
         public DisplayControl()
         {
             InitializeComponent();
         }
 
+        //constructor to specialise this control to the type
         public DisplayControl(string type)
         {
             InitializeComponent();

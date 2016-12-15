@@ -109,7 +109,7 @@ namespace FeedBackSystem
                                 //Label today = new Label { Text = object.ReferenceEquals(itemType.ValueChosen, null) ? DateTime.Today.ToShortDateString() : itemType.ValueChosen, TextAlign = ContentAlignment.BottomLeft, Anchor = AnchorStyles.Left, AutoSize = true, Name = "header" + itemType.Id };
                                 TextBox today = new TextBox
                                 {
-                                    Text = object.ReferenceEquals(itemType.ValueChosen, null) ? DateTime.Today.ToShortDateString() : itemType.ValueChosen,
+                                    Text = string.IsNullOrEmpty(itemType.ValueChosen) ? DateTime.Today.ToShortDateString() : itemType.ValueChosen,
                                     ReadOnly = true,
                                     Anchor = AnchorStyles.Left | AnchorStyles.Right,
                                     AutoSize = true,

@@ -15,12 +15,13 @@ namespace FeedBackSystem
         Template _currentTemplate = new Template();
         private bool isUpdate = false;
 
+        //default constructor
         public TemplateCreator()
         {
             InitializeComponent();
-           // ContentTable.Padding = new Padding(0, 0, SystemInformation.VerticalScrollBarWidth, 0);
         }
 
+        //constructor used to initialise the template with the passed in id
         public TemplateCreator(string id)
         {
             InitializeComponent();
@@ -54,92 +55,7 @@ namespace FeedBackSystem
             SaveTemplate.Text = "Update Template";
             isUpdate = true;
         }
-
-        //private void AddSectionBtn_Click(object sender, EventArgs e)
-        //{
-        //    SectionPanel.Controls.Clear();
-        //    SectionPanel.Controls.Add(SectionTable);
-        //    SectionTable.Controls.Clear();
-
-        //    RowStyle style = new RowStyle { SizeType = SizeType.AutoSize };
-
-        //    SectionTable.Padding = new Padding(0, 0, SystemInformation.VerticalScrollBarWidth, 0);
-        //    //HeaderControls.Padding = new Padding(0, 0, SystemInformation.VerticalScrollBarWidth, 0);
-
-        //    SectionTable.RowStyles.Add(style);
-
-
-        //    using (SelectControl form = new SelectControl("Section"))
-        //    {
-        //        var result = form.ShowDialog();
-
-        //        if (result == DialogResult.OK)
-        //        {
-
-        //            List<Section> section = new List<Section>();
-
-        //            MySql sql = new MySql();
-        //            sql.OpenConnection();
-
-        //            form._ids.Reverse();
-
-        //            foreach (string id  in form._ids)
-        //            {
-        //                section.Add(sql.GetSection(id));
-        //            }
-
-        //            sql.CloseConnection();
-
-        //            foreach (Section s in section)
-        //            {
-        //                SectionTable.Controls.Add(new CheckBox { Anchor = AnchorStyles.Left, Name = "checker" + s.SectionId, AutoSize = true }, 0, _row);
-
-        //                SectionTable.Controls.Add(
-        //                    new Label
-        //                    {
-        //                        Text = s.Title,
-        //                        Anchor = AnchorStyles.Left,
-        //                        TextAlign = ContentAlignment.MiddleLeft
-        //                    }, 1, _row);
-
-        //                ComboBox codes = new ComboBox
-        //                {
-        //                    DropDownStyle = ComboBoxStyle.DropDownList,
-        //                    Anchor = AnchorStyles.Right,
-        //                    Name = "codes" + s.SectionId
-        //                };
-
-        //                foreach (string code in s.Codes)
-        //                {
-        //                    codes.Items.Add(code);
-        //                }
-
-        //                SectionTable.Controls.Add(codes, 2, _row);
-
-        //                RichTextBox comment = new RichTextBox
-        //                {
-        //                    Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top,
-        //                    Name = "comment" + s.SectionId
-        //                };
-
-        //                SectionTable.Controls.Add(comment, 1, _row + 1);
-        //                SectionTable.SetColumnSpan(comment,2);
-
-        //                _row++;
-        //                _row++;
-        //            }
-
-        //            //ChangeSectionBtn.Text = "Change Section";
-        //            ChangeSectionBtn.Enabled = true;
-
-        //            _currentTemplate.Sections.Clear();
-        //            _currentTemplate.Sections.AddRange(section);
-
-        //        }
-        //    }
-
-        //}
-
+        
         private void AddHeaderBtn_Click(object sender, EventArgs e)
         {
             using (SelectControl form = new SelectControl("Header"))
@@ -188,6 +104,12 @@ namespace FeedBackSystem
                 return;
             }
 
+            if(object.ReferenceEquals(_currentTemplate.Header, null))
+            {
+                MessageBox.Show("Please choose the header to be included in the template.", "Missing Header");
+                return;
+            }
+
             _currentTemplate.Sections = Sections.SelectedSections;
 
             if (_currentTemplate.Sections.Count <= 0)
@@ -195,13 +117,8 @@ namespace FeedBackSystem
                 MessageBox.Show("Please choose the sections to be included in the template.","Missing Sections");
                 return;
             }
-
-            //if (DescText.Text.Length <= 0)
-            //{
-            //    MessageBox.Show("Please insert the description","Missing Field");
-            //    return;
-            //}
-
+            //end of field checkers
+            
             MySql sql = new MySql();
             sql.OpenConnection();
 

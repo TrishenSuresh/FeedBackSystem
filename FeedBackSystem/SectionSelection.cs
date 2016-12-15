@@ -39,30 +39,6 @@ namespace FeedBackSystem
             sql.CloseConnection();
         }
 
-        //To be used when editing template, give it the sections that is already contain in the template
-        public SectionSelection(List<Section> sections)
-        {
-            InitializeComponent();
-
-            MySql sql = new MySql();
-            sql.OpenConnection();
-
-            AvailableSections = sql.GetSectionsList();
-
-            AvailableSectionDGV.DataSource = AvailableSections;
-
-            SelectedSections.AddRange(sections);
-
-            foreach (Section s in sections)
-            {
-                AvailableSections.RemoveAll(x => x.SectionId.Equals(s.SectionId));
-            }
-
-            SelectedSectionDGV.DataSource = SelectedSections;
-
-            sql.CloseConnection();
-        }
-
         public void UpdateSelectedSections(List<Section> sections)
         {
             SelectedSections.AddRange(sections);

@@ -23,7 +23,7 @@ namespace FeedBackSystem
             SectionTable.VerticalScroll.Enabled = false;
             ContentTable.VerticalScroll.Enabled = true;
             SectionTable.HorizontalScroll.Enabled = false;
-            AddHeaderBtn.Visible = false;
+
             AddSectionBtn.Visible = false;
             SetTemplateBtn.Enabled = false;
             SaveTemplateBtn.Enabled = false;
@@ -35,6 +35,7 @@ namespace FeedBackSystem
             
             ApplicantList.ValueMember = "Name";
 
+            //get the list of position from the database
             List<Position> positions = sql.GetPositions();
 
             foreach (Position p in positions)
@@ -52,26 +53,7 @@ namespace FeedBackSystem
         private void setSection()
         {
             _currentFeed.Sections.Clear();
-
-            //using (SelectControl form = new SelectControl("Section"))
-            //{
-            //    var result = form.ShowDialog();
-
-            //    if (result == DialogResult.OK)
-            //    {
-            //        MySql sql = new MySql();
-            //        sql.OpenConnection();
-            //        foreach (string id in form._ids)
-            //        {
-            //            _currentFeed.Sections.Add(sql.GetSection(id));
-            //        }
-
-            //        _currentFeed.Sections.Reverse();
-
-            //        FillSection();
-            //    } 
-            //}
-
+            
             Form window = new Form { Text = "Select Sections", ControlBox = false, FormBorderStyle = FormBorderStyle.FixedDialog, StartPosition = FormStartPosition.CenterParent};
 
             window.Size = new Size(980, 330);
@@ -81,8 +63,7 @@ namespace FeedBackSystem
             Button ok = new Button { Location = new Point(870, 250), Text = "Ok" };
             ok.Click += (s, e) => { window.DialogResult = DialogResult.OK; window.Close(); };
             window.Controls.Add(ok);
-
-
+            
             var result = window.ShowDialog();
 
             if (result == DialogResult.OK)
@@ -160,13 +141,16 @@ namespace FeedBackSystem
 
         private void ApplicantList_SelectedIndexChanged(object sender, EventArgs e)
         {
+            SaveTemplateBtn.Enabled = false;
+            ChangeHeader.Visible = false;
+            AddSectionBtn.Visible = false;
+
             if (ApplicantList.SelectedIndex != -1)
             {
                 PDFDisplay.DocumentText = "<HTML><CENTER>Loading...</CENTER></HTML>";
 
                 Applicant app = (Applicant) ApplicantList.SelectedItem;
                 _currentFeed.Applicant = app;
-                AddHeaderBtn.Enabled = true;
 
                 if (app.Pdf != null)
                 {
@@ -190,11 +174,11 @@ namespace FeedBackSystem
                     _currentFeed.Sections = tmpFeedback.Sections;
                     FillHeader();
                     FillSection();
-                    sql.CloseConnection();
+
+                    ChangeHeader.Visible = !CheckPositionIsCompleted();
+                    AddSectionBtn.Visible = !CheckPositionIsCompleted();
 
                     SaveFeedbackBtn.Text = "Update Feedback";
-
-                    return;
                 } else
                 {
                     SaveFeedbackBtn.Text = "Save Feedback";
@@ -204,6 +188,7 @@ namespace FeedBackSystem
                         _currentFeed.Header.HeaderItems.Clear();
                         //in order to reset the header items value for the cascading
                         _currentFeed.Header.HeaderItems = sql.GetHeaderItems(_currentFeed.Header.HeaderId);
+                        ChangeHeader.Visible = true;
 
                         FillHeader();
                     }
@@ -216,12 +201,14 @@ namespace FeedBackSystem
                             sec.CodeChosen = null;
                             sec.IsChecked = false;
                         }
+                        AddSectionBtn.Visible = true;
+
                         FillSection();
                     }
                 }
                 
                 sql.CloseConnection();
-                SetTemplateBtn.Enabled = true;
+                SetTemplateBtn.Enabled = !CheckPositionIsCompleted();
             }
         }
 
@@ -286,6 +273,7 @@ namespace FeedBackSystem
             { return; }
 
         }
+
         private void setHeader()
         {
             using (SelectControl form = new SelectControl("Header"))
@@ -301,8 +289,6 @@ namespace FeedBackSystem
                     _currentFeed.Header.HeaderItems = sql.GetHeaderItems(_currentFeed.Header.HeaderId);
 
                     FillHeader();
-
-                    //ChangeHeader.Visible = true;
 
                     sql.CloseConnection();
                 } else
@@ -365,9 +351,6 @@ namespace FeedBackSystem
                         case "DateTimePicker":
                             item.ValueChosen = ((DateTimePicker)control).Value.ToString("dd/MM/yyyy");
                             break;
-                        //case "Label":
-                          //  item.ValueChosen = ((Label)control).Text;
-                            //break;
                     }
 
                     if (item.ValueChosen.Length <= 0)
@@ -535,6 +518,11 @@ namespace FeedBackSystem
         {
             if (PositionList.SelectedIndex != -1)
             {
+                ChangeHeader.Visible = false;
+                AddSectionBtn.Visible = false;
+                SetTemplateBtn.Enabled = false;
+                SaveTemplateBtn.Enabled = false;
+
                 MySql sql = new MySql();
                 sql.OpenConnection();
                 Position pos = (Position) PositionList.SelectedItem;

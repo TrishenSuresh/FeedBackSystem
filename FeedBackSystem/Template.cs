@@ -14,8 +14,5 @@ namespace FeedBackSystem
         public string Author;
         public Header Header;
         public List<Section> Sections = new List<Section>();
-
-
-
     }
 }

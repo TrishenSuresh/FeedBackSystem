@@ -89,12 +89,6 @@
       <DependentUpon>UserInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Applicant.cs" />
-    <Compile Include="DeleteBox.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DeleteBox.Designer.cs">
-      <DependentUpon>DeleteBox.cs</DependentUpon>
-    </Compile>
     <Compile Include="DisplayControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -215,9 +209,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserInfo.resx">
       <DependentUpon>UserInfo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DeleteBox.resx">
-      <DependentUpon>DeleteBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DisplayControl.resx">
       <DependentUpon>DisplayControl.cs</DependentUpon>

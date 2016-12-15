@@ -677,11 +677,6 @@ namespace FeedBackSystem
                     "ORDER BY positionapplied.timestamp DESC) t " +
                     "GROUP BY ApplicantID; ",
                     _connection);
-            /*new MySqlCommand(
-                "SELECT applicant.ApplicantID,FirstName, LastName, Email, positionapplied.File,applicationtype.Name FROM feedbacksystem.applicant, feedbacksystem.positionapplied,feedbacksystem.positions,feedbacksystem.applicationtype " +
-                "where applicant.ApplicantID = positionapplied.ApplicantID and positionapplied.PositionID = positions.PositionID and positions.PositionID = @PositionID and applicationtype.ApplicationTypeID = positionapplied.ApplicantTypeID " + 
-                "ORDER BY positionapplied.timestamp DESC",
-                _connection);*/
 
             cmd.Parameters.AddWithValue("@PositionID", posId);
             MySqlDataReader reader = cmd.ExecuteReader();
@@ -932,7 +927,7 @@ namespace FeedBackSystem
                     //loop section
                     foreach (Section s in sections)
                     {
-                        //Link template with sections
+                        //link template with sections
                         sqlStatement =
                             "INSERT INTO template_section(`TemplateID`,`SectionID`) VALUES (@TemplateID,@SectionID);";
                         using (MySqlCommand cmd = new MySqlCommand(sqlStatement, _connection, trans))
@@ -1010,7 +1005,9 @@ namespace FeedBackSystem
                     } //end loop section
 
                     ////////////////////////end updates for template//////////////////////
-                    
+
+
+                    //begin updates of the feedback affected
                     List<string> affectedFIDs = new List<string>();
                     bool sameHeader = false;
 
