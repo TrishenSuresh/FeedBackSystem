@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FeedBackSystem
@@ -127,8 +122,6 @@ namespace FeedBackSystem
             
             if (rowIndex >= rowCount-1)
             {
-                // Doesn't need to inform the user since it is just annoying for MessageBoxes keep showing up
-                //MessageBox.Show("Sorry, you cannot move this down any further");
                 return;
             }
 
@@ -180,13 +173,6 @@ namespace FeedBackSystem
                 return;
             }
 
-            //optional field
-            /*
-            if (HeaderDescText.Text.Length <= 0)
-            {
-                MessageBox.Show("Please fill in the description");
-                return;
-            }*/
 
             _header.Title = HeaderTitleText.Text;
             _header.Desc = HeaderDescText.Text;

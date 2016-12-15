@@ -67,12 +67,6 @@
     <Compile Include="HeaderItemDisplay.Designer.cs">
       <DependentUpon>HeaderItemDisplay.cs</DependentUpon>
     </Compile>
-    <Compile Include="PDF Generation Tester.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="PDF Generation Tester.Designer.cs">
-      <DependentUpon>PDF Generation Tester.cs</DependentUpon>
-    </Compile>
     <Compile Include="PDFfooter.cs" />
     <Compile Include="PDFGeneration.cs" />
     <Compile Include="ReportIssue.cs">
@@ -119,12 +113,6 @@
     </Compile>
     <Compile Include="HeaderPlacement.designer.cs">
       <DependentUpon>HeaderPlacement.cs</DependentUpon>
-    </Compile>
-    <Compile Include="HeaderCreator.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="HeaderCreator.Designer.cs">
-      <DependentUpon>HeaderCreator.cs</DependentUpon>
     </Compile>
     <Compile Include="HeaderCreatorControls\Date.cs">
       <SubType>UserControl</SubType>
@@ -175,12 +163,6 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MoreInfoHeader.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MoreInfoHeader.Designer.cs">
-      <DependentUpon>MoreInfoHeader.cs</DependentUpon>
-    </Compile>
     <Compile Include="MySQL.cs" />
     <Compile Include="Position.cs" />
     <Compile Include="Program.cs" />
@@ -225,9 +207,6 @@
     <EmbeddedResource Include="HeaderItemDisplay.resx">
       <DependentUpon>HeaderItemDisplay.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PDF Generation Tester.resx">
-      <DependentUpon>PDF Generation Tester.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="ReportIssue.resx">
       <DependentUpon>ReportIssue.cs</DependentUpon>
     </EmbeddedResource>
@@ -248,9 +227,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="HeaderPlacement.resx">
       <DependentUpon>HeaderPlacement.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="HeaderCreator.resx">
-      <DependentUpon>HeaderCreator.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="HeaderCreatorControls\Date.resx">
       <DependentUpon>Date.cs</DependentUpon>
@@ -275,9 +251,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MoreInfoHeader.resx">
-      <DependentUpon>MoreInfoHeader.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

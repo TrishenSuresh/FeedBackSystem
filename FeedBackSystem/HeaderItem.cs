@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.IO;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Windows.Forms;
+﻿using System.Collections.Generic;
 
 namespace FeedBackSystem
 {
