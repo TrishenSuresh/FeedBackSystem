@@ -88,7 +88,7 @@ namespace FeedBackSystem
                     switch (itemType.ValueItem[0])
                     {
                         case "Manual":
-                            DateTime time = object.ReferenceEquals(itemType.ValueChosen, null) ? DateTime.Now : DateTime.ParseExact(itemType.ValueChosen, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture) ;
+                            DateTime time = string.IsNullOrEmpty(itemType.ValueChosen) ? DateTime.Now : DateTime.ParseExact(itemType.ValueChosen, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture) ;
                             //DateTime time = DateTime.Now;
 
                             DateTimePicker date = new DateTimePicker
